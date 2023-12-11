@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "techeducationnav",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authtecheducationnav6670346a",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2023-12-05T00:05:05.131Z"
+}

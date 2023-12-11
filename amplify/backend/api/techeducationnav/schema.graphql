@@ -1,0 +1,43 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type User @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  cognitoSub: String!
+  displayId: String!
+  name: String
+  nameKana: String
+  gender: String
+  birthYear: Int
+  birthMonth: Int
+  birthDate: Int
+  prefecture: String
+  previousJob: String
+  isRegisterUserInfo: Boolean
+}
+
+type LearningCenter @model {
+  id: ID!
+  name: String
+  memo: String
+  operatingCompany: String
+  headquartersLocation: String
+  websiteURL: String
+  establishmentYear: Int
+  representative: String
+  locations: [LearningCenterCourse] @hasMany(fields: ["id"])
+}
+
+type LearningCenterCourse @model {
+  id: ID!
+  learningCenterId: ID!
+  courseName: String
+  courseURL: String
+  couseDetail: String
+  user: LearningCenter @belongsTo(fields: ["learningCenterId"])
+}
