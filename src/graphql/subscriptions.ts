@@ -143,7 +143,7 @@ export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearni
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -168,7 +168,7 @@ export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearni
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -193,7 +193,7 @@ export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearni
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -215,7 +215,7 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo
@@ -246,7 +246,7 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo
@@ -277,7 +277,7 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo

@@ -1,17 +1,17 @@
 import Layout from "@/app/layout";
 import Head from "next/head";
-import LearningCenterListPane from "@/components/pages/learning-center/LearningCenterListPane";
+import LearningCenterEditPane from "@/components/pages/learning-center/LearningCenterEditPane";
 
-export default function LearningCenterIndex() {
+export default function LearningCenterEdit() {
   return (
     <>
       <Head>
-        <title>スクール情報</title>
+        <title>【編集】スクール情報</title>
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>
       <Layout>
-        <LearningCenterListPane />
+        <LearningCenterEditPane />
       </Layout>
     </>
   );

@@ -4,11 +4,6 @@ export interface AuthRegisterFormType {
   password: string;
 }
 
-// 認証コード 入力型
-export interface AuthRegisterConfirmFormType {
-  authCode: string;
-}
-
 // ログイン画面の入力型
 export interface AuthLoginFormType {
   email: string;
@@ -32,7 +27,13 @@ export interface UserProfileInputType {
   previousJob: string;
 }
 
-// アカウント情報編集画面の入力型
-export interface UserAccountInputType {
-  email: string;
+// スクール情報入力型
+export interface LearningCenterInputType {
+  name: string;
+  memo: string;
+  operatingCompany: string;
+  headquartersLocation: string;
+  websiteURL: string;
+  establishmentYear: number;
+  representative: string;
 }

@@ -98,7 +98,7 @@ export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -145,7 +145,7 @@ export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCou
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo

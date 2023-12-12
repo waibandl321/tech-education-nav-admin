@@ -198,7 +198,7 @@ export type LearningCenter = {
   websiteURL?: string | null,
   establishmentYear?: number | null,
   representative?: string | null,
-  locations?: ModelLearningCenterCourseConnection | null,
+  learningCenterCourses?: ModelLearningCenterCourseConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -216,7 +216,7 @@ export type LearningCenterCourse = {
   courseName?: string | null,
   courseURL?: string | null,
   couseDetail?: string | null,
-  user?: LearningCenter | null,
+  learningCenter?: LearningCenter | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -589,7 +589,7 @@ export type CreateLearningCenterMutation = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -614,7 +614,7 @@ export type UpdateLearningCenterMutation = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -639,7 +639,7 @@ export type DeleteLearningCenterMutation = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -661,7 +661,7 @@ export type CreateLearningCenterCourseMutation = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -692,7 +692,7 @@ export type UpdateLearningCenterCourseMutation = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -723,7 +723,7 @@ export type DeleteLearningCenterCourseMutation = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -848,7 +848,7 @@ export type GetLearningCenterQuery = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -895,7 +895,7 @@ export type GetLearningCenterCourseQuery = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -1074,7 +1074,7 @@ export type OnCreateLearningCenterSubscription = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -1098,7 +1098,7 @@ export type OnUpdateLearningCenterSubscription = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -1122,7 +1122,7 @@ export type OnDeleteLearningCenterSubscription = {
     websiteURL?: string | null,
     establishmentYear?: number | null,
     representative?: string | null,
-    locations?:  {
+    learningCenterCourses?:  {
       __typename: "ModelLearningCenterCourseConnection",
       nextToken?: string | null,
     } | null,
@@ -1143,7 +1143,7 @@ export type OnCreateLearningCenterCourseSubscription = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -1173,7 +1173,7 @@ export type OnUpdateLearningCenterCourseSubscription = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,
@@ -1203,7 +1203,7 @@ export type OnDeleteLearningCenterCourseSubscription = {
     courseName?: string | null,
     courseURL?: string | null,
     couseDetail?: string | null,
-    user?:  {
+    learningCenter?:  {
       __typename: "LearningCenter",
       id: string,
       name?: string | null,

@@ -1,8 +1,7 @@
 "use client";
 import * as React from "react";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
 import { useRouter } from "next/router";
+import { MenuItem, MenuList } from "@mui/material";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -13,12 +12,12 @@ export default function Sidebar() {
   ];
 
   return (
-    <List>
+    <MenuList>
       {menus.map((menu) => (
-        <ListItemButton key={menu.path} onClick={() => router.push(menu.path)}>
+        <MenuItem key={menu.path} onClick={() => router.push(menu.path)}>
           {menu.name}
-        </ListItemButton>
+        </MenuItem>
       ))}
-    </List>
+    </MenuList>
   );
 }

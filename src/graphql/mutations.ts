@@ -153,7 +153,7 @@ export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -179,7 +179,7 @@ export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -205,7 +205,7 @@ export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter
     websiteURL
     establishmentYear
     representative
-    locations {
+    learningCenterCourses {
       nextToken
       __typename
     }
@@ -228,7 +228,7 @@ export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearning
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo
@@ -260,7 +260,7 @@ export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearning
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo
@@ -292,7 +292,7 @@ export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearning
     courseName
     courseURL
     couseDetail
-    user {
+    learningCenter {
       id
       name
       memo
