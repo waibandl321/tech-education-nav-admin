@@ -1,0 +1,16 @@
+{
+  "resourceName": "s334cc9079",
+  "policyUUID": "34cc9079",
+  "bucketName": "techeducationnav6d59581b77da421f950827a01807f3b",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
