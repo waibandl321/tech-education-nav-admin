@@ -140,7 +140,8 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   APITypes.DeleteUserMutationVariables,
   APITypes.DeleteUserMutation
 >;
-export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter(
+export const createLearningCenter =
+  /* GraphQL */ `mutation CreateLearningCenter(
   $input: CreateLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -151,6 +152,7 @@ export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -159,14 +161,16 @@ export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateLearningCenterMutationVariables,
-  APITypes.CreateLearningCenterMutation
->;
-export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter(
+    APITypes.CreateLearningCenterMutationVariables,
+    APITypes.CreateLearningCenterMutation
+  >;
+export const updateLearningCenter =
+  /* GraphQL */ `mutation UpdateLearningCenter(
   $input: UpdateLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -177,6 +181,7 @@ export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -185,14 +190,16 @@ export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateLearningCenterMutationVariables,
-  APITypes.UpdateLearningCenterMutation
->;
-export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter(
+    APITypes.UpdateLearningCenterMutationVariables,
+    APITypes.UpdateLearningCenterMutation
+  >;
+export const deleteLearningCenter =
+  /* GraphQL */ `mutation DeleteLearningCenter(
   $input: DeleteLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -203,6 +210,7 @@ export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -211,14 +219,16 @@ export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteLearningCenterMutationVariables,
-  APITypes.DeleteLearningCenterMutation
->;
-export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearningCenterCourse(
+    APITypes.DeleteLearningCenterMutationVariables,
+    APITypes.DeleteLearningCenterMutation
+  >;
+export const createLearningCenterCourse =
+  /* GraphQL */ `mutation CreateLearningCenterCourse(
   $input: CreateLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -235,22 +245,26 @@ export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearning
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateLearningCenterCourseMutationVariables,
-  APITypes.CreateLearningCenterCourseMutation
->;
-export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearningCenterCourse(
+    APITypes.CreateLearningCenterCourseMutationVariables,
+    APITypes.CreateLearningCenterCourseMutation
+  >;
+export const updateLearningCenterCourse =
+  /* GraphQL */ `mutation UpdateLearningCenterCourse(
   $input: UpdateLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -267,22 +281,26 @@ export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearning
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateLearningCenterCourseMutationVariables,
-  APITypes.UpdateLearningCenterCourseMutation
->;
-export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearningCenterCourse(
+    APITypes.UpdateLearningCenterCourseMutationVariables,
+    APITypes.UpdateLearningCenterCourseMutation
+  >;
+export const deleteLearningCenterCourse =
+  /* GraphQL */ `mutation DeleteLearningCenterCourse(
   $input: DeleteLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -299,18 +317,21 @@ export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearning
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteLearningCenterCourseMutationVariables,
-  APITypes.DeleteLearningCenterCourseMutation
->;
+    APITypes.DeleteLearningCenterCourseMutationVariables,
+    APITypes.DeleteLearningCenterCourseMutation
+  >;

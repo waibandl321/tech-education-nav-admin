@@ -27,6 +27,7 @@ export declare type LearningCenterCreateFormInputValues = {
     operatingCompany?: string;
     headquartersLocation?: string;
     websiteURL?: string;
+    logoImageURL?: string;
     establishmentYear?: number;
     representative?: string;
 };
@@ -36,6 +37,7 @@ export declare type LearningCenterCreateFormValidationValues = {
     operatingCompany?: ValidationFunction<string>;
     headquartersLocation?: ValidationFunction<string>;
     websiteURL?: ValidationFunction<string>;
+    logoImageURL?: ValidationFunction<string>;
     establishmentYear?: ValidationFunction<number>;
     representative?: ValidationFunction<string>;
 };
@@ -47,6 +49,7 @@ export declare type LearningCenterCreateFormOverridesProps = {
     operatingCompany?: PrimitiveOverrideProps<TextFieldProps>;
     headquartersLocation?: PrimitiveOverrideProps<TextFieldProps>;
     websiteURL?: PrimitiveOverrideProps<TextFieldProps>;
+    logoImageURL?: PrimitiveOverrideProps<TextFieldProps>;
     establishmentYear?: PrimitiveOverrideProps<TextFieldProps>;
     representative?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

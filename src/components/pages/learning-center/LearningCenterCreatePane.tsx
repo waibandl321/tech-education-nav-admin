@@ -1,18 +1,12 @@
+import { CreateLearningCenterInput } from "@/API";
 import useLearningCenterLogic from "@/hooks/components/learning-center/useLearningCenterLogic";
 import { SelectChangeEvent, Container } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import LearningCenterForm from "@/components/pages/learning-center/section/LearningCenterForm";
-import { useRouter } from "next/router";
 
 export default function LearningCenterEditPane() {
-  const router = useRouter();
-  const {
-    editLearningCenter,
-    setEditLearningCenter,
-    updateLearningCenter,
-    getEditData,
-    handleDeleteExistImage,
-  } = useLearningCenterLogic();
+  const { createLearningCenter, createData, setCreateData } =
+    useLearningCenterLogic();
 
   // Formの更新
   const handlerFormChange = (
@@ -20,25 +14,25 @@ export default function LearningCenterEditPane() {
   ) => {
     const target = event.target as HTMLInputElement | HTMLSelectElement;
     const { name, value } = target;
-    setEditLearningCenter((prevLearningCenter) => ({
+    setCreateData((prevLearningCenter) => ({
       ...prevLearningCenter,
       [name]: value,
     }));
   };
 
-  useEffect(() => {
-    // 編集対象のデータを取得
-    getEditData();
-  }, [router.query.id]);
+  // 作成
+  const handlerCreate = async (
+    data: CreateLearningCenterInput,
+    file?: File | null
+  ) => createLearningCenter(data, file);
 
   return (
     <Container sx={{ p: 4 }}>
       <LearningCenterForm
-        onSubmitUpdate={updateLearningCenter}
+        onSubmitCreate={handlerCreate}
         handlerFormChange={handlerFormChange}
-        handleDeleteExistImage={handleDeleteExistImage}
-        formData={editLearningCenter}
-        isEdit={true}
+        formData={createData}
+        isEdit={false}
       />
     </Container>
   );

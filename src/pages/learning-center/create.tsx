@@ -1,7 +1,7 @@
 "use client";
 import Layout from "@/app/layout";
 import Head from "next/head";
-import LearningCenterEditPane from "@/components/pages/learning-center/LearningCenterEditPane";
+import LearningCenterCreatePane from "@/components/pages/learning-center/LearningCenterCreatePane";
 
 export default function LearningCenterEdit() {
   return (
@@ -12,7 +12,7 @@ export default function LearningCenterEdit() {
         {/* その他のメタタグ */}
       </Head>
       <Layout>
-        <LearningCenterEditPane />
+        <LearningCenterCreatePane />
       </Layout>
     </>
   );

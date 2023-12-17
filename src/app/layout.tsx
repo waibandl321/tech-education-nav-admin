@@ -21,10 +21,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <MesageAlert />
       <Header />
       <Grid container>
-        <Grid item width={240}>
+        <Grid item width={200}>
           <Sidebar />
         </Grid>
-        <Grid item width={"calc(100% - 240px)"}>
+        <Grid item width={"calc(100% - 200px)"}>
           {children}
         </Grid>
       </Grid>

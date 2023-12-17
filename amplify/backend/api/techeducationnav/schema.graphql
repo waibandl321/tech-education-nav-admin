@@ -28,6 +28,7 @@ type LearningCenter @model @auth(rules: [{ allow: owner }]) {
   operatingCompany: String
   headquartersLocation: String
   websiteURL: String
+  logoImageURL: String
   establishmentYear: Int
   representative: String
   learningCenterCourses: [LearningCenterCourse] @hasMany(fields: ["id"])

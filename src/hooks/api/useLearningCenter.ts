@@ -4,15 +4,18 @@ import { generateClient } from "aws-amplify/api";
 import {
   CreateLearningCenterInput,
   DeleteLearningCenterInput,
+  GetLearningCenterQuery,
   LearningCenter,
+  UpdateLearningCenterInput,
+  UpdateLearningCenterMutation,
 } from "@/API";
 import useAPIResponse from "./useAPIResponse";
-import { LearningCenterInputType } from "@/types/FormType";
+import useConvertData from "../utils/useConvertData";
 
 export default function useLearningCenter() {
   const { getErrorMessage } = useAPIResponse();
   const client = generateClient();
-
+  const { ensureString } = useConvertData();
   // 一覧取得
   const apiGetLearningCenters = async (): Promise<
     ApiResponse<Array<LearningCenter>>
@@ -33,9 +36,30 @@ export default function useLearningCenter() {
     }
   };
 
+  // 詳細取得
+  const apiGetLearningCenterById = async (
+    id: string | string[]
+  ): Promise<ApiResponse<GetLearningCenterQuery["getLearningCenter"]>> => {
+    try {
+      const result = await client.graphql({
+        query: queries.getLearningCenter,
+        variables: { id: ensureString(id) },
+      });
+      return {
+        isSuccess: true,
+        data: result.data.getLearningCenter ?? null,
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: getErrorMessage(error),
+      };
+    }
+  };
+
   // 作成
   const apiCreateLearningCenter = async (
-    learningCenter: LearningCenterInputType
+    learningCenter: CreateLearningCenterInput
   ) => {
     try {
       const request: CreateLearningCenterInput = {
@@ -48,6 +72,28 @@ export default function useLearningCenter() {
       return {
         isSuccess: true,
         data: result.data.createLearningCenter,
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: getErrorMessage(error),
+      };
+    }
+  };
+
+  const apiUpdateLearningCenter = async (
+    learningCenter: UpdateLearningCenterInput
+  ): Promise<
+    ApiResponse<UpdateLearningCenterMutation["updateLearningCenter"]>
+  > => {
+    try {
+      const result = await client.graphql({
+        query: mutations.updateLearningCenter,
+        variables: { input: learningCenter },
+      });
+      return {
+        isSuccess: true,
+        data: result.data.updateLearningCenter,
       };
     } catch (error) {
       return {
@@ -81,7 +127,9 @@ export default function useLearningCenter() {
 
   return {
     apiGetLearningCenters,
+    apiGetLearningCenterById,
     apiCreateLearningCenter,
+    apiUpdateLearningCenter,
     apiDeleteLearningCenter,
   };
 }

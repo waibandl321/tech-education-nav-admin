@@ -88,7 +88,8 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   }
 }
 ` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
-export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!) {
+export const getLearningCenter =
+  /* GraphQL */ `query GetLearningCenter($id: ID!) {
   getLearningCenter(id: $id) {
     id
     name
@@ -96,6 +97,7 @@ export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -104,13 +106,14 @@ export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetLearningCenterQueryVariables,
-  APITypes.GetLearningCenterQuery
->;
+    APITypes.GetLearningCenterQueryVariables,
+    APITypes.GetLearningCenterQuery
+  >;
 export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
   $filter: ModelLearningCenterFilterInput
   $limit: Int
@@ -124,10 +127,12 @@ export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     nextToken
@@ -138,7 +143,8 @@ export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
   APITypes.ListLearningCentersQueryVariables,
   APITypes.ListLearningCentersQuery
 >;
-export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCourse($id: ID!) {
+export const getLearningCenterCourse =
+  /* GraphQL */ `query GetLearningCenterCourse($id: ID!) {
   getLearningCenterCourse(id: $id) {
     id
     learningCenterId
@@ -152,22 +158,26 @@ export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCou
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetLearningCenterCourseQueryVariables,
-  APITypes.GetLearningCenterCourseQuery
->;
-export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenterCourses(
+    APITypes.GetLearningCenterCourseQueryVariables,
+    APITypes.GetLearningCenterCourseQuery
+  >;
+export const listLearningCenterCourses =
+  /* GraphQL */ `query ListLearningCenterCourses(
   $filter: ModelLearningCenterCourseFilterInput
   $limit: Int
   $nextToken: String
@@ -185,6 +195,7 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
       couseDetail
       createdAt
       updatedAt
+      owner
       __typename
     }
     nextToken
@@ -192,6 +203,6 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListLearningCenterCoursesQueryVariables,
-  APITypes.ListLearningCenterCoursesQuery
->;
+    APITypes.ListLearningCenterCoursesQueryVariables,
+    APITypes.ListLearningCenterCoursesQuery
+  >;

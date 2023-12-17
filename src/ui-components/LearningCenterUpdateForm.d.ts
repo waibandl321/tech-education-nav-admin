@@ -28,6 +28,7 @@ export declare type LearningCenterUpdateFormInputValues = {
     operatingCompany?: string;
     headquartersLocation?: string;
     websiteURL?: string;
+    logoImageURL?: string;
     establishmentYear?: number;
     representative?: string;
 };
@@ -37,6 +38,7 @@ export declare type LearningCenterUpdateFormValidationValues = {
     operatingCompany?: ValidationFunction<string>;
     headquartersLocation?: ValidationFunction<string>;
     websiteURL?: ValidationFunction<string>;
+    logoImageURL?: ValidationFunction<string>;
     establishmentYear?: ValidationFunction<number>;
     representative?: ValidationFunction<string>;
 };
@@ -48,6 +50,7 @@ export declare type LearningCenterUpdateFormOverridesProps = {
     operatingCompany?: PrimitiveOverrideProps<TextFieldProps>;
     headquartersLocation?: PrimitiveOverrideProps<TextFieldProps>;
     websiteURL?: PrimitiveOverrideProps<TextFieldProps>;
+    logoImageURL?: PrimitiveOverrideProps<TextFieldProps>;
     establishmentYear?: PrimitiveOverrideProps<TextFieldProps>;
     representative?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

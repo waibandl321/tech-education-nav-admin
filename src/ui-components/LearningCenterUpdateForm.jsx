@@ -30,6 +30,7 @@ export default function LearningCenterUpdateForm(props) {
     operatingCompany: "",
     headquartersLocation: "",
     websiteURL: "",
+    logoImageURL: "",
     establishmentYear: "",
     representative: "",
   };
@@ -42,6 +43,9 @@ export default function LearningCenterUpdateForm(props) {
     initialValues.headquartersLocation
   );
   const [websiteURL, setWebsiteURL] = React.useState(initialValues.websiteURL);
+  const [logoImageURL, setLogoImageURL] = React.useState(
+    initialValues.logoImageURL
+  );
   const [establishmentYear, setEstablishmentYear] = React.useState(
     initialValues.establishmentYear
   );
@@ -58,6 +62,7 @@ export default function LearningCenterUpdateForm(props) {
     setOperatingCompany(cleanValues.operatingCompany);
     setHeadquartersLocation(cleanValues.headquartersLocation);
     setWebsiteURL(cleanValues.websiteURL);
+    setLogoImageURL(cleanValues.logoImageURL);
     setEstablishmentYear(cleanValues.establishmentYear);
     setRepresentative(cleanValues.representative);
     setErrors({});
@@ -86,6 +91,7 @@ export default function LearningCenterUpdateForm(props) {
     operatingCompany: [],
     headquartersLocation: [],
     websiteURL: [],
+    logoImageURL: [],
     establishmentYear: [],
     representative: [],
   };
@@ -120,6 +126,7 @@ export default function LearningCenterUpdateForm(props) {
           operatingCompany: operatingCompany ?? null,
           headquartersLocation: headquartersLocation ?? null,
           websiteURL: websiteURL ?? null,
+          logoImageURL: logoImageURL ?? null,
           establishmentYear: establishmentYear ?? null,
           representative: representative ?? null,
         };
@@ -187,6 +194,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation,
               websiteURL,
+              logoImageURL,
               establishmentYear,
               representative,
             };
@@ -217,6 +225,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation,
               websiteURL,
+              logoImageURL,
               establishmentYear,
               representative,
             };
@@ -247,6 +256,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany: value,
               headquartersLocation,
               websiteURL,
+              logoImageURL,
               establishmentYear,
               representative,
             };
@@ -277,6 +287,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation: value,
               websiteURL,
+              logoImageURL,
               establishmentYear,
               representative,
             };
@@ -309,6 +320,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation,
               websiteURL: value,
+              logoImageURL,
               establishmentYear,
               representative,
             };
@@ -324,6 +336,37 @@ export default function LearningCenterUpdateForm(props) {
         errorMessage={errors.websiteURL?.errorMessage}
         hasError={errors.websiteURL?.hasError}
         {...getOverrideProps(overrides, "websiteURL")}
+      ></TextField>
+      <TextField
+        label="Logo image url"
+        isRequired={false}
+        isReadOnly={false}
+        value={logoImageURL}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL: value,
+              establishmentYear,
+              representative,
+            };
+            const result = onChange(modelFields);
+            value = result?.logoImageURL ?? value;
+          }
+          if (errors.logoImageURL?.hasError) {
+            runValidationTasks("logoImageURL", value);
+          }
+          setLogoImageURL(value);
+        }}
+        onBlur={() => runValidationTasks("logoImageURL", logoImageURL)}
+        errorMessage={errors.logoImageURL?.errorMessage}
+        hasError={errors.logoImageURL?.hasError}
+        {...getOverrideProps(overrides, "logoImageURL")}
       ></TextField>
       <TextField
         label="Establishment year"
@@ -343,6 +386,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation,
               websiteURL,
+              logoImageURL,
               establishmentYear: value,
               representative,
             };
@@ -375,6 +419,7 @@ export default function LearningCenterUpdateForm(props) {
               operatingCompany,
               headquartersLocation,
               websiteURL,
+              logoImageURL,
               establishmentYear,
               representative: value,
             };

@@ -8,7 +8,8 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
+export const onCreateTodo =
+  /* GraphQL */ `subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
   onCreateTodo(filter: $filter) {
     id
     name
@@ -19,10 +20,11 @@ export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo($filter: Mo
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateTodoSubscriptionVariables,
-  APITypes.OnCreateTodoSubscription
->;
-export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
+    APITypes.OnCreateTodoSubscriptionVariables,
+    APITypes.OnCreateTodoSubscription
+  >;
+export const onUpdateTodo =
+  /* GraphQL */ `subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
   onUpdateTodo(filter: $filter) {
     id
     name
@@ -33,10 +35,11 @@ export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo($filter: Mo
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateTodoSubscriptionVariables,
-  APITypes.OnUpdateTodoSubscription
->;
-export const onDeleteTodo = /* GraphQL */ `subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
+    APITypes.OnUpdateTodoSubscriptionVariables,
+    APITypes.OnUpdateTodoSubscription
+  >;
+export const onDeleteTodo =
+  /* GraphQL */ `subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
   onDeleteTodo(filter: $filter) {
     id
     name
@@ -47,9 +50,9 @@ export const onDeleteTodo = /* GraphQL */ `subscription OnDeleteTodo($filter: Mo
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteTodoSubscriptionVariables,
-  APITypes.OnDeleteTodoSubscription
->;
+    APITypes.OnDeleteTodoSubscriptionVariables,
+    APITypes.OnDeleteTodoSubscription
+  >;
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
   $filter: ModelSubscriptionUserFilterInput
   $owner: String
@@ -131,16 +134,19 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
   APITypes.OnDeleteUserSubscriptionVariables,
   APITypes.OnDeleteUserSubscription
 >;
-export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearningCenter(
+export const onCreateLearningCenter =
+  /* GraphQL */ `subscription OnCreateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
+  $owner: String
 ) {
-  onCreateLearningCenter(filter: $filter) {
+  onCreateLearningCenter(filter: $filter, owner: $owner) {
     id
     name
     memo
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -149,23 +155,27 @@ export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearni
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateLearningCenterSubscriptionVariables,
-  APITypes.OnCreateLearningCenterSubscription
->;
-export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearningCenter(
+    APITypes.OnCreateLearningCenterSubscriptionVariables,
+    APITypes.OnCreateLearningCenterSubscription
+  >;
+export const onUpdateLearningCenter =
+  /* GraphQL */ `subscription OnUpdateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
+  $owner: String
 ) {
-  onUpdateLearningCenter(filter: $filter) {
+  onUpdateLearningCenter(filter: $filter, owner: $owner) {
     id
     name
     memo
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -174,23 +184,27 @@ export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearni
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateLearningCenterSubscriptionVariables,
-  APITypes.OnUpdateLearningCenterSubscription
->;
-export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearningCenter(
+    APITypes.OnUpdateLearningCenterSubscriptionVariables,
+    APITypes.OnUpdateLearningCenterSubscription
+  >;
+export const onDeleteLearningCenter =
+  /* GraphQL */ `subscription OnDeleteLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
+  $owner: String
 ) {
-  onDeleteLearningCenter(filter: $filter) {
+  onDeleteLearningCenter(filter: $filter, owner: $owner) {
     id
     name
     memo
     operatingCompany
     headquartersLocation
     websiteURL
+    logoImageURL
     establishmentYear
     representative
     learningCenterCourses {
@@ -199,17 +213,20 @@ export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearni
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteLearningCenterSubscriptionVariables,
-  APITypes.OnDeleteLearningCenterSubscription
->;
-export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreateLearningCenterCourse(
+    APITypes.OnDeleteLearningCenterSubscriptionVariables,
+    APITypes.OnDeleteLearningCenterSubscription
+  >;
+export const onCreateLearningCenterCourse =
+  /* GraphQL */ `subscription OnCreateLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
+  $owner: String
 ) {
-  onCreateLearningCenterCourse(filter: $filter) {
+  onCreateLearningCenterCourse(filter: $filter, owner: $owner) {
     id
     learningCenterId
     courseName
@@ -222,25 +239,30 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateLearningCenterCourseSubscriptionVariables,
-  APITypes.OnCreateLearningCenterCourseSubscription
->;
-export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdateLearningCenterCourse(
+    APITypes.OnCreateLearningCenterCourseSubscriptionVariables,
+    APITypes.OnCreateLearningCenterCourseSubscription
+  >;
+export const onUpdateLearningCenterCourse =
+  /* GraphQL */ `subscription OnUpdateLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
+  $owner: String
 ) {
-  onUpdateLearningCenterCourse(filter: $filter) {
+  onUpdateLearningCenterCourse(filter: $filter, owner: $owner) {
     id
     learningCenterId
     courseName
@@ -253,25 +275,30 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateLearningCenterCourseSubscriptionVariables,
-  APITypes.OnUpdateLearningCenterCourseSubscription
->;
-export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDeleteLearningCenterCourse(
+    APITypes.OnUpdateLearningCenterCourseSubscriptionVariables,
+    APITypes.OnUpdateLearningCenterCourseSubscription
+  >;
+export const onDeleteLearningCenterCourse =
+  /* GraphQL */ `subscription OnDeleteLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
+  $owner: String
 ) {
-  onDeleteLearningCenterCourse(filter: $filter) {
+  onDeleteLearningCenterCourse(filter: $filter, owner: $owner) {
     id
     learningCenterId
     courseName
@@ -284,18 +311,21 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
       operatingCompany
       headquartersLocation
       websiteURL
+      logoImageURL
       establishmentYear
       representative
       createdAt
       updatedAt
+      owner
       __typename
     }
     createdAt
     updatedAt
+    owner
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteLearningCenterCourseSubscriptionVariables,
-  APITypes.OnDeleteLearningCenterCourseSubscription
->;
+    APITypes.OnDeleteLearningCenterCourseSubscriptionVariables,
+    APITypes.OnDeleteLearningCenterCourseSubscription
+  >;

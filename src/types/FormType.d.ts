@@ -1,3 +1,5 @@
+import { LearningCenter } from "@/API";
+
 // 会員登録画面の入力型
 export interface AuthRegisterFormType {
   email: string;
@@ -27,13 +29,7 @@ export interface UserProfileInputType {
   previousJob: string;
 }
 
-// スクール情報入力型
-export interface LearningCenterInputType {
-  name: string;
-  memo: string;
-  operatingCompany: string;
-  headquartersLocation: string;
-  websiteURL: string;
-  establishmentYear: number;
-  representative: string;
-}
+export type LearningCenterEditInputType = Omit<
+  LearningCenter,
+  "owner" | "learningCenterCourses"
+>;
