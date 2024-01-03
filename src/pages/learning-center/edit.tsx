@@ -1,4 +1,3 @@
-"use client";
 import Layout from "@/app/layout";
 import Head from "next/head";
 import LearningCenterEditPane from "@/components/pages/learning-center/LearningCenterEditPane";

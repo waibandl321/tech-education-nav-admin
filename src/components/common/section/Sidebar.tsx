@@ -6,9 +6,8 @@ import { MenuItem, MenuList } from "@mui/material";
 export default function Sidebar() {
   const router = useRouter();
   const menus = [
-    { name: "TOP", path: "/" },
     { name: "スクール情報", path: "/learning-center" },
-    // { name: "コース情報", path: "/learning-course" },
+    { name: "コース情報", path: "/learning-courses" },
   ];
 
   return (

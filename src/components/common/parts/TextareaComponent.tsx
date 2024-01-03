@@ -35,8 +35,8 @@ const Textarea = styled(BaseTextareaAutosize)(
 interface TextareaProps {
   inputValue: string;
   placeholder?: string;
-  name: string;
-  onInputChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  name?: string;
+  onInputChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 /**

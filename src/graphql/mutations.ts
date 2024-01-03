@@ -140,8 +140,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
   APITypes.DeleteUserMutationVariables,
   APITypes.DeleteUserMutation
 >;
-export const createLearningCenter =
-  /* GraphQL */ `mutation CreateLearningCenter(
+export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter(
   $input: CreateLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -155,10 +154,6 @@ export const createLearningCenter =
     logoImageURL
     establishmentYear
     representative
-    learningCenterCourses {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -166,11 +161,10 @@ export const createLearningCenter =
   }
 }
 ` as GeneratedMutation<
-    APITypes.CreateLearningCenterMutationVariables,
-    APITypes.CreateLearningCenterMutation
-  >;
-export const updateLearningCenter =
-  /* GraphQL */ `mutation UpdateLearningCenter(
+  APITypes.CreateLearningCenterMutationVariables,
+  APITypes.CreateLearningCenterMutation
+>;
+export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter(
   $input: UpdateLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -184,10 +178,6 @@ export const updateLearningCenter =
     logoImageURL
     establishmentYear
     representative
-    learningCenterCourses {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -195,11 +185,10 @@ export const updateLearningCenter =
   }
 }
 ` as GeneratedMutation<
-    APITypes.UpdateLearningCenterMutationVariables,
-    APITypes.UpdateLearningCenterMutation
-  >;
-export const deleteLearningCenter =
-  /* GraphQL */ `mutation DeleteLearningCenter(
+  APITypes.UpdateLearningCenterMutationVariables,
+  APITypes.UpdateLearningCenterMutation
+>;
+export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter(
   $input: DeleteLearningCenterInput!
   $condition: ModelLearningCenterConditionInput
 ) {
@@ -213,10 +202,6 @@ export const deleteLearningCenter =
     logoImageURL
     establishmentYear
     representative
-    learningCenterCourses {
-      nextToken
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -224,11 +209,10 @@ export const deleteLearningCenter =
   }
 }
 ` as GeneratedMutation<
-    APITypes.DeleteLearningCenterMutationVariables,
-    APITypes.DeleteLearningCenterMutation
-  >;
-export const createLearningCenterCourse =
-  /* GraphQL */ `mutation CreateLearningCenterCourse(
+  APITypes.DeleteLearningCenterMutationVariables,
+  APITypes.DeleteLearningCenterMutation
+>;
+export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearningCenterCourse(
   $input: CreateLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -238,21 +222,6 @@ export const createLearningCenterCourse =
     courseName
     courseURL
     couseDetail
-    learningCenter {
-      id
-      name
-      memo
-      operatingCompany
-      headquartersLocation
-      websiteURL
-      logoImageURL
-      establishmentYear
-      representative
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -260,11 +229,10 @@ export const createLearningCenterCourse =
   }
 }
 ` as GeneratedMutation<
-    APITypes.CreateLearningCenterCourseMutationVariables,
-    APITypes.CreateLearningCenterCourseMutation
-  >;
-export const updateLearningCenterCourse =
-  /* GraphQL */ `mutation UpdateLearningCenterCourse(
+  APITypes.CreateLearningCenterCourseMutationVariables,
+  APITypes.CreateLearningCenterCourseMutation
+>;
+export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearningCenterCourse(
   $input: UpdateLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -274,21 +242,6 @@ export const updateLearningCenterCourse =
     courseName
     courseURL
     couseDetail
-    learningCenter {
-      id
-      name
-      memo
-      operatingCompany
-      headquartersLocation
-      websiteURL
-      logoImageURL
-      establishmentYear
-      representative
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -296,11 +249,10 @@ export const updateLearningCenterCourse =
   }
 }
 ` as GeneratedMutation<
-    APITypes.UpdateLearningCenterCourseMutationVariables,
-    APITypes.UpdateLearningCenterCourseMutation
-  >;
-export const deleteLearningCenterCourse =
-  /* GraphQL */ `mutation DeleteLearningCenterCourse(
+  APITypes.UpdateLearningCenterCourseMutationVariables,
+  APITypes.UpdateLearningCenterCourseMutation
+>;
+export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearningCenterCourse(
   $input: DeleteLearningCenterCourseInput!
   $condition: ModelLearningCenterCourseConditionInput
 ) {
@@ -310,21 +262,6 @@ export const deleteLearningCenterCourse =
     courseName
     courseURL
     couseDetail
-    learningCenter {
-      id
-      name
-      memo
-      operatingCompany
-      headquartersLocation
-      websiteURL
-      logoImageURL
-      establishmentYear
-      representative
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
     createdAt
     updatedAt
     owner
@@ -332,6 +269,87 @@ export const deleteLearningCenterCourse =
   }
 }
 ` as GeneratedMutation<
-    APITypes.DeleteLearningCenterCourseMutationVariables,
-    APITypes.DeleteLearningCenterCourseMutation
-  >;
+  APITypes.DeleteLearningCenterCourseMutationVariables,
+  APITypes.DeleteLearningCenterCourseMutation
+>;
+export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
+  $input: CreateCourseReviewInput!
+  $condition: ModelCourseReviewConditionInput
+) {
+  createCourseReview(input: $input, condition: $condition) {
+    id
+    userId
+    userDisplayName
+    userGender
+    userAge
+    userPreviousJob
+    learningCenterId
+    learningCenterCourseId
+    reviewTitle
+    reviewDetail
+    rating
+    isPublished
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateCourseReviewMutationVariables,
+  APITypes.CreateCourseReviewMutation
+>;
+export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
+  $input: UpdateCourseReviewInput!
+  $condition: ModelCourseReviewConditionInput
+) {
+  updateCourseReview(input: $input, condition: $condition) {
+    id
+    userId
+    userDisplayName
+    userGender
+    userAge
+    userPreviousJob
+    learningCenterId
+    learningCenterCourseId
+    reviewTitle
+    reviewDetail
+    rating
+    isPublished
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateCourseReviewMutationVariables,
+  APITypes.UpdateCourseReviewMutation
+>;
+export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
+  $input: DeleteCourseReviewInput!
+  $condition: ModelCourseReviewConditionInput
+) {
+  deleteCourseReview(input: $input, condition: $condition) {
+    id
+    userId
+    userDisplayName
+    userGender
+    userAge
+    userPreviousJob
+    learningCenterId
+    learningCenterCourseId
+    reviewTitle
+    reviewDetail
+    rating
+    isPublished
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteCourseReviewMutationVariables,
+  APITypes.DeleteCourseReviewMutation
+>;

@@ -1,10 +1,10 @@
 import Layout from "@/app/layout";
 import Head from "next/head";
-import LearningCenterListPane from "@/components/pages/learning-center/LearningCenterListPane";
+import LearningCoursesPane from "@/components/pages/learning-course/LearningCoursesPane";
 import { Grid } from "@mui/material";
 import Sidebar from "@/components/common/section/Sidebar";
 
-export default function LearningCenterIndex() {
+export default function LearningCoursesIndex() {
   return (
     <>
       <Head>
@@ -18,7 +18,7 @@ export default function LearningCenterIndex() {
             <Sidebar />
           </Grid>
           <Grid item width={"calc(100% - 200px)"} paddingBottom={10}>
-            <LearningCenterListPane />
+            <LearningCoursesPane />
           </Grid>
         </Grid>
       </Layout>

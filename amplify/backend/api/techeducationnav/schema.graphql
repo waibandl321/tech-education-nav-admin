@@ -21,7 +21,9 @@ type User @model @auth(rules: [{ allow: owner }]) {
   isRegisterUserInfo: Boolean
 }
 
-type LearningCenter @model @auth(rules: [{ allow: owner }]) {
+type LearningCenter
+  @model
+  @auth(rules: [{ allow: public, operations: [read] }, { allow: owner }]) {
   id: ID!
   name: String
   memo: String
@@ -31,14 +33,31 @@ type LearningCenter @model @auth(rules: [{ allow: owner }]) {
   logoImageURL: String
   establishmentYear: Int
   representative: String
-  learningCenterCourses: [LearningCenterCourse] @hasMany(fields: ["id"])
 }
 
-type LearningCenterCourse @model @auth(rules: [{ allow: owner }]) {
+type LearningCenterCourse
+  @model
+  @auth(rules: [{ allow: public, operations: [read] }, { allow: owner }]) {
   id: ID!
   learningCenterId: ID!
   courseName: String
   courseURL: String
   couseDetail: String
-  learningCenter: LearningCenter @belongsTo(fields: ["learningCenterId"])
+}
+
+type CourseReview
+  @model
+  @auth(rules: [{ allow: public, operations: [read] }, { allow: owner }]) {
+  id: ID!
+  userId: ID!
+  userDisplayName: String
+  userGender: String
+  userAge: String
+  userPreviousJob: String
+  learningCenterId: ID!
+  learningCenterCourseId: ID!
+  reviewTitle: String!
+  reviewDetail: String!
+  rating: Int!
+  isPublished: Boolean!
 }

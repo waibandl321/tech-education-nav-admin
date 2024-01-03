@@ -200,26 +200,6 @@ export type LearningCenter = {
   logoImageURL?: string | null;
   establishmentYear?: number | null;
   representative?: string | null;
-  learningCenterCourses?: ModelLearningCenterCourseConnection | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type ModelLearningCenterCourseConnection = {
-  __typename: "ModelLearningCenterCourseConnection";
-  items: Array<LearningCenterCourse | null>;
-  nextToken?: string | null;
-};
-
-export type LearningCenterCourse = {
-  __typename: "LearningCenterCourse";
-  id: string;
-  learningCenterId: string;
-  courseName?: string | null;
-  courseURL?: string | null;
-  couseDetail?: string | null;
-  learningCenter?: LearningCenter | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -275,6 +255,18 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type LearningCenterCourse = {
+  __typename: "LearningCenterCourse";
+  id: string;
+  learningCenterId: string;
+  courseName?: string | null;
+  courseURL?: string | null;
+  couseDetail?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
 export type UpdateLearningCenterCourseInput = {
   id: string;
   learningCenterId?: string | null;
@@ -284,6 +276,76 @@ export type UpdateLearningCenterCourseInput = {
 };
 
 export type DeleteLearningCenterCourseInput = {
+  id: string;
+};
+
+export type CreateCourseReviewInput = {
+  id?: string | null;
+  userId: string;
+  userDisplayName?: string | null;
+  userGender?: string | null;
+  userAge?: string | null;
+  userPreviousJob?: string | null;
+  learningCenterId: string;
+  learningCenterCourseId: string;
+  reviewTitle: string;
+  reviewDetail: string;
+  rating: number;
+  isPublished: boolean;
+};
+
+export type ModelCourseReviewConditionInput = {
+  userId?: ModelIDInput | null;
+  userDisplayName?: ModelStringInput | null;
+  userGender?: ModelStringInput | null;
+  userAge?: ModelStringInput | null;
+  userPreviousJob?: ModelStringInput | null;
+  learningCenterId?: ModelIDInput | null;
+  learningCenterCourseId?: ModelIDInput | null;
+  reviewTitle?: ModelStringInput | null;
+  reviewDetail?: ModelStringInput | null;
+  rating?: ModelIntInput | null;
+  isPublished?: ModelBooleanInput | null;
+  and?: Array<ModelCourseReviewConditionInput | null> | null;
+  or?: Array<ModelCourseReviewConditionInput | null> | null;
+  not?: ModelCourseReviewConditionInput | null;
+};
+
+export type CourseReview = {
+  __typename: "CourseReview";
+  id: string;
+  userId: string;
+  userDisplayName?: string | null;
+  userGender?: string | null;
+  userAge?: string | null;
+  userPreviousJob?: string | null;
+  learningCenterId: string;
+  learningCenterCourseId: string;
+  reviewTitle: string;
+  reviewDetail: string;
+  rating: number;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type UpdateCourseReviewInput = {
+  id: string;
+  userId?: string | null;
+  userDisplayName?: string | null;
+  userGender?: string | null;
+  userAge?: string | null;
+  userPreviousJob?: string | null;
+  learningCenterId?: string | null;
+  learningCenterCourseId?: string | null;
+  reviewTitle?: string | null;
+  reviewDetail?: string | null;
+  rating?: number | null;
+  isPublished?: boolean | null;
+};
+
+export type DeleteCourseReviewInput = {
   id: string;
 };
 
@@ -356,6 +418,36 @@ export type ModelLearningCenterCourseFilterInput = {
   and?: Array<ModelLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelLearningCenterCourseFilterInput | null> | null;
   not?: ModelLearningCenterCourseFilterInput | null;
+};
+
+export type ModelLearningCenterCourseConnection = {
+  __typename: "ModelLearningCenterCourseConnection";
+  items: Array<LearningCenterCourse | null>;
+  nextToken?: string | null;
+};
+
+export type ModelCourseReviewFilterInput = {
+  id?: ModelIDInput | null;
+  userId?: ModelIDInput | null;
+  userDisplayName?: ModelStringInput | null;
+  userGender?: ModelStringInput | null;
+  userAge?: ModelStringInput | null;
+  userPreviousJob?: ModelStringInput | null;
+  learningCenterId?: ModelIDInput | null;
+  learningCenterCourseId?: ModelIDInput | null;
+  reviewTitle?: ModelStringInput | null;
+  reviewDetail?: ModelStringInput | null;
+  rating?: ModelIntInput | null;
+  isPublished?: ModelBooleanInput | null;
+  and?: Array<ModelCourseReviewFilterInput | null> | null;
+  or?: Array<ModelCourseReviewFilterInput | null> | null;
+  not?: ModelCourseReviewFilterInput | null;
+};
+
+export type ModelCourseReviewConnection = {
+  __typename: "ModelCourseReviewConnection";
+  items: Array<CourseReview | null>;
+  nextToken?: string | null;
 };
 
 export type ModelSubscriptionTodoFilterInput = {
@@ -452,6 +544,23 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   couseDetail?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
+};
+
+export type ModelSubscriptionCourseReviewFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  userId?: ModelSubscriptionIDInput | null;
+  userDisplayName?: ModelSubscriptionStringInput | null;
+  userGender?: ModelSubscriptionStringInput | null;
+  userAge?: ModelSubscriptionStringInput | null;
+  userPreviousJob?: ModelSubscriptionStringInput | null;
+  learningCenterId?: ModelSubscriptionIDInput | null;
+  learningCenterCourseId?: ModelSubscriptionIDInput | null;
+  reviewTitle?: ModelSubscriptionStringInput | null;
+  reviewDetail?: ModelSubscriptionStringInput | null;
+  rating?: ModelSubscriptionIntInput | null;
+  isPublished?: ModelSubscriptionBooleanInput | null;
+  and?: Array<ModelSubscriptionCourseReviewFilterInput | null> | null;
+  or?: Array<ModelSubscriptionCourseReviewFilterInput | null> | null;
 };
 
 export type CreateTodoMutationVariables = {
@@ -597,10 +706,6 @@ export type CreateLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -624,10 +729,6 @@ export type UpdateLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -651,10 +752,6 @@ export type DeleteLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -674,21 +771,6 @@ export type CreateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -708,21 +790,6 @@ export type UpdateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -742,21 +809,84 @@ export type DeleteLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type CreateCourseReviewMutationVariables = {
+  input: CreateCourseReviewInput;
+  condition?: ModelCourseReviewConditionInput | null;
+};
+
+export type CreateCourseReviewMutation = {
+  createCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type UpdateCourseReviewMutationVariables = {
+  input: UpdateCourseReviewInput;
+  condition?: ModelCourseReviewConditionInput | null;
+};
+
+export type UpdateCourseReviewMutation = {
+  updateCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type DeleteCourseReviewMutationVariables = {
+  input: DeleteCourseReviewInput;
+  condition?: ModelCourseReviewConditionInput | null;
+};
+
+export type DeleteCourseReviewMutation = {
+  deleteCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -871,10 +1001,6 @@ export type GetLearningCenterQuery = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -921,21 +1047,6 @@ export type GetLearningCenterCourseQuery = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -958,6 +1069,62 @@ export type ListLearningCenterCoursesQuery = {
       courseName?: string | null;
       courseURL?: string | null;
       couseDetail?: string | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type GetCourseReviewQueryVariables = {
+  id: string;
+};
+
+export type GetCourseReviewQuery = {
+  getCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type ListCourseReviewsQueryVariables = {
+  filter?: ModelCourseReviewFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListCourseReviewsQuery = {
+  listCourseReviews?: {
+    __typename: "ModelCourseReviewConnection";
+    items: Array<{
+      __typename: "CourseReview";
+      id: string;
+      userId: string;
+      userDisplayName?: string | null;
+      userGender?: string | null;
+      userAge?: string | null;
+      userPreviousJob?: string | null;
+      learningCenterId: string;
+      learningCenterCourseId: string;
+      reviewTitle: string;
+      reviewDetail: string;
+      rating: number;
+      isPublished: boolean;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1106,10 +1273,6 @@ export type OnCreateLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1133,10 +1296,6 @@ export type OnUpdateLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1160,10 +1319,6 @@ export type OnDeleteLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
-    learningCenterCourses?: {
-      __typename: "ModelLearningCenterCourseConnection";
-      nextToken?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1183,21 +1338,6 @@ export type OnCreateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1217,21 +1357,6 @@ export type OnUpdateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1251,21 +1376,84 @@ export type OnDeleteLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    learningCenter?: {
-      __typename: "LearningCenter";
-      id: string;
-      name?: string | null;
-      memo?: string | null;
-      operatingCompany?: string | null;
-      headquartersLocation?: string | null;
-      websiteURL?: string | null;
-      logoImageURL?: string | null;
-      establishmentYear?: number | null;
-      representative?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type OnCreateCourseReviewSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseReviewFilterInput | null;
+  owner?: string | null;
+};
+
+export type OnCreateCourseReviewSubscription = {
+  onCreateCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type OnUpdateCourseReviewSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseReviewFilterInput | null;
+  owner?: string | null;
+};
+
+export type OnUpdateCourseReviewSubscription = {
+  onUpdateCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export type OnDeleteCourseReviewSubscriptionVariables = {
+  filter?: ModelSubscriptionCourseReviewFilterInput | null;
+  owner?: string | null;
+};
+
+export type OnDeleteCourseReviewSubscription = {
+  onDeleteCourseReview?: {
+    __typename: "CourseReview";
+    id: string;
+    userId: string;
+    userDisplayName?: string | null;
+    userGender?: string | null;
+    userAge?: string | null;
+    userPreviousJob?: string | null;
+    learningCenterId: string;
+    learningCenterCourseId: string;
+    reviewTitle: string;
+    reviewDetail: string;
+    rating: number;
+    isPublished: boolean;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;

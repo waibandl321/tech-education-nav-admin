@@ -1,4 +1,4 @@
-import { Button, Container, IconButton, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { LearningCenter } from "@/API";
-import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 import Image from "next/image";
 import useLearningCenterLogic from "@/hooks/components/learning-center/useLearningCenterLogic";
 
@@ -42,22 +41,26 @@ export default function LearningCenterList() {
   }, []);
 
   return (
-    <Container sx={{ p: 4 }}>
+    <Container sx={{ px: 4, pt: 2 }}>
       <Typography textAlign="right">
         <Button onClick={() => router.push("/learning-center/create")}>
           新規作成
         </Button>
       </Typography>
 
-      <TableContainer component={Paper}>
-        <Table
-          sx={{ minWidth: 650, overflow: "auto" }}
-          aria-label="simple table"
-        >
-          <TableHead>
+      <TableContainer
+        component={Paper}
+        sx={{ overflowX: "auto" }}
+        variant="outlined"
+      >
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
+          <TableHead sx={{ backgroundColor: "#eee" }}>
             <TableRow>
               {headers.map((item) => (
-                <TableCell key={item.key} sx={{ whiteSpace: "nowrap" }}>
+                <TableCell
+                  key={item.key}
+                  sx={{ minWidth: 120, whiteSpace: "nowrap" }}
+                >
                   {item.name}
                 </TableCell>
               ))}
@@ -70,22 +73,22 @@ export default function LearningCenterList() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell>
-                  <IconButton
-                    type="button"
-                    aria-label="search"
-                    color="error"
-                    onClick={() => deleteLearningCenter(item)}
-                  >
-                    <DeleteOutline />
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    aria-label="search"
-                    color="error"
-                    onClick={() => onClickEdit(item)}
-                  >
-                    <EditOutlined />
-                  </IconButton>
+                  <Box display="flex" alignItems="center">
+                    <Button
+                      aria-label="save button"
+                      color="primary"
+                      onClick={() => onClickEdit(item)}
+                    >
+                      編集
+                    </Button>
+                    <Button
+                      aria-label="delete button"
+                      color="error"
+                      onClick={() => deleteLearningCenter(item)}
+                    >
+                      削除
+                    </Button>
+                  </Box>
                 </TableCell>
                 <TableCell>
                   {item.logoImageURL ? (
@@ -101,7 +104,7 @@ export default function LearningCenterList() {
                   )}
                 </TableCell>
                 <TableCell>{item.name}</TableCell>
-                <TableCell>{item.memo}</TableCell>
+                <TableCell sx={{ minWidth: 250 }}>{item.memo}</TableCell>
                 <TableCell>{item.operatingCompany}</TableCell>
                 <TableCell>{item.headquartersLocation}</TableCell>
                 <TableCell>{item.websiteURL}</TableCell>

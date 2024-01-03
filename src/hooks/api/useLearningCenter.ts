@@ -11,6 +11,7 @@ import {
 } from "@/API";
 import useAPIResponse from "./useAPIResponse";
 import useConvertData from "../utils/useConvertData";
+import { orderBy } from "lodash";
 
 export default function useLearningCenter() {
   const { getErrorMessage } = useAPIResponse();
@@ -23,10 +24,15 @@ export default function useLearningCenter() {
     try {
       const result = await client.graphql({
         query: queries.listLearningCenters,
+        authMode: "apiKey",
       });
       return {
         isSuccess: true,
-        data: result.data.listLearningCenters.items,
+        data: orderBy(
+          result.data.listLearningCenters.items,
+          "createdAt",
+          "desc"
+        ),
       };
     } catch (error) {
       return {
@@ -43,6 +49,7 @@ export default function useLearningCenter() {
     try {
       const result = await client.graphql({
         query: queries.getLearningCenter,
+        authMode: "apiKey",
         variables: { id: ensureString(id) },
       });
       return {

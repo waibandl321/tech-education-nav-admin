@@ -4,7 +4,6 @@ import { useFormOptions } from "@/hooks/utils/useFormOptions";
 import {
   Box,
   FormHelperText,
-  Grid,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -114,6 +113,7 @@ export default function LearningCenterForm({
       <Box>
         <Typography>ロゴ画像</Typography>
         <TextField
+          size="small"
           type="file"
           fullWidth
           sx={{ mt: 1 }}
@@ -143,9 +143,10 @@ export default function LearningCenterForm({
           </>
         )}
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>スクール名</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="スクール名"
+          size="small"
           value={formData.name || ""}
           {...register("name", {
             required: {
@@ -157,12 +158,13 @@ export default function LearningCenterForm({
           error={!!errors.name}
           helperText={errors.name?.message}
           fullWidth
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>詳細</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="スクール詳細"
+          rows={3}
+          size="small"
           value={formData.memo || ""}
           {...register("memo", {
             required: {
@@ -175,12 +177,12 @@ export default function LearningCenterForm({
           helperText={errors.memo?.message}
           fullWidth
           minRows={3}
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>運営会社</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="運営会社"
+          size="small"
           value={formData.operatingCompany || ""}
           {...register("operatingCompany", {
             required: {
@@ -192,12 +194,12 @@ export default function LearningCenterForm({
           error={!!errors.operatingCompany}
           helperText={errors.operatingCompany?.message}
           fullWidth
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>本社所在地</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="本社所在地"
+          size="small"
           value={formData.headquartersLocation || ""}
           {...register("headquartersLocation", {
             required: {
@@ -209,12 +211,12 @@ export default function LearningCenterForm({
           error={!!errors.headquartersLocation}
           helperText={errors.headquartersLocation?.message}
           fullWidth
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>ホームページURL</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="ホームページURL"
+          size="small"
           value={formData.websiteURL || ""}
           {...register("websiteURL", {
             required: {
@@ -226,44 +228,41 @@ export default function LearningCenterForm({
           error={!!errors.websiteURL}
           helperText={errors.websiteURL?.message}
           fullWidth
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>設立年</Typography>
-        <Grid container sx={{ mt: 1 }}>
-          <Grid item minWidth={200}>
-            <Select
-              value={formData.establishmentYear || ""}
-              {...register("establishmentYear", {
-                required: {
-                  value: true,
-                  message: "設立年は選択必須の項目です。",
-                },
-                onChange: (event) => handlerFormChange(event),
-              })}
-              error={!!errors.establishmentYear}
-              id="establishmentYear"
-              sx={{ mt: 1 }}
-              fullWidth
-            >
-              {years.map((p) => (
-                <MenuItem key={p} value={p}>
-                  {p}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-        </Grid>
+      <Box sx={{ mt: 3 }}>
+        <Select
+          label="設立年"
+          size="small"
+          value={formData.establishmentYear || ""}
+          {...register("establishmentYear", {
+            required: {
+              value: true,
+              message: "設立年は選択必須の項目です。",
+            },
+            onChange: (event) => handlerFormChange(event),
+          })}
+          error={!!errors.establishmentYear}
+          id="establishmentYear"
+          sx={{ mt: 1 }}
+          fullWidth
+        >
+          {years.map((p) => (
+            <MenuItem key={p} value={p}>
+              {p}
+            </MenuItem>
+          ))}
+        </Select>
         {errors.establishmentYear?.message && (
           <FormHelperText error={!!errors.establishmentYear}>
             {errors.establishmentYear.message}
           </FormHelperText>
         )}
       </Box>
-      <Box sx={{ mt: 5 }}>
-        <Typography>代表者</Typography>
+      <Box sx={{ mt: 3 }}>
         <TextField
+          label="代表者"
+          size="small"
           value={formData.representative || ""}
           {...register("representative", {
             required: {
@@ -275,10 +274,9 @@ export default function LearningCenterForm({
           error={!!errors.representative}
           helperText={errors.representative?.message}
           fullWidth
-          sx={{ mt: 1 }}
         />
       </Box>
-      <Box sx={{ mt: 5 }}>
+      <Box sx={{ mt: 3 }}>
         <Button
           variant="contained"
           size="large"

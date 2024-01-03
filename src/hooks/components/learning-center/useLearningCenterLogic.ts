@@ -173,8 +173,14 @@ export default function useLearningCenterLogic() {
   const deleteLearningCenter = async (item: LearningCenter) => {
     setLoading(true);
     try {
-      await apiDeleteLearningCenter(item);
-      await fetchLearningCenters();
+      const result = await apiDeleteLearningCenter(item);
+      if (result.isSuccess) {
+        await fetchLearningCenters();
+        setAlertMessage({
+          type: "success",
+          message: `${item.name}を削除しました。`,
+        });
+      }
     } catch (error) {
       console.error(error);
     } finally {
