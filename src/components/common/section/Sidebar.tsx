@@ -8,6 +8,7 @@ export default function Sidebar() {
   const menus = [
     { name: "スクール情報", path: "/learning-center" },
     { name: "コース情報", path: "/learning-courses" },
+    { name: "レビュー情報", path: "/reviews" },
   ];
 
   return (

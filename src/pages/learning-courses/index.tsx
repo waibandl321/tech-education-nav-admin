@@ -8,9 +8,7 @@ export default function LearningCoursesIndex() {
   return (
     <>
       <Head>
-        <title>スクール情報</title>
-        <meta name="description" content="ページの説明" />
-        {/* その他のメタタグ */}
+        <title>コース情報</title>
       </Head>
       <Layout>
         <Grid container>

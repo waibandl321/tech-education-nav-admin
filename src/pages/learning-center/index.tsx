@@ -9,8 +9,6 @@ export default function LearningCenterIndex() {
     <>
       <Head>
         <title>スクール情報</title>
-        <meta name="description" content="ページの説明" />
-        {/* その他のメタタグ */}
       </Head>
       <Layout>
         <Grid container>
