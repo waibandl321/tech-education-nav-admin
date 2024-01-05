@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { CreateLearningCenterCourseInput, LearningCenterCourse } from "@/API";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
@@ -23,9 +24,9 @@ import {
   DialogContent,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import Papa from "papaparse";
 import useLearningCourse from "@/hooks/api/useLearningCourse";
 import { useLoading } from "@/contexts/LoadingContext";
+import useCSV from "@/hooks/utils/useCSV";
 
 const headers = [
   { key: "courseName", name: "コース名" },
@@ -48,6 +49,7 @@ export default function LearningCoursesPane() {
   const { apiCreateLearningCourse, apiDeleteLearningCourse } =
     useLearningCourse();
   const { setLoading } = useLoading();
+  const { getImportedCSV, convertStringToCSV, download } = useCSV();
   const [isOpenEditUserDialog, setIsOpenEditUserDialog] = useState(false);
   const [editItem, setEditItem] = useState<LearningCenterCourse | null>(null);
   // input fileのテンプレート参照
@@ -75,6 +77,26 @@ export default function LearningCoursesPane() {
       updatedAt: "",
     });
     setIsOpenEditUserDialog(true);
+  };
+
+  // エクスポート
+  const exportCSV = async () => {
+    // 'admin' キーを持つ要素を除去し、'id' キーを先頭に追加
+    const nonAdminHeaders = headers.filter((header) => header.key !== "admin");
+    const csvHeaders = [{ key: "id", name: "ID" }, ...nonAdminHeaders];
+    // CSVのフィールドキーを準備
+    const csvFieldKeys = csvHeaders.map((header) => header.key);
+    // LearningCenter型のデータをCSV用に変換
+    const csvData = computedItems.map((item) =>
+      csvFieldKeys.reduce((obj, key) => {
+        obj[key] = item[key as keyof LearningCenterCourse] ?? "";
+        return obj;
+      }, {} as Record<string, unknown>)
+    );
+    // CSV文字列に変換
+    const csv = convertStringToCSV(csvFieldKeys, csvData);
+    const fileName = `learning-course-list-${dayjs().valueOf()}.csv`;
+    download(csv, fileName);
   };
 
   // 一括削除
@@ -126,34 +148,32 @@ export default function LearningCoursesPane() {
   };
 
   // インポート登録
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (!event.target.files) return;
-    const file = event.target.files[0];
-    Papa.parse(file, {
-      header: true,
-      complete: async (result) => {
-        setLoading(true);
-        try {
-          for await (const item of result.data as Array<CreateLearningCenterCourseInput>) {
-            const req: CreateLearningCenterCourseInput = {
-              learningCenterId: selectedLearningCenter,
-              courseName: item.courseName,
-              courseURL: item.courseURL,
-            };
-            await apiCreateLearningCourse(req);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          await fetchData();
-          // input要素の値をクリアする
-          if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-          }
-          setLoading(false);
-        }
-      },
-    });
+    setLoading(true);
+    try {
+      const file = event.target.files[0];
+      const data = await getImportedCSV<CreateLearningCenterCourseInput>(file);
+      for await (const item of data) {
+        const req: CreateLearningCenterCourseInput = {
+          learningCenterId: selectedLearningCenter,
+          courseName: item.courseName,
+          courseURL: item.courseURL,
+        };
+        await apiCreateLearningCourse(req);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await fetchData();
+      // input要素の値をクリアする
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      setLoading(false);
+    }
   };
 
   // 編集
@@ -214,6 +234,7 @@ export default function LearningCoursesPane() {
                 ref={fileInputRef}
               />
               <Button onClick={handleAddCourse}>新規作成</Button>
+              <Button onClick={exportCSV}>エクスポート</Button>
               <Button onClick={habdlerBulkDelete} color="error">
                 一括削除
               </Button>

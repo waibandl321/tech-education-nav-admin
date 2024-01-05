@@ -1,4 +1,5 @@
 import { Box, Button, Container, Typography } from "@mui/material";
+import GetAppIcon from "@mui/icons-material/GetApp";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,6 +12,8 @@ import { useRouter } from "next/router";
 import { LearningCenter } from "@/API";
 import Image from "next/image";
 import useLearningCenterLogic from "@/hooks/components/learning-center/useLearningCenterLogic";
+import dayjs from "dayjs";
+import useCSV from "@/hooks/utils/useCSV";
 
 const headers = [
   { key: "admin", name: "管理" },
@@ -29,10 +32,34 @@ export default function LearningCenterList() {
   const { fetchLearningCenters, learningCenters, deleteLearningCenter } =
     useLearningCenterLogic();
   const router = useRouter();
+  const { convertStringToCSV, download } = useCSV();
 
   // 編集画面遷移
   const onClickEdit = (item: LearningCenter) => {
     router.push(`/learning-center/edit?id=${item.id}`);
+  };
+
+  // エクスポート
+  const exportCSV = async () => {
+    // 'admin' キーを持つ要素を除去し、'id' キーを先頭に追加
+    const nonAdminHeaders = headers.filter((header) => header.key !== "admin");
+    const csvHeaders = [{ key: "id", name: "ID" }, ...nonAdminHeaders];
+
+    // CSVのフィールドキーを準備
+    const csvFieldKeys = csvHeaders.map((header) => header.key);
+
+    // LearningCenter型のデータをCSV用に変換
+    const csvData = learningCenters.map((item) =>
+      csvFieldKeys.reduce((obj, key) => {
+        obj[key] = item[key as keyof LearningCenter] ?? "";
+        return obj;
+      }, {} as Record<string, unknown>)
+    );
+
+    // CSV文字列に変換
+    const csv = convertStringToCSV(csvFieldKeys, csvData);
+    const fileName = `learning-center-list-${dayjs().valueOf()}.csv`;
+    download(csv, fileName);
   };
 
   useEffect(() => {
@@ -43,6 +70,10 @@ export default function LearningCenterList() {
   return (
     <Container sx={{ px: 4, pt: 2 }}>
       <Typography textAlign="right">
+        <Button onClick={exportCSV}>
+          <GetAppIcon></GetAppIcon>
+          <span>エクスポート</span>
+        </Button>
         <Button onClick={() => router.push("/learning-center/create")}>
           新規作成
         </Button>
@@ -50,7 +81,7 @@ export default function LearningCenterList() {
 
       <TableContainer
         component={Paper}
-        sx={{ overflowX: "auto" }}
+        sx={{ overflowX: "auto", mt: 1 }}
         variant="outlined"
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
