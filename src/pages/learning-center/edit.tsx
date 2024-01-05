@@ -6,7 +6,7 @@ export default function LearningCenterEdit() {
   return (
     <>
       <Head>
-        <title>【編集】スクール情報</title>
+        <title>【管理】スクール情報</title>
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>

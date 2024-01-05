@@ -8,7 +8,7 @@ export default function LearningCenterIndex() {
   return (
     <>
       <Head>
-        <title>スクール情報</title>
+        <title>【管理】スクール情報</title>
       </Head>
       <Layout>
         <Grid container>

@@ -1,5 +1,4 @@
-import dayjs from "dayjs";
-import { CreateLearningCenterCourseInput, LearningCenterCourse } from "@/API";
+import { LearningCenter, LearningCenterCourse } from "@/API";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
 import {
@@ -22,54 +21,37 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  Autocomplete,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import useLearningCourse from "@/hooks/api/useLearningCourse";
-import { useLoading } from "@/contexts/LoadingContext";
-import useCSV from "@/hooks/utils/useCSV";
-
-const headers = [
-  { key: "courseName", name: "コース名" },
-  { key: "courseURL", name: "コースURL" },
-  { key: "couseDetail", name: "コース詳細" },
-  { key: "admin", name: "編集/削除" },
-];
 
 export default function LearningCoursesPane() {
   // hooks
   const {
+    headers,
     selectedLearningCenter,
     setSelectedLearningCenter,
     computedItems,
     learningCenters,
     fetchData,
     updateLearningCourse,
+    deleteLearningCourse,
+    habdlerBulkDelete,
     createLearningCourse,
+    importCourseListCSV,
+    exportCSV,
   } = useLearningCourseLogic();
-  const { apiCreateLearningCourse, apiDeleteLearningCourse } =
-    useLearningCourse();
-  const { setLoading } = useLoading();
-  const { getImportedCSV, convertStringToCSV, download } = useCSV();
   const [isOpenEditUserDialog, setIsOpenEditUserDialog] = useState(false);
   const [editItem, setEditItem] = useState<LearningCenterCourse | null>(null);
   // input fileのテンプレート参照
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // スクールの選択状態の変更
-  const handleChangeLearningCenter = async (
-    event: React.ChangeEvent<HTMLInputElement> | SelectChangeEvent
-  ) => {
-    const target = event.target as HTMLSelectElement;
-    const { value } = target;
-    setSelectedLearningCenter(value);
-  };
 
   // コース新規作成
   const handleAddCourse = () => {
     setEditItem({
       __typename: "LearningCenterCourse",
       id: "",
-      learningCenterId: selectedLearningCenter,
+      learningCenterId: selectedLearningCenter?.id ?? "",
       courseName: "",
       courseURL: "",
       couseDetail: "",
@@ -77,41 +59,6 @@ export default function LearningCoursesPane() {
       updatedAt: "",
     });
     setIsOpenEditUserDialog(true);
-  };
-
-  // エクスポート
-  const exportCSV = async () => {
-    // 'admin' キーを持つ要素を除去し、'id' キーを先頭に追加
-    const nonAdminHeaders = headers.filter((header) => header.key !== "admin");
-    const csvHeaders = [{ key: "id", name: "ID" }, ...nonAdminHeaders];
-    // CSVのフィールドキーを準備
-    const csvFieldKeys = csvHeaders.map((header) => header.key);
-    // LearningCenter型のデータをCSV用に変換
-    const csvData = computedItems.map((item) =>
-      csvFieldKeys.reduce((obj, key) => {
-        obj[key] = item[key as keyof LearningCenterCourse] ?? "";
-        return obj;
-      }, {} as Record<string, unknown>)
-    );
-    // CSV文字列に変換
-    const csv = convertStringToCSV(csvFieldKeys, csvData);
-    const fileName = `learning-course-list-${dayjs().valueOf()}.csv`;
-    download(csv, fileName);
-  };
-
-  // 一括削除
-  const habdlerBulkDelete = async () => {
-    setLoading(true);
-    try {
-      for await (const item of computedItems) {
-        await apiDeleteLearningCourse(item);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await fetchData();
-      setLoading(false);
-    }
   };
 
   // Formの更新
@@ -131,7 +78,7 @@ export default function LearningCoursesPane() {
 
   // 保存
   const handleSaveItem = async () => {
-    if (!editItem) return;
+    if (!editItem || !selectedLearningCenter) return;
     setIsOpenEditUserDialog(false);
     if (editItem?.id) {
       await updateLearningCourse(editItem);
@@ -139,7 +86,7 @@ export default function LearningCoursesPane() {
     }
     // 新規作成
     const createRequest = {
-      learningCenterId: selectedLearningCenter,
+      learningCenterId: selectedLearningCenter.id,
       courseName: editItem.courseName,
       courseURL: editItem.courseURL,
       couseDetail: editItem.couseDetail,
@@ -151,28 +98,10 @@ export default function LearningCoursesPane() {
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    if (!event.target.files) return;
-    setLoading(true);
-    try {
-      const file = event.target.files[0];
-      const data = await getImportedCSV<CreateLearningCenterCourseInput>(file);
-      for await (const item of data) {
-        const req: CreateLearningCenterCourseInput = {
-          learningCenterId: selectedLearningCenter,
-          courseName: item.courseName,
-          courseURL: item.courseURL,
-        };
-        await apiCreateLearningCourse(req);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await fetchData();
-      // input要素の値をクリアする
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-      setLoading(false);
+    await importCourseListCSV(event);
+    // input要素の値をクリアする
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -187,19 +116,6 @@ export default function LearningCoursesPane() {
     setEditItem(null);
   };
 
-  // 削除
-  const handleDeleteCourse = async (item: LearningCenterCourse) => {
-    setLoading(true);
-    try {
-      await apiDeleteLearningCourse(item);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await fetchData();
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     // データ取得
     fetchData();
@@ -208,20 +124,29 @@ export default function LearningCoursesPane() {
   return (
     <Container sx={{ px: 4, pt: 2 }}>
       <Box>
-        <Select
-          value={selectedLearningCenter || ""}
-          onChange={handleChangeLearningCenter}
-          id="establishmentYear"
-          sx={{ mt: 1 }}
-          fullWidth
+        <Autocomplete
+          id="learningCenterSelect"
           size="small"
-        >
-          {learningCenters.map((item) => (
-            <MenuItem key={item.id} value={item.id}>
-              {item.name}
-            </MenuItem>
-          ))}
-        </Select>
+          value={selectedLearningCenter}
+          options={learningCenters}
+          noOptionsText="データがありません"
+          getOptionLabel={(option) => option.name ?? ""}
+          getOptionKey={(option) => option.id}
+          onChange={(event: any, newValue: LearningCenter | null) => {
+            setSelectedLearningCenter(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="スクールを選択してください"
+              InputProps={{
+                ...params.InputProps,
+              }}
+            />
+          )}
+          fullWidth
+          sx={{ backgroundColor: "#fff", borderRadius: 1 }}
+        />
       </Box>
       {selectedLearningCenter && (
         <Box sx={{ mt: 3 }}>
@@ -273,7 +198,7 @@ export default function LearningCoursesPane() {
                         <Button
                           aria-label="delete button"
                           color="error"
-                          onClick={() => handleDeleteCourse(item)}
+                          onClick={() => deleteLearningCourse(item)}
                         >
                           削除
                         </Button>

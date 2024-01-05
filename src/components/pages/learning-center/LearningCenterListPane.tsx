@@ -1,65 +1,70 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { useEffect } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { LearningCenter } from "@/API";
 import Image from "next/image";
 import useLearningCenterLogic from "@/hooks/components/learning-center/useLearningCenterLogic";
-import dayjs from "dayjs";
-import useCSV from "@/hooks/utils/useCSV";
-
-const headers = [
-  { key: "admin", name: "管理" },
-  { key: "logoImageURL", name: "ロゴ" },
-  { key: "name", name: "スクール名" },
-  { key: "memo", name: "スクール詳細情報" },
-  { key: "operatingCompany", name: "運営会社" },
-  { key: "headquartersLocation", name: "本社所在地" },
-  { key: "websiteURL", name: "ホームページURL" },
-  { key: "establishmentYear", name: "設立年" },
-  { key: "representative", name: "代表者" },
-];
 
 export default function LearningCenterList() {
+  const [searchText, setSearchText] = useState("");
   // hooks
-  const { fetchLearningCenters, learningCenters, deleteLearningCenter } =
-    useLearningCenterLogic();
+  const {
+    fetchLearningCenters,
+    learningCenters,
+    deleteLearningCenter,
+    importLearningCenterCSV,
+    exportCSV,
+    headers,
+  } = useLearningCenterLogic();
   const router = useRouter();
-  const { convertStringToCSV, download } = useCSV();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // テキスト検索結果
+  const computedLearningCenters: Array<LearningCenter> = useMemo(() => {
+    return learningCenters.filter(
+      (v) =>
+        v.name?.includes(searchText) ||
+        v.memo?.includes(searchText) ||
+        v.operatingCompany?.includes(searchText)
+    );
+  }, [learningCenters, searchText]);
 
   // 編集画面遷移
   const onClickEdit = (item: LearningCenter) => {
     router.push(`/learning-center/edit?id=${item.id}`);
   };
 
-  // エクスポート
-  const exportCSV = async () => {
-    // 'admin' キーを持つ要素を除去し、'id' キーを先頭に追加
-    const nonAdminHeaders = headers.filter((header) => header.key !== "admin");
-    const csvHeaders = [{ key: "id", name: "ID" }, ...nonAdminHeaders];
+  // インポート登録
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    await importLearningCenterCSV(event);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
-    // CSVのフィールドキーを準備
-    const csvFieldKeys = csvHeaders.map((header) => header.key);
-
-    // LearningCenter型のデータをCSV用に変換
-    const csvData = learningCenters.map((item) =>
-      csvFieldKeys.reduce((obj, key) => {
-        obj[key] = item[key as keyof LearningCenter] ?? "";
-        return obj;
-      }, {} as Record<string, unknown>)
-    );
-
-    // CSV文字列に変換
-    const csv = convertStringToCSV(csvFieldKeys, csvData);
-    const fileName = `learning-center-list-${dayjs().valueOf()}.csv`;
-    download(csv, fileName);
+  // Formの更新
+  const handlerSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const target = event.target as HTMLInputElement;
+    const { value } = target;
+    setSearchText(value);
   };
 
   useEffect(() => {
@@ -69,15 +74,30 @@ export default function LearningCenterList() {
 
   return (
     <Container sx={{ px: 4, pt: 2 }}>
-      <Typography textAlign="right">
-        <Button onClick={exportCSV}>
-          <GetAppIcon></GetAppIcon>
-          <span>エクスポート</span>
-        </Button>
-        <Button onClick={() => router.push("/learning-center/create")}>
-          新規作成
-        </Button>
-      </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box>
+          <TextField
+            size="small"
+            variant="standard"
+            placeholder="テキストで検索"
+            value={searchText}
+            onChange={(event) => handlerSearchInputChange(event)}
+            InputProps={{
+              endAdornment: <SearchIcon color="disabled"></SearchIcon>,
+            }}
+          />
+        </Box>
+        <Box>
+          <input type="file" onChange={handleFileChange} ref={fileInputRef} />
+          <Button onClick={exportCSV}>
+            <GetAppIcon></GetAppIcon>
+            <span>エクスポート</span>
+          </Button>
+          <Button onClick={() => router.push("/learning-center/create")}>
+            新規作成
+          </Button>
+        </Box>
+      </Box>
 
       <TableContainer
         component={Paper}
@@ -98,7 +118,7 @@ export default function LearningCenterList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {learningCenters.map((item) => (
+            {computedLearningCenters.map((item) => (
               <TableRow
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

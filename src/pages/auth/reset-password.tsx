@@ -7,7 +7,7 @@ export default function ResetPassword() {
   return (
     <>
       <Head>
-        <title>パスワード変更 | テック教育ナビ</title>
+        <title>【管理】パスワード変更</title>
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>

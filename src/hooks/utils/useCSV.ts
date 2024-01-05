@@ -7,7 +7,7 @@ export default function useCSV() {
    * @returns csvのfieldとセルをマッピングしたオブジェクトの配列<T>
    * Array<{フィールド名: 値}>
    */
-  const getImportedCSV = <T>(file: File): Promise<T[]> => {
+  const getImportedCSV = async <T>(file: File): Promise<T[]> => {
     return new Promise((resolve, reject) => {
       Papa.parse(file, {
         header: true,

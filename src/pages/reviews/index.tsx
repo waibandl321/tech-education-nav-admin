@@ -19,7 +19,7 @@ export default function LearningCoursesIndex({
   return (
     <>
       <Head>
-        <title>レビュー情報</title>
+        <title>【管理】レビュー情報</title>
       </Head>
       <Layout>
         <Grid container>

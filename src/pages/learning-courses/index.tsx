@@ -8,7 +8,7 @@ export default function LearningCoursesIndex() {
   return (
     <>
       <Head>
-        <title>コース情報</title>
+        <title>【管理】コース情報</title>
       </Head>
       <Layout>
         <Grid container>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   CreateLearningCenterInput,
   LearningCenter,
@@ -10,6 +11,7 @@ import useStorage from "@/hooks/api/useStorage";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useImageUpload from "../auth/useImageUpload";
+import useCSV from "@/hooks/utils/useCSV";
 
 const initCreateLearningCenter: CreateLearningCenterInput = {
   name: "",
@@ -42,6 +44,7 @@ export default function useLearningCenterLogic() {
     []
   );
   const { compressImage, extractFilename } = useImageUpload();
+  const { getImportedCSV, convertStringToCSV, download } = useCSV();
   const {
     apiUpdateLearningCenter,
     apiGetLearningCenterById,
@@ -64,6 +67,18 @@ export default function useLearningCenterLogic() {
     setInputFile(null);
     setInputFilePreview("");
   };
+
+  const headers = [
+    { key: "admin", name: "管理" },
+    { key: "logoImageURL", name: "ロゴ" },
+    { key: "name", name: "スクール名" },
+    { key: "memo", name: "スクール詳細情報" },
+    { key: "operatingCompany", name: "運営会社" },
+    { key: "headquartersLocation", name: "本社所在地" },
+    { key: "websiteURL", name: "ホームページURL" },
+    { key: "establishmentYear", name: "設立年" },
+    { key: "representative", name: "代表者" },
+  ];
 
   // 画像ファイル形式のチェック
   const isImageFile = (selectedFile: File | null): boolean => {
@@ -90,7 +105,10 @@ export default function useLearningCenterLogic() {
   // input fileのchangeイベントを検知し、画像を圧縮する
   const changeFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      if (!event.target.files) return;
+      if (!event.target.files) {
+        alert("ファイルを選択してください。");
+        return;
+      }
       const targetFile = event.target.files[0];
       const compressedFile = await compressImage(targetFile, 400);
       if (!isImageFile(compressedFile)) {
@@ -186,6 +204,66 @@ export default function useLearningCenterLogic() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // インポート登録
+  const importLearningCenterCSV = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!event.target.files) {
+      alert("ファイルを選択してください。");
+      return;
+    }
+    setLoading(true);
+    try {
+      const file = event.target.files[0];
+      const data = await getImportedCSV<CreateLearningCenterInput>(file);
+
+      for await (const item of data) {
+        // idがあれば更新、idがなければ新規登録
+        if (item.id) {
+          const req: UpdateLearningCenterInput = {
+            ...item,
+            id: item.id,
+          };
+          await apiUpdateLearningCenter(req);
+        } else {
+          const req: CreateLearningCenterInput = {
+            ...item,
+          };
+          delete req.id;
+          await apiCreateLearningCenter(req);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      await fetchLearningCenters();
+      setLoading(false);
+    }
+  };
+
+  // エクスポート
+  const exportCSV = async () => {
+    // 'admin' キーを持つ要素を除去し、'id' キーを先頭に追加
+    const nonAdminHeaders = headers.filter((header) => header.key !== "admin");
+    const csvHeaders = [{ key: "id", name: "ID" }, ...nonAdminHeaders];
+
+    // CSVのフィールドキーを準備
+    const csvFieldKeys = csvHeaders.map((header) => header.key);
+
+    // LearningCenter型のデータをCSV用に変換
+    const csvData = learningCenters.map((item) =>
+      csvFieldKeys.reduce((obj, key) => {
+        obj[key] = item[key as keyof LearningCenter] ?? "";
+        return obj;
+      }, {} as Record<string, unknown>)
+    );
+
+    // CSV文字列に変換
+    const csv = convertStringToCSV(csvFieldKeys, csvData);
+    const fileName = `learning-center-list-${dayjs().valueOf()}.csv`;
+    download(csv, fileName);
   };
 
   // 画像をS3にアップロードしてURLを取得する
@@ -297,6 +375,7 @@ export default function useLearningCenterLogic() {
 
   return {
     initCreateLearningCenter,
+    headers,
     learningCenters,
     fetchLearningCenters,
     deleteLearningCenter,
@@ -313,5 +392,7 @@ export default function useLearningCenterLogic() {
     setEditLearningCenter,
     getEditData,
     updateLearningCenter,
+    importLearningCenterCSV,
+    exportCSV,
   };
 }
