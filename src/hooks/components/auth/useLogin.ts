@@ -73,6 +73,10 @@ const useLogin = () => {
   const login: SubmitHandler<AuthLoginFormType> = async (data) => {
     setLoading(true);
     try {
+      // 管理者アカウントのみ認証可能にする
+      if (data.email !== process.env.NEXT_PUBLIC_HOST_USER_NAME)
+        throw new Error("Authentication information is invalid");
+
       const { isSignedIn, nextStep } = await apiSignin(data);
 
       // 認証コードの未確認

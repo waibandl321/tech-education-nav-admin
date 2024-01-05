@@ -156,7 +156,6 @@ export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -180,7 +179,6 @@ export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -204,7 +202,6 @@ export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -224,7 +221,6 @@ export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearning
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -244,7 +240,6 @@ export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearning
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -264,7 +259,6 @@ export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearning
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

@@ -10,7 +10,9 @@ import {
   Button,
   Checkbox,
   Container,
+  IconButton,
 } from "@mui/material";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   CourseReview,
   LearningCenter,
@@ -80,14 +82,18 @@ export default function ReviewPane({
     }
   };
 
+  const fetchData = async () => {
+    const getReviews = await apiGetReviews();
+    setReviewList(getReviews.data ?? []);
+  };
+
   // レビュー削除
   const handleDeleteReview = async (item: CourseReview) => {
     setLoading(true);
     try {
       const isDeleteResult = await apiDeleteReview(item);
       if (isDeleteResult.isSuccess) {
-        const getReviews = await apiGetReviews();
-        setReviewList(getReviews.data ?? []);
+        fetchData();
       }
     } catch (error) {
       console.log(error);
@@ -108,6 +114,11 @@ export default function ReviewPane({
 
   return (
     <Container>
+      <Box sx={{ mt: 2 }} display="flex" justifyContent="flex-end">
+        <IconButton color="primary" onClick={fetchData}>
+          <RefreshIcon></RefreshIcon>
+        </IconButton>
+      </Box>
       <TableContainer component={Paper} sx={{ mt: 2 }} variant="outlined">
         <Table sx={{ overflow: "auto" }} aria-label="simple table" size="small">
           <TableHead sx={{ backgroundColor: "#eee" }}>

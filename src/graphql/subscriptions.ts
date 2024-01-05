@@ -133,9 +133,8 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
 >;
 export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
-  $owner: String
 ) {
-  onCreateLearningCenter(filter: $filter, owner: $owner) {
+  onCreateLearningCenter(filter: $filter) {
     id
     name
     memo
@@ -147,7 +146,6 @@ export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearni
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -157,9 +155,8 @@ export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearni
 >;
 export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
-  $owner: String
 ) {
-  onUpdateLearningCenter(filter: $filter, owner: $owner) {
+  onUpdateLearningCenter(filter: $filter) {
     id
     name
     memo
@@ -171,7 +168,6 @@ export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearni
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -181,9 +177,8 @@ export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearni
 >;
 export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
-  $owner: String
 ) {
-  onDeleteLearningCenter(filter: $filter, owner: $owner) {
+  onDeleteLearningCenter(filter: $filter) {
     id
     name
     memo
@@ -195,7 +190,6 @@ export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearni
     representative
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -205,9 +199,8 @@ export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearni
 >;
 export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreateLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
-  $owner: String
 ) {
-  onCreateLearningCenterCourse(filter: $filter, owner: $owner) {
+  onCreateLearningCenterCourse(filter: $filter) {
     id
     learningCenterId
     courseName
@@ -215,7 +208,6 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -225,9 +217,8 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
 >;
 export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdateLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
-  $owner: String
 ) {
-  onUpdateLearningCenterCourse(filter: $filter, owner: $owner) {
+  onUpdateLearningCenterCourse(filter: $filter) {
     id
     learningCenterId
     courseName
@@ -235,7 +226,6 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -245,9 +235,8 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
 >;
 export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDeleteLearningCenterCourse(
   $filter: ModelSubscriptionLearningCenterCourseFilterInput
-  $owner: String
 ) {
-  onDeleteLearningCenterCourse(filter: $filter, owner: $owner) {
+  onDeleteLearningCenterCourse(filter: $filter) {
     id
     learningCenterId
     courseName
@@ -255,7 +244,6 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
     couseDetail
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
