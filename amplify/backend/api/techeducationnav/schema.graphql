@@ -1,11 +1,5 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-type Todo @model {
-  id: ID!
-  name: String!
-  description: String
-}
-
 type User @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   cognitoSub: String!
@@ -19,6 +13,7 @@ type User @model @auth(rules: [{ allow: owner }]) {
   prefecture: String
   previousJob: String
   isRegisterUserInfo: Boolean
+  isDeleted: Boolean
 }
 
 type LearningCenter
@@ -38,6 +33,7 @@ type LearningCenter
   logoImageURL: String
   establishmentYear: Int
   representative: String
+  isDeleted: Boolean
 }
 
 type LearningCenterCourse
@@ -53,6 +49,7 @@ type LearningCenterCourse
   courseName: String
   courseURL: String
   couseDetail: String
+  isDeleted: Boolean
 }
 
 type CourseReview
@@ -76,4 +73,5 @@ type CourseReview
   reviewDetail: String!
   rating: Int!
   isPublished: Boolean!
+  isDeleted: Boolean
 }

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { createLearningCenter } from "../graphql/mutations";
@@ -31,6 +37,7 @@ export default function LearningCenterCreateForm(props) {
     logoImageURL: "",
     establishmentYear: "",
     representative: "",
+    isDeleted: false,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [memo, setMemo] = React.useState(initialValues.memo);
@@ -50,6 +57,7 @@ export default function LearningCenterCreateForm(props) {
   const [representative, setRepresentative] = React.useState(
     initialValues.representative
   );
+  const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -60,6 +68,7 @@ export default function LearningCenterCreateForm(props) {
     setLogoImageURL(initialValues.logoImageURL);
     setEstablishmentYear(initialValues.establishmentYear);
     setRepresentative(initialValues.representative);
+    setIsDeleted(initialValues.isDeleted);
     setErrors({});
   };
   const validations = {
@@ -71,6 +80,7 @@ export default function LearningCenterCreateForm(props) {
     logoImageURL: [],
     establishmentYear: [],
     representative: [],
+    isDeleted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -106,6 +116,7 @@ export default function LearningCenterCreateForm(props) {
           logoImageURL,
           establishmentYear,
           representative,
+          isDeleted,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -176,6 +187,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -207,6 +219,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.memo ?? value;
@@ -238,6 +251,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.operatingCompany ?? value;
@@ -269,6 +283,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.headquartersLocation ?? value;
@@ -302,6 +317,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.websiteURL ?? value;
@@ -333,6 +349,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL: value,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.logoImageURL ?? value;
@@ -368,6 +385,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear: value,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.establishmentYear ?? value;
@@ -401,6 +419,7 @@ export default function LearningCenterCreateForm(props) {
               logoImageURL,
               establishmentYear,
               representative: value,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.representative ?? value;
@@ -415,6 +434,38 @@ export default function LearningCenterCreateForm(props) {
         hasError={errors.representative?.hasError}
         {...getOverrideProps(overrides, "representative")}
       ></TextField>
+      <SwitchField
+        label="Is deleted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDeleted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              isDeleted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isDeleted ?? value;
+          }
+          if (errors.isDeleted?.hasError) {
+            runValidationTasks("isDeleted", value);
+          }
+          setIsDeleted(value);
+        }}
+        onBlur={() => runValidationTasks("isDeleted", isDeleted)}
+        errorMessage={errors.isDeleted?.errorMessage}
+        hasError={errors.isDeleted?.hasError}
+        {...getOverrideProps(overrides, "isDeleted")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

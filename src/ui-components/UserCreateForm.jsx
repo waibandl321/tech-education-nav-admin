@@ -40,6 +40,7 @@ export default function UserCreateForm(props) {
     prefecture: "",
     previousJob: "",
     isRegisterUserInfo: false,
+    isDeleted: false,
   };
   const [cognitoSub, setCognitoSub] = React.useState(initialValues.cognitoSub);
   const [displayId, setDisplayId] = React.useState(initialValues.displayId);
@@ -56,6 +57,7 @@ export default function UserCreateForm(props) {
   const [isRegisterUserInfo, setIsRegisterUserInfo] = React.useState(
     initialValues.isRegisterUserInfo
   );
+  const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setCognitoSub(initialValues.cognitoSub);
@@ -69,6 +71,7 @@ export default function UserCreateForm(props) {
     setPrefecture(initialValues.prefecture);
     setPreviousJob(initialValues.previousJob);
     setIsRegisterUserInfo(initialValues.isRegisterUserInfo);
+    setIsDeleted(initialValues.isDeleted);
     setErrors({});
   };
   const validations = {
@@ -83,6 +86,7 @@ export default function UserCreateForm(props) {
     prefecture: [],
     previousJob: [],
     isRegisterUserInfo: [],
+    isDeleted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -121,6 +125,7 @@ export default function UserCreateForm(props) {
           prefecture,
           previousJob,
           isRegisterUserInfo,
+          isDeleted,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -194,6 +199,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.cognitoSub ?? value;
@@ -228,6 +234,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.displayId ?? value;
@@ -262,6 +269,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -296,6 +304,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.nameKana ?? value;
@@ -330,6 +339,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.gender ?? value;
@@ -368,6 +378,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.birthYear ?? value;
@@ -406,6 +417,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.birthMonth ?? value;
@@ -444,6 +456,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.birthDate ?? value;
@@ -478,6 +491,7 @@ export default function UserCreateForm(props) {
               prefecture: value,
               previousJob,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.prefecture ?? value;
@@ -512,6 +526,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob: value,
               isRegisterUserInfo,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.previousJob ?? value;
@@ -546,6 +561,7 @@ export default function UserCreateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo: value,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.isRegisterUserInfo ?? value;
@@ -561,6 +577,41 @@ export default function UserCreateForm(props) {
         errorMessage={errors.isRegisterUserInfo?.errorMessage}
         hasError={errors.isRegisterUserInfo?.hasError}
         {...getOverrideProps(overrides, "isRegisterUserInfo")}
+      ></SwitchField>
+      <SwitchField
+        label="Is deleted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDeleted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              cognitoSub,
+              displayId,
+              name,
+              nameKana,
+              gender,
+              birthYear,
+              birthMonth,
+              birthDate,
+              prefecture,
+              previousJob,
+              isRegisterUserInfo,
+              isDeleted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isDeleted ?? value;
+          }
+          if (errors.isDeleted?.hasError) {
+            runValidationTasks("isDeleted", value);
+          }
+          setIsDeleted(value);
+        }}
+        onBlur={() => runValidationTasks("isDeleted", isDeleted)}
+        errorMessage={errors.isDeleted?.errorMessage}
+        hasError={errors.isDeleted?.hasError}
+        {...getOverrideProps(overrides, "isDeleted")}
       ></SwitchField>
       <Flex
         justifyContent="space-between"

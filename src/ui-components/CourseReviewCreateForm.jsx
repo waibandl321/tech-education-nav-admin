@@ -40,6 +40,7 @@ export default function CourseReviewCreateForm(props) {
     reviewDetail: "",
     rating: "",
     isPublished: false,
+    isDeleted: false,
   };
   const [userId, setUserId] = React.useState(initialValues.userId);
   const [userDisplayName, setUserDisplayName] = React.useState(
@@ -66,6 +67,7 @@ export default function CourseReviewCreateForm(props) {
   const [isPublished, setIsPublished] = React.useState(
     initialValues.isPublished
   );
+  const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setUserId(initialValues.userId);
@@ -79,6 +81,7 @@ export default function CourseReviewCreateForm(props) {
     setReviewDetail(initialValues.reviewDetail);
     setRating(initialValues.rating);
     setIsPublished(initialValues.isPublished);
+    setIsDeleted(initialValues.isDeleted);
     setErrors({});
   };
   const validations = {
@@ -93,6 +96,7 @@ export default function CourseReviewCreateForm(props) {
     reviewDetail: [{ type: "Required" }],
     rating: [{ type: "Required" }],
     isPublished: [{ type: "Required" }],
+    isDeleted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -131,6 +135,7 @@ export default function CourseReviewCreateForm(props) {
           reviewDetail,
           rating,
           isPublished,
+          isDeleted,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -204,6 +209,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.userId ?? value;
@@ -238,6 +244,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.userDisplayName ?? value;
@@ -272,6 +279,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.userGender ?? value;
@@ -306,6 +314,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.userAge ?? value;
@@ -340,6 +349,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.userPreviousJob ?? value;
@@ -374,6 +384,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.learningCenterId ?? value;
@@ -408,6 +419,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.learningCenterCourseId ?? value;
@@ -444,6 +456,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.reviewTitle ?? value;
@@ -478,6 +491,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail: value,
               rating,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.reviewDetail ?? value;
@@ -516,6 +530,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating: value,
               isPublished,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -550,6 +565,7 @@ export default function CourseReviewCreateForm(props) {
               reviewDetail,
               rating,
               isPublished: value,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.isPublished ?? value;
@@ -563,6 +579,41 @@ export default function CourseReviewCreateForm(props) {
         errorMessage={errors.isPublished?.errorMessage}
         hasError={errors.isPublished?.hasError}
         {...getOverrideProps(overrides, "isPublished")}
+      ></SwitchField>
+      <SwitchField
+        label="Is deleted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDeleted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              userId,
+              userDisplayName,
+              userGender,
+              userAge,
+              userPreviousJob,
+              learningCenterId,
+              learningCenterCourseId,
+              reviewTitle,
+              reviewDetail,
+              rating,
+              isPublished,
+              isDeleted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isDeleted ?? value;
+          }
+          if (errors.isDeleted?.hasError) {
+            runValidationTasks("isDeleted", value);
+          }
+          setIsDeleted(value);
+        }}
+        onBlur={() => runValidationTasks("isDeleted", isDeleted)}
+        errorMessage={errors.isDeleted?.errorMessage}
+        hasError={errors.isDeleted?.hasError}
+        {...getOverrideProps(overrides, "isDeleted")}
       ></SwitchField>
       <Flex
         justifyContent="space-between"

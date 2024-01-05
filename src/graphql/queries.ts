@@ -8,36 +8,6 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getTodo = /* GraphQL */ `query GetTodo($id: ID!) {
-  getTodo(id: $id) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetTodoQueryVariables, APITypes.GetTodoQuery>;
-export const listTodos = /* GraphQL */ `query ListTodos(
-  $filter: ModelTodoFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListTodosQueryVariables, APITypes.ListTodosQuery>;
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -52,6 +22,7 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -78,6 +49,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       prefecture
       previousJob
       isRegisterUserInfo
+      isDeleted
       createdAt
       updatedAt
       owner
@@ -99,6 +71,7 @@ export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -124,6 +97,7 @@ export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
       logoImageURL
       establishmentYear
       representative
+      isDeleted
       createdAt
       updatedAt
       __typename
@@ -143,6 +117,7 @@ export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCou
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -168,6 +143,7 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
       courseName
       courseURL
       couseDetail
+      isDeleted
       createdAt
       updatedAt
       __typename
@@ -194,6 +170,7 @@ export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -223,6 +200,7 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
       reviewDetail
       rating
       isPublished
+      isDeleted
       createdAt
       updatedAt
       owner

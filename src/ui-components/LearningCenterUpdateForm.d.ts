@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { LearningCenter } from "../API.ts";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -31,6 +31,7 @@ export declare type LearningCenterUpdateFormInputValues = {
     logoImageURL?: string;
     establishmentYear?: number;
     representative?: string;
+    isDeleted?: boolean;
 };
 export declare type LearningCenterUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -41,6 +42,7 @@ export declare type LearningCenterUpdateFormValidationValues = {
     logoImageURL?: ValidationFunction<string>;
     establishmentYear?: ValidationFunction<number>;
     representative?: ValidationFunction<string>;
+    isDeleted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type LearningCenterUpdateFormOverridesProps = {
@@ -53,6 +55,7 @@ export declare type LearningCenterUpdateFormOverridesProps = {
     logoImageURL?: PrimitiveOverrideProps<TextFieldProps>;
     establishmentYear?: PrimitiveOverrideProps<TextFieldProps>;
     representative?: PrimitiveOverrideProps<TextFieldProps>;
+    isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type LearningCenterUpdateFormProps = React.PropsWithChildren<{
     overrides?: LearningCenterUpdateFormOverridesProps | undefined | null;

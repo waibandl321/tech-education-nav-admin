@@ -34,6 +34,7 @@ export declare type UserUpdateFormInputValues = {
     prefecture?: string;
     previousJob?: string;
     isRegisterUserInfo?: boolean;
+    isDeleted?: boolean;
 };
 export declare type UserUpdateFormValidationValues = {
     cognitoSub?: ValidationFunction<string>;
@@ -47,6 +48,7 @@ export declare type UserUpdateFormValidationValues = {
     prefecture?: ValidationFunction<string>;
     previousJob?: ValidationFunction<string>;
     isRegisterUserInfo?: ValidationFunction<boolean>;
+    isDeleted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
@@ -62,6 +64,7 @@ export declare type UserUpdateFormOverridesProps = {
     prefecture?: PrimitiveOverrideProps<TextFieldProps>;
     previousJob?: PrimitiveOverrideProps<TextFieldProps>;
     isRegisterUserInfo?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;

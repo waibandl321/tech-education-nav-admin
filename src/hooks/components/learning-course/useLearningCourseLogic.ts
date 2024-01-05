@@ -209,7 +209,9 @@ export default function useLearningCourseLogic() {
           const req: CreateLearningCenterCourseInput = {
             ...item,
             learningCenterId: selectedLearningCenter.id,
+            isDeleted: false,
           };
+          // NOTE: インポートの場合IDフィールドに空文字がセットされるため、削除する（idを削除しないとエラーになる）
           delete req.id;
           await apiCreateLearningCourse(req);
         }

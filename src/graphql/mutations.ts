@@ -8,57 +8,6 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createTodo = /* GraphQL */ `mutation CreateTodo(
-  $input: CreateTodoInput!
-  $condition: ModelTodoConditionInput
-) {
-  createTodo(input: $input, condition: $condition) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateTodoMutationVariables,
-  APITypes.CreateTodoMutation
->;
-export const updateTodo = /* GraphQL */ `mutation UpdateTodo(
-  $input: UpdateTodoInput!
-  $condition: ModelTodoConditionInput
-) {
-  updateTodo(input: $input, condition: $condition) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateTodoMutationVariables,
-  APITypes.UpdateTodoMutation
->;
-export const deleteTodo = /* GraphQL */ `mutation DeleteTodo(
-  $input: DeleteTodoInput!
-  $condition: ModelTodoConditionInput
-) {
-  deleteTodo(input: $input, condition: $condition) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteTodoMutationVariables,
-  APITypes.DeleteTodoMutation
->;
 export const createUser = /* GraphQL */ `mutation CreateUser(
   $input: CreateUserInput!
   $condition: ModelUserConditionInput
@@ -76,6 +25,7 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -103,6 +53,7 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -130,6 +81,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -154,6 +106,7 @@ export const createLearningCenter = /* GraphQL */ `mutation CreateLearningCenter
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -177,6 +130,7 @@ export const updateLearningCenter = /* GraphQL */ `mutation UpdateLearningCenter
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -200,6 +154,7 @@ export const deleteLearningCenter = /* GraphQL */ `mutation DeleteLearningCenter
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -219,6 +174,7 @@ export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearning
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -238,6 +194,7 @@ export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearning
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -257,6 +214,7 @@ export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearning
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -283,6 +241,7 @@ export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -310,6 +269,7 @@ export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -337,6 +297,7 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner

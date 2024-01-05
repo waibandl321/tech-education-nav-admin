@@ -34,6 +34,7 @@ export declare type CourseReviewUpdateFormInputValues = {
     reviewDetail?: string;
     rating?: number;
     isPublished?: boolean;
+    isDeleted?: boolean;
 };
 export declare type CourseReviewUpdateFormValidationValues = {
     userId?: ValidationFunction<string>;
@@ -47,6 +48,7 @@ export declare type CourseReviewUpdateFormValidationValues = {
     reviewDetail?: ValidationFunction<string>;
     rating?: ValidationFunction<number>;
     isPublished?: ValidationFunction<boolean>;
+    isDeleted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CourseReviewUpdateFormOverridesProps = {
@@ -62,6 +64,7 @@ export declare type CourseReviewUpdateFormOverridesProps = {
     reviewDetail?: PrimitiveOverrideProps<TextFieldProps>;
     rating?: PrimitiveOverrideProps<TextFieldProps>;
     isPublished?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type CourseReviewUpdateFormProps = React.PropsWithChildren<{
     overrides?: CourseReviewUpdateFormOverridesProps | undefined | null;

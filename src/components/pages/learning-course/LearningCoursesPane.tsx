@@ -90,6 +90,7 @@ export default function LearningCoursesPane() {
       courseName: editItem.courseName,
       courseURL: editItem.courseURL,
       couseDetail: editItem.couseDetail,
+      isDeleted: false,
     };
     await createLearningCourse(createRequest);
   };

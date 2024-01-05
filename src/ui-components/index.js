@@ -10,8 +10,6 @@ export { default as LearningCenterCourseCreateForm } from "./LearningCenterCours
 export { default as LearningCenterCourseUpdateForm } from "./LearningCenterCourseUpdateForm";
 export { default as LearningCenterCreateForm } from "./LearningCenterCreateForm";
 export { default as LearningCenterUpdateForm } from "./LearningCenterUpdateForm";
-export { default as TodoCreateForm } from "./TodoCreateForm";
-export { default as TodoUpdateForm } from "./TodoUpdateForm";
 export { default as UserCreateForm } from "./UserCreateForm";
 export { default as UserUpdateForm } from "./UserUpdateForm";
 export { default as studioTheme } from "./studioTheme";

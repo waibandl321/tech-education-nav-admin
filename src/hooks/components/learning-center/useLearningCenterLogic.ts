@@ -22,6 +22,7 @@ const initCreateLearningCenter: CreateLearningCenterInput = {
   logoImageURL: undefined,
   establishmentYear: 2000,
   representative: "",
+  isDeleted: false,
 };
 
 export default function useLearningCenterLogic() {

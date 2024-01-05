@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getLearningCenterCourse } from "../graphql/queries";
@@ -29,6 +35,7 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: "",
     courseURL: "",
     couseDetail: "",
+    isDeleted: false,
   };
   const [learningCenterId, setLearningCenterId] = React.useState(
     initialValues.learningCenterId
@@ -38,6 +45,7 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [couseDetail, setCouseDetail] = React.useState(
     initialValues.couseDetail
   );
+  const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = learningCenterCourseRecord
@@ -47,6 +55,7 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCourseName(cleanValues.courseName);
     setCourseURL(cleanValues.courseURL);
     setCouseDetail(cleanValues.couseDetail);
+    setIsDeleted(cleanValues.isDeleted);
     setErrors({});
   };
   const [learningCenterCourseRecord, setLearningCenterCourseRecord] =
@@ -71,6 +80,7 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: [],
     courseURL: [],
     couseDetail: [],
+    isDeleted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -102,6 +112,7 @@ export default function LearningCenterCourseUpdateForm(props) {
           courseName: courseName ?? null,
           courseURL: courseURL ?? null,
           couseDetail: couseDetail ?? null,
+          isDeleted: isDeleted ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -166,6 +177,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.learningCenterId ?? value;
@@ -193,6 +205,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName: value,
               courseURL,
               couseDetail,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.courseName ?? value;
@@ -220,6 +233,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL: value,
               couseDetail,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.courseURL ?? value;
@@ -247,6 +261,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail: value,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.couseDetail ?? value;
@@ -261,6 +276,34 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.couseDetail?.hasError}
         {...getOverrideProps(overrides, "couseDetail")}
       ></TextField>
+      <SwitchField
+        label="Is deleted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDeleted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              isDeleted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isDeleted ?? value;
+          }
+          if (errors.isDeleted?.hasError) {
+            runValidationTasks("isDeleted", value);
+          }
+          setIsDeleted(value);
+        }}
+        onBlur={() => runValidationTasks("isDeleted", isDeleted)}
+        errorMessage={errors.isDeleted?.errorMessage}
+        hasError={errors.isDeleted?.hasError}
+        {...getOverrideProps(overrides, "isDeleted")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getLearningCenter } from "../graphql/queries";
@@ -33,6 +39,7 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: "",
     establishmentYear: "",
     representative: "",
+    isDeleted: false,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [memo, setMemo] = React.useState(initialValues.memo);
@@ -52,6 +59,7 @@ export default function LearningCenterUpdateForm(props) {
   const [representative, setRepresentative] = React.useState(
     initialValues.representative
   );
+  const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = learningCenterRecord
@@ -65,6 +73,7 @@ export default function LearningCenterUpdateForm(props) {
     setLogoImageURL(cleanValues.logoImageURL);
     setEstablishmentYear(cleanValues.establishmentYear);
     setRepresentative(cleanValues.representative);
+    setIsDeleted(cleanValues.isDeleted);
     setErrors({});
   };
   const [learningCenterRecord, setLearningCenterRecord] = React.useState(
@@ -94,6 +103,7 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: [],
     establishmentYear: [],
     representative: [],
+    isDeleted: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -129,6 +139,7 @@ export default function LearningCenterUpdateForm(props) {
           logoImageURL: logoImageURL ?? null,
           establishmentYear: establishmentYear ?? null,
           representative: representative ?? null,
+          isDeleted: isDeleted ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -197,6 +208,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -228,6 +240,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.memo ?? value;
@@ -259,6 +272,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.operatingCompany ?? value;
@@ -290,6 +304,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.headquartersLocation ?? value;
@@ -323,6 +338,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.websiteURL ?? value;
@@ -354,6 +370,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL: value,
               establishmentYear,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.logoImageURL ?? value;
@@ -389,6 +406,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear: value,
               representative,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.establishmentYear ?? value;
@@ -422,6 +440,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative: value,
+              isDeleted,
             };
             const result = onChange(modelFields);
             value = result?.representative ?? value;
@@ -436,6 +455,38 @@ export default function LearningCenterUpdateForm(props) {
         hasError={errors.representative?.hasError}
         {...getOverrideProps(overrides, "representative")}
       ></TextField>
+      <SwitchField
+        label="Is deleted"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDeleted}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              isDeleted: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.isDeleted ?? value;
+          }
+          if (errors.isDeleted?.hasError) {
+            runValidationTasks("isDeleted", value);
+          }
+          setIsDeleted(value);
+        }}
+        onBlur={() => runValidationTasks("isDeleted", isDeleted)}
+        errorMessage={errors.isDeleted?.errorMessage}
+        hasError={errors.isDeleted?.hasError}
+        {...getOverrideProps(overrides, "isDeleted")}
+      ></SwitchField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

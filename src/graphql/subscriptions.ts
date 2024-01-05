@@ -8,48 +8,6 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
-  onCreateTodo(filter: $filter) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateTodoSubscriptionVariables,
-  APITypes.OnCreateTodoSubscription
->;
-export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
-  onUpdateTodo(filter: $filter) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateTodoSubscriptionVariables,
-  APITypes.OnUpdateTodoSubscription
->;
-export const onDeleteTodo = /* GraphQL */ `subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
-  onDeleteTodo(filter: $filter) {
-    id
-    name
-    description
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteTodoSubscriptionVariables,
-  APITypes.OnDeleteTodoSubscription
->;
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
   $filter: ModelSubscriptionUserFilterInput
   $owner: String
@@ -67,6 +25,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -94,6 +53,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -121,6 +81,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -144,6 +105,7 @@ export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearni
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -166,6 +128,7 @@ export const onUpdateLearningCenter = /* GraphQL */ `subscription OnUpdateLearni
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -188,6 +151,7 @@ export const onDeleteLearningCenter = /* GraphQL */ `subscription OnDeleteLearni
     logoImageURL
     establishmentYear
     representative
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -206,6 +170,7 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -224,6 +189,7 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -242,6 +208,7 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
     courseName
     courseURL
     couseDetail
+    isDeleted
     createdAt
     updatedAt
     __typename
@@ -268,6 +235,7 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -295,6 +263,7 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
@@ -322,6 +291,7 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
     reviewDetail
     rating
     isPublished
+    isDeleted
     createdAt
     updatedAt
     owner
