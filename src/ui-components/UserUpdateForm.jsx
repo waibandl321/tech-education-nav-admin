@@ -42,6 +42,7 @@ export default function UserUpdateForm(props) {
     prefecture: "",
     previousJob: "",
     isRegisterUserInfo: false,
+    isApproved: false,
     isDeleted: false,
   };
   const [cognitoSub, setCognitoSub] = React.useState(initialValues.cognitoSub);
@@ -59,6 +60,7 @@ export default function UserUpdateForm(props) {
   const [isRegisterUserInfo, setIsRegisterUserInfo] = React.useState(
     initialValues.isRegisterUserInfo
   );
+  const [isApproved, setIsApproved] = React.useState(initialValues.isApproved);
   const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -76,6 +78,7 @@ export default function UserUpdateForm(props) {
     setPrefecture(cleanValues.prefecture);
     setPreviousJob(cleanValues.previousJob);
     setIsRegisterUserInfo(cleanValues.isRegisterUserInfo);
+    setIsApproved(cleanValues.isApproved);
     setIsDeleted(cleanValues.isDeleted);
     setErrors({});
   };
@@ -107,6 +110,7 @@ export default function UserUpdateForm(props) {
     prefecture: [],
     previousJob: [],
     isRegisterUserInfo: [],
+    isApproved: [],
     isDeleted: [],
   };
   const runValidationTasks = async (
@@ -146,6 +150,7 @@ export default function UserUpdateForm(props) {
           prefecture: prefecture ?? null,
           previousJob: previousJob ?? null,
           isRegisterUserInfo: isRegisterUserInfo ?? null,
+          isApproved: isApproved ?? null,
           isDeleted: isDeleted ?? null,
         };
         const validationResponses = await Promise.all(
@@ -218,6 +223,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -253,6 +259,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -288,6 +295,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -323,6 +331,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -358,6 +367,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -397,6 +407,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -436,6 +447,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -475,6 +487,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -510,6 +523,7 @@ export default function UserUpdateForm(props) {
               prefecture: value,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -545,6 +559,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob: value,
               isRegisterUserInfo,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -580,6 +595,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo: value,
+              isApproved,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -596,6 +612,42 @@ export default function UserUpdateForm(props) {
         errorMessage={errors.isRegisterUserInfo?.errorMessage}
         hasError={errors.isRegisterUserInfo?.hasError}
         {...getOverrideProps(overrides, "isRegisterUserInfo")}
+      ></SwitchField>
+      <SwitchField
+        label="Is approved"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isApproved}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              cognitoSub,
+              displayId,
+              name,
+              nameKana,
+              gender,
+              birthYear,
+              birthMonth,
+              birthDate,
+              prefecture,
+              previousJob,
+              isRegisterUserInfo,
+              isApproved: value,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isApproved ?? value;
+          }
+          if (errors.isApproved?.hasError) {
+            runValidationTasks("isApproved", value);
+          }
+          setIsApproved(value);
+        }}
+        onBlur={() => runValidationTasks("isApproved", isApproved)}
+        errorMessage={errors.isApproved?.errorMessage}
+        hasError={errors.isApproved?.hasError}
+        {...getOverrideProps(overrides, "isApproved")}
       ></SwitchField>
       <SwitchField
         label="Is deleted"
@@ -617,6 +669,7 @@ export default function UserUpdateForm(props) {
               prefecture,
               previousJob,
               isRegisterUserInfo,
+              isApproved,
               isDeleted: value,
             };
             const result = onChange(modelFields);

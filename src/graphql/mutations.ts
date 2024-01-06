@@ -25,6 +25,7 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt
@@ -53,6 +54,7 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt
@@ -81,6 +83,7 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt

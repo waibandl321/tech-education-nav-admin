@@ -25,6 +25,7 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt
@@ -53,6 +54,7 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt
@@ -81,6 +83,7 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt

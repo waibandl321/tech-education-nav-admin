@@ -22,6 +22,7 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     prefecture
     previousJob
     isRegisterUserInfo
+    isApproved
     isDeleted
     createdAt
     updatedAt
@@ -49,6 +50,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       prefecture
       previousJob
       isRegisterUserInfo
+      isApproved
       isDeleted
       createdAt
       updatedAt

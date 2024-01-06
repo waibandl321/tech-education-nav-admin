@@ -33,6 +33,7 @@ export declare type UserCreateFormInputValues = {
     prefecture?: string;
     previousJob?: string;
     isRegisterUserInfo?: boolean;
+    isApproved?: boolean;
     isDeleted?: boolean;
 };
 export declare type UserCreateFormValidationValues = {
@@ -47,6 +48,7 @@ export declare type UserCreateFormValidationValues = {
     prefecture?: ValidationFunction<string>;
     previousJob?: ValidationFunction<string>;
     isRegisterUserInfo?: ValidationFunction<boolean>;
+    isApproved?: ValidationFunction<boolean>;
     isDeleted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -63,6 +65,7 @@ export declare type UserCreateFormOverridesProps = {
     prefecture?: PrimitiveOverrideProps<TextFieldProps>;
     previousJob?: PrimitiveOverrideProps<TextFieldProps>;
     isRegisterUserInfo?: PrimitiveOverrideProps<SwitchFieldProps>;
+    isApproved?: PrimitiveOverrideProps<SwitchFieldProps>;
     isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{

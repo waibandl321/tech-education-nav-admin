@@ -15,6 +15,7 @@ export type CreateUserInput = {
   prefecture?: string | null;
   previousJob?: string | null;
   isRegisterUserInfo?: boolean | null;
+  isApproved?: boolean | null;
   isDeleted?: boolean | null;
 };
 
@@ -30,6 +31,7 @@ export type ModelUserConditionInput = {
   prefecture?: ModelStringInput | null;
   previousJob?: ModelStringInput | null;
   isRegisterUserInfo?: ModelBooleanInput | null;
+  isApproved?: ModelBooleanInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelUserConditionInput | null> | null;
   or?: Array<ModelUserConditionInput | null> | null;
@@ -108,6 +110,7 @@ export type User = {
   prefecture?: string | null;
   previousJob?: string | null;
   isRegisterUserInfo?: boolean | null;
+  isApproved?: boolean | null;
   isDeleted?: boolean | null;
   createdAt: string;
   updatedAt: string;
@@ -127,6 +130,7 @@ export type UpdateUserInput = {
   prefecture?: string | null;
   previousJob?: string | null;
   isRegisterUserInfo?: boolean | null;
+  isApproved?: boolean | null;
   isDeleted?: boolean | null;
 };
 
@@ -343,6 +347,7 @@ export type ModelUserFilterInput = {
   prefecture?: ModelStringInput | null;
   previousJob?: ModelStringInput | null;
   isRegisterUserInfo?: ModelBooleanInput | null;
+  isApproved?: ModelBooleanInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelUserFilterInput | null> | null;
   or?: Array<ModelUserFilterInput | null> | null;
@@ -433,6 +438,7 @@ export type ModelSubscriptionUserFilterInput = {
   prefecture?: ModelSubscriptionStringInput | null;
   previousJob?: ModelSubscriptionStringInput | null;
   isRegisterUserInfo?: ModelSubscriptionBooleanInput | null;
+  isApproved?: ModelSubscriptionBooleanInput | null;
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionUserFilterInput | null> | null;
   or?: Array<ModelSubscriptionUserFilterInput | null> | null;
@@ -549,6 +555,7 @@ export type CreateUserMutation = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -576,6 +583,7 @@ export type UpdateUserMutation = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -603,6 +611,7 @@ export type DeleteUserMutation = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -836,6 +845,7 @@ export type GetUserQuery = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -866,6 +876,7 @@ export type ListUsersQuery = {
       prefecture?: string | null;
       previousJob?: string | null;
       isRegisterUserInfo?: boolean | null;
+      isApproved?: boolean | null;
       isDeleted?: boolean | null;
       createdAt: string;
       updatedAt: string;
@@ -1045,6 +1056,7 @@ export type OnCreateUserSubscription = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1072,6 +1084,7 @@ export type OnUpdateUserSubscription = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1099,6 +1112,7 @@ export type OnDeleteUserSubscription = {
     prefecture?: string | null;
     previousJob?: string | null;
     isRegisterUserInfo?: boolean | null;
+    isApproved?: boolean | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
