@@ -1,29 +1,5 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-type User
-  @model
-  @auth(
-    rules: [
-      { allow: owner } # オーナーには全操作を許可
-      { allow: groups, groups: ["Admin"], operations: [read, update, delete] } # Adminグループには特定の操作を許可
-    ]
-  ) {
-  id: ID!
-  cognitoSub: String!
-  displayId: String!
-  name: String
-  nameKana: String
-  gender: String
-  birthYear: Int
-  birthMonth: Int
-  birthDate: Int
-  prefecture: String
-  previousJob: String
-  isRegisterUserInfo: Boolean
-  isApproved: Boolean
-  isDeleted: Boolean
-}
-
 type LearningCenter
   @model
   @auth(
@@ -64,17 +40,17 @@ type CourseReview
   @model
   @auth(
     rules: [
-      { allow: public, operations: [read] }
-      { allow: groups, groups: ["Admin"], operations: [update, delete] }
+      { allow: public, operations: [read, create] }
+      { allow: groups, groups: ["Admin"], operations: [read, update, delete] }
       { allow: owner }
     ]
   ) {
   id: ID!
-  userId: ID!
-  userDisplayName: String
+  userDisplayId: String
+  userEmail: String
   userGender: String
   userAge: String
-  userPreviousJob: String
+  userPrefecture: String
   learningCenterId: ID!
   learningCenterCourseId: ID!
   reviewTitle: String!

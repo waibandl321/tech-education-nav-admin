@@ -2,7 +2,6 @@ import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 import { useUserContext } from "@/contexts/UserContext";
 import useAuth from "@/hooks/api/useAuth";
-import useUser from "@/hooks/api/useUser";
 import { AuthLoginFormType } from "@/types/FormType";
 import { useRouter } from "next/router";
 import { SubmitHandler } from "react-hook-form";
@@ -14,7 +13,6 @@ const useLogin = () => {
   const { setAlertMessage } = useMessageAlert();
   const router = useRouter();
   const { setLoading } = useLoading();
-  const { apiGetUserByCognitoSub, apiCreateUser } = useUser();
   const { setAccountInfomation } = useUserContext();
   const { apiSignin, resendSignUpAuthCode, currentAuthenticatedUser } =
     useAuth();
@@ -28,24 +26,10 @@ const useLogin = () => {
       userId,
       email: signInDetails?.loginId,
     });
-
-    const getUserResult = await apiGetUserByCognitoSub(userId);
-    let alertMessage = "認証に成功しました。";
-    let redirectPath = "/";
-
-    if (!getUserResult.data) {
-      await apiCreateUser(userId);
-      redirectPath = "/user/setting/edit/profile";
-      alertMessage += "ユーザー情報を登録してください。";
-    } else if (!getUserResult.data.isRegisterUserInfo) {
-      redirectPath = "/user/setting/edit/profile";
-      alertMessage += "ユーザー情報を登録してください。";
-    }
-
-    await router.replace(redirectPath);
+    await router.replace("/");
     setAlertMessage({
       type: "success",
-      message: alertMessage,
+      message: "認証に成功しました。",
     });
   };
 

@@ -31,11 +31,11 @@ export default function CourseReviewUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    userId: "",
-    userDisplayName: "",
+    userDisplayId: "",
+    userEmail: "",
     userGender: "",
     userAge: "",
-    userPreviousJob: "",
+    userPrefecture: "",
     learningCenterId: "",
     learningCenterCourseId: "",
     reviewTitle: "",
@@ -44,14 +44,14 @@ export default function CourseReviewUpdateForm(props) {
     isPublished: false,
     isDeleted: false,
   };
-  const [userId, setUserId] = React.useState(initialValues.userId);
-  const [userDisplayName, setUserDisplayName] = React.useState(
-    initialValues.userDisplayName
+  const [userDisplayId, setUserDisplayId] = React.useState(
+    initialValues.userDisplayId
   );
+  const [userEmail, setUserEmail] = React.useState(initialValues.userEmail);
   const [userGender, setUserGender] = React.useState(initialValues.userGender);
   const [userAge, setUserAge] = React.useState(initialValues.userAge);
-  const [userPreviousJob, setUserPreviousJob] = React.useState(
-    initialValues.userPreviousJob
+  const [userPrefecture, setUserPrefecture] = React.useState(
+    initialValues.userPrefecture
   );
   const [learningCenterId, setLearningCenterId] = React.useState(
     initialValues.learningCenterId
@@ -75,11 +75,11 @@ export default function CourseReviewUpdateForm(props) {
     const cleanValues = courseReviewRecord
       ? { ...initialValues, ...courseReviewRecord }
       : initialValues;
-    setUserId(cleanValues.userId);
-    setUserDisplayName(cleanValues.userDisplayName);
+    setUserDisplayId(cleanValues.userDisplayId);
+    setUserEmail(cleanValues.userEmail);
     setUserGender(cleanValues.userGender);
     setUserAge(cleanValues.userAge);
-    setUserPreviousJob(cleanValues.userPreviousJob);
+    setUserPrefecture(cleanValues.userPrefecture);
     setLearningCenterId(cleanValues.learningCenterId);
     setLearningCenterCourseId(cleanValues.learningCenterCourseId);
     setReviewTitle(cleanValues.reviewTitle);
@@ -108,11 +108,11 @@ export default function CourseReviewUpdateForm(props) {
   }, [idProp, courseReviewModelProp]);
   React.useEffect(resetStateValues, [courseReviewRecord]);
   const validations = {
-    userId: [{ type: "Required" }],
-    userDisplayName: [],
+    userDisplayId: [],
+    userEmail: [],
     userGender: [],
     userAge: [],
-    userPreviousJob: [],
+    userPrefecture: [],
     learningCenterId: [{ type: "Required" }],
     learningCenterCourseId: [{ type: "Required" }],
     reviewTitle: [{ type: "Required" }],
@@ -147,11 +147,11 @@ export default function CourseReviewUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          userId,
-          userDisplayName: userDisplayName ?? null,
+          userDisplayId: userDisplayId ?? null,
+          userEmail: userEmail ?? null,
           userGender: userGender ?? null,
           userAge: userAge ?? null,
-          userPreviousJob: userPreviousJob ?? null,
+          userPrefecture: userPrefecture ?? null,
           learningCenterId,
           learningCenterCourseId,
           reviewTitle,
@@ -211,54 +211,19 @@ export default function CourseReviewUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="User id"
-        isRequired={true}
-        isReadOnly={false}
-        value={userId}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              userId: value,
-              userDisplayName,
-              userGender,
-              userAge,
-              userPreviousJob,
-              learningCenterId,
-              learningCenterCourseId,
-              reviewTitle,
-              reviewDetail,
-              rating,
-              isPublished,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.userId ?? value;
-          }
-          if (errors.userId?.hasError) {
-            runValidationTasks("userId", value);
-          }
-          setUserId(value);
-        }}
-        onBlur={() => runValidationTasks("userId", userId)}
-        errorMessage={errors.userId?.errorMessage}
-        hasError={errors.userId?.hasError}
-        {...getOverrideProps(overrides, "userId")}
-      ></TextField>
-      <TextField
-        label="User display name"
+        label="User display id"
         isRequired={false}
         isReadOnly={false}
-        value={userDisplayName}
+        value={userDisplayId}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName: value,
+              userDisplayId: value,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -268,17 +233,52 @@ export default function CourseReviewUpdateForm(props) {
               isDeleted,
             };
             const result = onChange(modelFields);
-            value = result?.userDisplayName ?? value;
+            value = result?.userDisplayId ?? value;
           }
-          if (errors.userDisplayName?.hasError) {
-            runValidationTasks("userDisplayName", value);
+          if (errors.userDisplayId?.hasError) {
+            runValidationTasks("userDisplayId", value);
           }
-          setUserDisplayName(value);
+          setUserDisplayId(value);
         }}
-        onBlur={() => runValidationTasks("userDisplayName", userDisplayName)}
-        errorMessage={errors.userDisplayName?.errorMessage}
-        hasError={errors.userDisplayName?.hasError}
-        {...getOverrideProps(overrides, "userDisplayName")}
+        onBlur={() => runValidationTasks("userDisplayId", userDisplayId)}
+        errorMessage={errors.userDisplayId?.errorMessage}
+        hasError={errors.userDisplayId?.hasError}
+        {...getOverrideProps(overrides, "userDisplayId")}
+      ></TextField>
+      <TextField
+        label="User email"
+        isRequired={false}
+        isReadOnly={false}
+        value={userEmail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              userDisplayId,
+              userEmail: value,
+              userGender,
+              userAge,
+              userPrefecture,
+              learningCenterId,
+              learningCenterCourseId,
+              reviewTitle,
+              reviewDetail,
+              rating,
+              isPublished,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.userEmail ?? value;
+          }
+          if (errors.userEmail?.hasError) {
+            runValidationTasks("userEmail", value);
+          }
+          setUserEmail(value);
+        }}
+        onBlur={() => runValidationTasks("userEmail", userEmail)}
+        errorMessage={errors.userEmail?.errorMessage}
+        hasError={errors.userEmail?.hasError}
+        {...getOverrideProps(overrides, "userEmail")}
       ></TextField>
       <TextField
         label="User gender"
@@ -289,11 +289,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender: value,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -324,11 +324,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge: value,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -351,19 +351,19 @@ export default function CourseReviewUpdateForm(props) {
         {...getOverrideProps(overrides, "userAge")}
       ></TextField>
       <TextField
-        label="User previous job"
+        label="User prefecture"
         isRequired={false}
         isReadOnly={false}
-        value={userPreviousJob}
+        value={userPrefecture}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob: value,
+              userPrefecture: value,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -373,17 +373,17 @@ export default function CourseReviewUpdateForm(props) {
               isDeleted,
             };
             const result = onChange(modelFields);
-            value = result?.userPreviousJob ?? value;
+            value = result?.userPrefecture ?? value;
           }
-          if (errors.userPreviousJob?.hasError) {
-            runValidationTasks("userPreviousJob", value);
+          if (errors.userPrefecture?.hasError) {
+            runValidationTasks("userPrefecture", value);
           }
-          setUserPreviousJob(value);
+          setUserPrefecture(value);
         }}
-        onBlur={() => runValidationTasks("userPreviousJob", userPreviousJob)}
-        errorMessage={errors.userPreviousJob?.errorMessage}
-        hasError={errors.userPreviousJob?.hasError}
-        {...getOverrideProps(overrides, "userPreviousJob")}
+        onBlur={() => runValidationTasks("userPrefecture", userPrefecture)}
+        errorMessage={errors.userPrefecture?.errorMessage}
+        hasError={errors.userPrefecture?.hasError}
+        {...getOverrideProps(overrides, "userPrefecture")}
       ></TextField>
       <TextField
         label="Learning center id"
@@ -394,11 +394,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId: value,
               learningCenterCourseId,
               reviewTitle,
@@ -429,11 +429,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId: value,
               reviewTitle,
@@ -466,11 +466,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle: value,
@@ -501,11 +501,11 @@ export default function CourseReviewUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -540,11 +540,11 @@ export default function CourseReviewUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -575,11 +575,11 @@ export default function CourseReviewUpdateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -610,11 +610,11 @@ export default function CourseReviewUpdateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              userId,
-              userDisplayName,
+              userDisplayId,
+              userEmail,
               userGender,
               userAge,
-              userPreviousJob,
+              userPrefecture,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,

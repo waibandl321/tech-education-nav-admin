@@ -8,60 +8,6 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
-  getUser(id: $id) {
-    id
-    cognitoSub
-    displayId
-    name
-    nameKana
-    gender
-    birthYear
-    birthMonth
-    birthDate
-    prefecture
-    previousJob
-    isRegisterUserInfo
-    isApproved
-    isDeleted
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetUserQueryVariables, APITypes.GetUserQuery>;
-export const listUsers = /* GraphQL */ `query ListUsers(
-  $filter: ModelUserFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      cognitoSub
-      displayId
-      name
-      nameKana
-      gender
-      birthYear
-      birthMonth
-      birthDate
-      prefecture
-      previousJob
-      isRegisterUserInfo
-      isApproved
-      isDeleted
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
 export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!) {
   getLearningCenter(id: $id) {
     id
@@ -161,11 +107,11 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
 export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
   getCourseReview(id: $id) {
     id
-    userId
-    userDisplayName
+    userDisplayId
+    userEmail
     userGender
     userAge
-    userPreviousJob
+    userPrefecture
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -191,11 +137,11 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
   listCourseReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      userId
-      userDisplayName
+      userDisplayId
+      userEmail
       userGender
       userAge
-      userPreviousJob
+      userPrefecture
       learningCenterId
       learningCenterCourseId
       reviewTitle

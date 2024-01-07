@@ -8,93 +8,6 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
-  $filter: ModelSubscriptionUserFilterInput
-  $owner: String
-) {
-  onCreateUser(filter: $filter, owner: $owner) {
-    id
-    cognitoSub
-    displayId
-    name
-    nameKana
-    gender
-    birthYear
-    birthMonth
-    birthDate
-    prefecture
-    previousJob
-    isRegisterUserInfo
-    isApproved
-    isDeleted
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateUserSubscriptionVariables,
-  APITypes.OnCreateUserSubscription
->;
-export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
-  $filter: ModelSubscriptionUserFilterInput
-  $owner: String
-) {
-  onUpdateUser(filter: $filter, owner: $owner) {
-    id
-    cognitoSub
-    displayId
-    name
-    nameKana
-    gender
-    birthYear
-    birthMonth
-    birthDate
-    prefecture
-    previousJob
-    isRegisterUserInfo
-    isApproved
-    isDeleted
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateUserSubscriptionVariables,
-  APITypes.OnUpdateUserSubscription
->;
-export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
-  $filter: ModelSubscriptionUserFilterInput
-  $owner: String
-) {
-  onDeleteUser(filter: $filter, owner: $owner) {
-    id
-    cognitoSub
-    displayId
-    name
-    nameKana
-    gender
-    birthYear
-    birthMonth
-    birthDate
-    prefecture
-    previousJob
-    isRegisterUserInfo
-    isApproved
-    isDeleted
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteUserSubscriptionVariables,
-  APITypes.OnDeleteUserSubscription
->;
 export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
 ) {
@@ -227,11 +140,11 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
 ) {
   onCreateCourseReview(filter: $filter, owner: $owner) {
     id
-    userId
-    userDisplayName
+    userDisplayId
+    userEmail
     userGender
     userAge
-    userPreviousJob
+    userPrefecture
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -255,11 +168,11 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
 ) {
   onUpdateCourseReview(filter: $filter, owner: $owner) {
     id
-    userId
-    userDisplayName
+    userDisplayId
+    userEmail
     userGender
     userAge
-    userPreviousJob
+    userPrefecture
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -283,11 +196,11 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
 ) {
   onDeleteCourseReview(filter: $filter, owner: $owner) {
     id
-    userId
-    userDisplayName
+    userDisplayId
+    userEmail
     userGender
     userAge
-    userPreviousJob
+    userPrefecture
     learningCenterId
     learningCenterCourseId
     reviewTitle
