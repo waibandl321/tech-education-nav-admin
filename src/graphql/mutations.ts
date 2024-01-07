@@ -160,7 +160,6 @@ export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -188,7 +187,6 @@ export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -216,7 +214,6 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

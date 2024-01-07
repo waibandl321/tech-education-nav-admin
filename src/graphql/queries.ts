@@ -121,7 +121,6 @@ export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -151,7 +150,6 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
       isDeleted
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken

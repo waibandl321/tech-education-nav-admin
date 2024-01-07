@@ -136,9 +136,8 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
 >;
 export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseReview(
   $filter: ModelSubscriptionCourseReviewFilterInput
-  $owner: String
 ) {
-  onCreateCourseReview(filter: $filter, owner: $owner) {
+  onCreateCourseReview(filter: $filter) {
     id
     userDisplayId
     userEmail
@@ -154,7 +153,6 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -164,9 +162,8 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
 >;
 export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseReview(
   $filter: ModelSubscriptionCourseReviewFilterInput
-  $owner: String
 ) {
-  onUpdateCourseReview(filter: $filter, owner: $owner) {
+  onUpdateCourseReview(filter: $filter) {
     id
     userDisplayId
     userEmail
@@ -182,7 +179,6 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -192,9 +188,8 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
 >;
 export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseReview(
   $filter: ModelSubscriptionCourseReviewFilterInput
-  $owner: String
 ) {
-  onDeleteCourseReview(filter: $filter, owner: $owner) {
+  onDeleteCourseReview(filter: $filter) {
     id
     userDisplayId
     userEmail
@@ -210,7 +205,6 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
     isDeleted
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

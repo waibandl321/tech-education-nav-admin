@@ -24,12 +24,14 @@ import { useLoading } from "@/contexts/LoadingContext";
 import { useEffect, useState } from "react";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 import useAPIRequest from "@/hooks/utils/useAPIRequest";
+import ReviewUserModal from "@/components/pages/reviews/ReviewUserModal";
 
 const headers = [
   { key: "learningCenterId", name: "スクール名" },
   { key: "learningCenterCourseId", name: "コース名" },
-  { key: "courseName", name: "title" },
-  { key: "courseURL", name: "message" },
+  { key: "courseName", name: "タイトル" },
+  { key: "courseURL", name: "詳細" },
+  { key: "postUser", name: "投稿ユーザー" },
   { key: "couseDetail", name: "公開/非公開" },
   { key: "admin", name: "編集/削除" },
 ];
@@ -47,6 +49,8 @@ export default function ReviewPane({
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
   const [reviewList, setReviewList] = useState<Array<CourseReview>>([]);
+  const [viewedReview, setViewedReview] = useState<CourseReview | null>(null); //モーダルで閲覧する対象のデータ
+  const [isOpenUserModal, setIsOpenUserModal] = useState(false);
   const { getUpdateRequest } = useAPIRequest();
 
   useEffect(() => {
@@ -112,6 +116,16 @@ export default function ReviewPane({
     return courses.find((course) => course.id === courseId)?.courseName ?? "";
   };
 
+  const handleOpenDialog = (item: CourseReview) => {
+    setViewedReview(item);
+    setIsOpenUserModal(true);
+  };
+
+  const handleCloseDialog = () => {
+    setViewedReview(null);
+    setIsOpenUserModal(false);
+  };
+
   return (
     <Container>
       <Box sx={{ mt: 2 }} display="flex" justifyContent="flex-end">
@@ -145,6 +159,11 @@ export default function ReviewPane({
                 <TableCell sx={{ minWidth: 200 }}>
                   {item.reviewDetail || ""}
                 </TableCell>
+                <TableCell sx={{ minWidth: 140 }}>
+                  <Button onClick={() => handleOpenDialog(item)}>
+                    投稿したユーザー
+                  </Button>
+                </TableCell>
                 <TableCell>
                   <Checkbox
                     checked={item.isPublished}
@@ -172,6 +191,11 @@ export default function ReviewPane({
           </TableBody>
         </Table>
       </TableContainer>
+      <ReviewUserModal
+        isOpen={isOpenUserModal}
+        closeModal={handleCloseDialog}
+        targetReview={viewedReview}
+      />
     </Container>
   );
 }

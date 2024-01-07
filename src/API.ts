@@ -233,7 +233,6 @@ export type CourseReview = {
   isDeleted?: boolean | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type UpdateCourseReviewInput = {
@@ -561,7 +560,6 @@ export type CreateCourseReviewMutation = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
@@ -588,7 +586,6 @@ export type UpdateCourseReviewMutation = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
@@ -615,7 +612,6 @@ export type DeleteCourseReviewMutation = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
@@ -733,7 +729,6 @@ export type GetCourseReviewQuery = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
@@ -763,7 +758,6 @@ export type ListCourseReviewsQuery = {
       isDeleted?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
   } | null;
@@ -891,7 +885,6 @@ export type OnDeleteLearningCenterCourseSubscription = {
 
 export type OnCreateCourseReviewSubscriptionVariables = {
   filter?: ModelSubscriptionCourseReviewFilterInput | null;
-  owner?: string | null;
 };
 
 export type OnCreateCourseReviewSubscription = {
@@ -912,13 +905,11 @@ export type OnCreateCourseReviewSubscription = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
 export type OnUpdateCourseReviewSubscriptionVariables = {
   filter?: ModelSubscriptionCourseReviewFilterInput | null;
-  owner?: string | null;
 };
 
 export type OnUpdateCourseReviewSubscription = {
@@ -939,13 +930,11 @@ export type OnUpdateCourseReviewSubscription = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
 export type OnDeleteCourseReviewSubscriptionVariables = {
   filter?: ModelSubscriptionCourseReviewFilterInput | null;
-  owner?: string | null;
 };
 
 export type OnDeleteCourseReviewSubscription = {
@@ -966,6 +955,5 @@ export type OnDeleteCourseReviewSubscription = {
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };

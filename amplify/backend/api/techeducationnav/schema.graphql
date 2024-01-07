@@ -42,7 +42,6 @@ type CourseReview
     rules: [
       { allow: public, operations: [read, create] }
       { allow: groups, groups: ["Admin"], operations: [read, update, delete] }
-      { allow: owner }
     ]
   ) {
   id: ID!
