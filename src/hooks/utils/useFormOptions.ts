@@ -1,4 +1,3 @@
-import { User } from "@/API";
 import { UserProfileInputType } from "@/types/FormType";
 import { useMemo } from "react";
 
@@ -74,39 +73,5 @@ export const useFormOptions = () => {
     return Array.from({ length: 31 }, (_, i) => i + 1);
   }, []);
 
-  const getBirthDayFields = (
-    user: User
-  ): Array<{
-    name: keyof UserProfileInputType;
-    labelId: string;
-    labelName: string;
-    options: number[];
-    value: number | null | undefined;
-  }> => {
-    return [
-      {
-        name: "birthYear",
-        labelId: "birthYear",
-        labelName: "誕生日(年)",
-        options: years,
-        value: user.birthYear,
-      },
-      {
-        name: "birthMonth",
-        labelId: "birthMonth",
-        labelName: "誕生日(月)",
-        options: months,
-        value: user.birthMonth,
-      },
-      {
-        name: "birthDate",
-        labelId: "birthDate",
-        labelName: "誕生日(日)",
-        options: days,
-        value: user.birthDate,
-      },
-    ];
-  };
-
-  return { prefectures, genders, years, months, days, getBirthDayFields };
+  return { prefectures, genders, years, months, days };
 };
