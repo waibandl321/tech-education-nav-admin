@@ -29,11 +29,13 @@ export default function CourseReviewCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    userId: "",
     userDisplayId: "",
-    userEmail: "",
     userGender: "",
     userAge: "",
     userPrefecture: "",
+    courseStartMonth: "",
+    courseEndMonth: "",
     learningCenterId: "",
     learningCenterCourseId: "",
     reviewTitle: "",
@@ -42,14 +44,20 @@ export default function CourseReviewCreateForm(props) {
     isPublished: false,
     isDeleted: false,
   };
+  const [userId, setUserId] = React.useState(initialValues.userId);
   const [userDisplayId, setUserDisplayId] = React.useState(
     initialValues.userDisplayId
   );
-  const [userEmail, setUserEmail] = React.useState(initialValues.userEmail);
   const [userGender, setUserGender] = React.useState(initialValues.userGender);
   const [userAge, setUserAge] = React.useState(initialValues.userAge);
   const [userPrefecture, setUserPrefecture] = React.useState(
     initialValues.userPrefecture
+  );
+  const [courseStartMonth, setCourseStartMonth] = React.useState(
+    initialValues.courseStartMonth
+  );
+  const [courseEndMonth, setCourseEndMonth] = React.useState(
+    initialValues.courseEndMonth
   );
   const [learningCenterId, setLearningCenterId] = React.useState(
     initialValues.learningCenterId
@@ -70,11 +78,13 @@ export default function CourseReviewCreateForm(props) {
   const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setUserId(initialValues.userId);
     setUserDisplayId(initialValues.userDisplayId);
-    setUserEmail(initialValues.userEmail);
     setUserGender(initialValues.userGender);
     setUserAge(initialValues.userAge);
     setUserPrefecture(initialValues.userPrefecture);
+    setCourseStartMonth(initialValues.courseStartMonth);
+    setCourseEndMonth(initialValues.courseEndMonth);
     setLearningCenterId(initialValues.learningCenterId);
     setLearningCenterCourseId(initialValues.learningCenterCourseId);
     setReviewTitle(initialValues.reviewTitle);
@@ -85,11 +95,13 @@ export default function CourseReviewCreateForm(props) {
     setErrors({});
   };
   const validations = {
+    userId: [{ type: "Required" }],
     userDisplayId: [],
-    userEmail: [],
     userGender: [],
     userAge: [],
     userPrefecture: [],
+    courseStartMonth: [],
+    courseEndMonth: [],
     learningCenterId: [{ type: "Required" }],
     learningCenterCourseId: [{ type: "Required" }],
     reviewTitle: [{ type: "Required" }],
@@ -115,6 +127,29 @@ export default function CourseReviewCreateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
+  const convertTimeStampToDate = (ts) => {
+    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
+      return new Date(ts);
+    }
+    return new Date(ts * 1000);
+  };
+  const convertToLocal = (date) => {
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
+      hourCycle: "h23",
+    });
+    const parts = df.formatToParts(date).reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {});
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
   return (
     <Grid
       as="form"
@@ -124,11 +159,13 @@ export default function CourseReviewCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          userId,
           userDisplayId,
-          userEmail,
           userGender,
           userAge,
           userPrefecture,
+          courseStartMonth,
+          courseEndMonth,
           learningCenterId,
           learningCenterCourseId,
           reviewTitle,
@@ -190,6 +227,43 @@ export default function CourseReviewCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="User id"
+        isRequired={true}
+        isReadOnly={false}
+        value={userId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              userId: value,
+              userDisplayId,
+              userGender,
+              userAge,
+              userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
+              learningCenterId,
+              learningCenterCourseId,
+              reviewTitle,
+              reviewDetail,
+              rating,
+              isPublished,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.userId ?? value;
+          }
+          if (errors.userId?.hasError) {
+            runValidationTasks("userId", value);
+          }
+          setUserId(value);
+        }}
+        onBlur={() => runValidationTasks("userId", userId)}
+        errorMessage={errors.userId?.errorMessage}
+        hasError={errors.userId?.hasError}
+        {...getOverrideProps(overrides, "userId")}
+      ></TextField>
+      <TextField
         label="User display id"
         isRequired={false}
         isReadOnly={false}
@@ -198,11 +272,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId: value,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -225,41 +301,6 @@ export default function CourseReviewCreateForm(props) {
         {...getOverrideProps(overrides, "userDisplayId")}
       ></TextField>
       <TextField
-        label="User email"
-        isRequired={false}
-        isReadOnly={false}
-        value={userEmail}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              userDisplayId,
-              userEmail: value,
-              userGender,
-              userAge,
-              userPrefecture,
-              learningCenterId,
-              learningCenterCourseId,
-              reviewTitle,
-              reviewDetail,
-              rating,
-              isPublished,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.userEmail ?? value;
-          }
-          if (errors.userEmail?.hasError) {
-            runValidationTasks("userEmail", value);
-          }
-          setUserEmail(value);
-        }}
-        onBlur={() => runValidationTasks("userEmail", userEmail)}
-        errorMessage={errors.userEmail?.errorMessage}
-        hasError={errors.userEmail?.hasError}
-        {...getOverrideProps(overrides, "userEmail")}
-      ></TextField>
-      <TextField
         label="User gender"
         isRequired={false}
         isReadOnly={false}
@@ -268,11 +309,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender: value,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -303,11 +346,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge: value,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -338,11 +383,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture: value,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -365,6 +412,90 @@ export default function CourseReviewCreateForm(props) {
         {...getOverrideProps(overrides, "userPrefecture")}
       ></TextField>
       <TextField
+        label="Course start month"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={
+          courseStartMonth &&
+          convertToLocal(convertTimeStampToDate(courseStartMonth))
+        }
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : Number(new Date(e.target.value));
+          if (onChange) {
+            const modelFields = {
+              userId,
+              userDisplayId,
+              userGender,
+              userAge,
+              userPrefecture,
+              courseStartMonth: value,
+              courseEndMonth,
+              learningCenterId,
+              learningCenterCourseId,
+              reviewTitle,
+              reviewDetail,
+              rating,
+              isPublished,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.courseStartMonth ?? value;
+          }
+          if (errors.courseStartMonth?.hasError) {
+            runValidationTasks("courseStartMonth", value);
+          }
+          setCourseStartMonth(value);
+        }}
+        onBlur={() => runValidationTasks("courseStartMonth", courseStartMonth)}
+        errorMessage={errors.courseStartMonth?.errorMessage}
+        hasError={errors.courseStartMonth?.hasError}
+        {...getOverrideProps(overrides, "courseStartMonth")}
+      ></TextField>
+      <TextField
+        label="Course end month"
+        isRequired={false}
+        isReadOnly={false}
+        type="datetime-local"
+        value={
+          courseEndMonth &&
+          convertToLocal(convertTimeStampToDate(courseEndMonth))
+        }
+        onChange={(e) => {
+          let value =
+            e.target.value === "" ? "" : Number(new Date(e.target.value));
+          if (onChange) {
+            const modelFields = {
+              userId,
+              userDisplayId,
+              userGender,
+              userAge,
+              userPrefecture,
+              courseStartMonth,
+              courseEndMonth: value,
+              learningCenterId,
+              learningCenterCourseId,
+              reviewTitle,
+              reviewDetail,
+              rating,
+              isPublished,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.courseEndMonth ?? value;
+          }
+          if (errors.courseEndMonth?.hasError) {
+            runValidationTasks("courseEndMonth", value);
+          }
+          setCourseEndMonth(value);
+        }}
+        onBlur={() => runValidationTasks("courseEndMonth", courseEndMonth)}
+        errorMessage={errors.courseEndMonth?.errorMessage}
+        hasError={errors.courseEndMonth?.hasError}
+        {...getOverrideProps(overrides, "courseEndMonth")}
+      ></TextField>
+      <TextField
         label="Learning center id"
         isRequired={true}
         isReadOnly={false}
@@ -373,11 +504,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId: value,
               learningCenterCourseId,
               reviewTitle,
@@ -408,11 +541,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId: value,
               reviewTitle,
@@ -445,11 +580,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle: value,
@@ -480,11 +617,13 @@ export default function CourseReviewCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -519,11 +658,13 @@ export default function CourseReviewCreateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -554,11 +695,13 @@ export default function CourseReviewCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -589,11 +732,13 @@ export default function CourseReviewCreateForm(props) {
           let value = e.target.checked;
           if (onChange) {
             const modelFields = {
+              userId,
               userDisplayId,
-              userEmail,
               userGender,
               userAge,
               userPrefecture,
+              courseStartMonth,
+              courseEndMonth,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,

@@ -146,11 +146,13 @@ export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
 ) {
   createCourseReview(input: $input, condition: $condition) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -173,11 +175,13 @@ export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
 ) {
   updateCourseReview(input: $input, condition: $condition) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -200,11 +204,13 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
 ) {
   deleteCourseReview(input: $input, condition: $condition) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -220,4 +226,58 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
 ` as GeneratedMutation<
   APITypes.DeleteCourseReviewMutationVariables,
   APITypes.DeleteCourseReviewMutation
+>;
+export const createContact = /* GraphQL */ `mutation CreateContact(
+  $input: CreateContactInput!
+  $condition: ModelContactConditionInput
+) {
+  createContact(input: $input, condition: $condition) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateContactMutationVariables,
+  APITypes.CreateContactMutation
+>;
+export const updateContact = /* GraphQL */ `mutation UpdateContact(
+  $input: UpdateContactInput!
+  $condition: ModelContactConditionInput
+) {
+  updateContact(input: $input, condition: $condition) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateContactMutationVariables,
+  APITypes.UpdateContactMutation
+>;
+export const deleteContact = /* GraphQL */ `mutation DeleteContact(
+  $input: DeleteContactInput!
+  $condition: ModelContactConditionInput
+) {
+  deleteContact(input: $input, condition: $condition) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteContactMutationVariables,
+  APITypes.DeleteContactMutation
 >;

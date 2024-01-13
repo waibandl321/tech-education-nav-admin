@@ -4,9 +4,7 @@ import useLearningCourseLogic from "@/hooks/components/learning-course/useLearni
 import {
   Box,
   Container,
-  MenuItem,
   Paper,
-  Select,
   SelectChangeEvent,
   Table,
   TableContainer,

@@ -45,11 +45,13 @@ type CourseReview
     ]
   ) {
   id: ID!
+  userId: String!
   userDisplayId: String
-  userEmail: String
   userGender: String
   userAge: String
   userPrefecture: String
+  courseStartMonth: AWSTimestamp
+  courseEndMonth: AWSTimestamp
   learningCenterId: ID!
   learningCenterCourseId: ID!
   reviewTitle: String!
@@ -57,4 +59,22 @@ type CourseReview
   rating: Int!
   isPublished: Boolean!
   isDeleted: Boolean
+}
+
+type Contact
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [create] }
+      {
+        allow: groups
+        groups: ["Admin"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  userEmail: String!
+  userName: String!
+  messageInfo: String!
 }

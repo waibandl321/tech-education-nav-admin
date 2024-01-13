@@ -1,4 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import Router from "next/router";
+// nprogress
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+// ページ遷移時のローディング表示
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 // コンテキストで使用されるプロパティの型定義
 interface LoadingContextPropsType {

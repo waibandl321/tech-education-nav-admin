@@ -17,6 +17,15 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolName": "string"
     }
   },
+  "function": {
+    "techeducationnavd0f3d630": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
+  },
   "storage": {
     "s334cc9079": {
       "BucketName": "string",

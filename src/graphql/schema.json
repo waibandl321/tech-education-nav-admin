@@ -200,6 +200,68 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
+        }, {
+          "name" : "getContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "id",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "SCALAR",
+                "name" : "ID",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "listContacts",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "limit",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "nextToken",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "ModelContactConnection",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
@@ -1380,18 +1442,22 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -1430,6 +1496,28 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -1571,6 +1659,15 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "SCALAR",
+        "name" : "AWSTimestamp",
+        "description" : "The `AWSTimestamp` scalar type provided by AWS AppSync, represents the number of seconds that have elapsed since `1970-01-01T00:00Z`. Negative values are also accepted and these represent the number of seconds till `1970-01-01T00:00Z`.  Timestamps are serialized and deserialized as integers. The minimum supported timestamp value is **`-31557014167219200`** which corresponds to `-1000000000-01-01T00:00Z`. The maximum supported timestamp value is **`31556889864403199`** which corresponds to `1000000000-12-31T23:59:59.999999999Z`.",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "OBJECT",
         "name" : "ModelCourseReviewConnection",
         "description" : null,
@@ -1624,7 +1721,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1633,7 +1730,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -1665,6 +1762,24 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1763,6 +1878,224 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelCourseReviewFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "Contact",
+        "description" : null,
+        "fields" : [ {
+          "name" : "id",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "userEmail",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "createdAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updatedAt",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "ModelContactConnection",
+        "description" : null,
+        "fields" : [ {
+          "name" : "items",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "Contact",
+                "ofType" : null
+              }
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "nextToken",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelContactFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userEmail",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelContactFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2067,6 +2400,105 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "CourseReview",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "createContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "CreateContactInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "updateContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "UpdateContactInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "deleteContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "input",
+            "description" : null,
+            "type" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "INPUT_OBJECT",
+                "name" : "DeleteContactInput",
+                "ofType" : null
+              }
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "condition",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactConditionInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -2685,16 +3117,20 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
           },
           "defaultValue" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -2726,6 +3162,24 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2826,7 +3280,7 @@
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2835,7 +3289,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2867,6 +3321,24 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2991,7 +3463,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3000,7 +3472,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3032,6 +3504,24 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSTimestamp",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3105,6 +3595,205 @@
       }, {
         "kind" : "INPUT_OBJECT",
         "name" : "DeleteCourseReviewInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "CreateContactInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userEmail",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelContactConditionInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "userEmail",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactConditionInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelContactConditionInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "not",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelContactConditionInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "UpdateContactInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userEmail",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "DeleteContactInput",
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -3304,6 +3993,66 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "CourseReview",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onCreateContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelSubscriptionContactFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onUpdateContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelSubscriptionContactFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "onDeleteContact",
+          "description" : null,
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelSubscriptionContactFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Contact",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -3929,7 +4678,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userDisplayId",
+          "name" : "userId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3938,7 +4687,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "userEmail",
+          "name" : "userDisplayId",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3970,6 +4719,24 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseStartMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "courseEndMonth",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionIntInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -4058,6 +4825,77 @@
             "ofType" : {
               "kind" : "INPUT_OBJECT",
               "name" : "ModelSubscriptionCourseReviewFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelSubscriptionContactFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionIDInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userEmail",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userName",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "messageInfo",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelSubscriptionStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "and",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelSubscriptionContactFilterInput",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "or",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "ModelSubscriptionContactFilterInput",
               "ofType" : null
             }
           },
@@ -5074,79 +5912,12 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "aws_cognito_user_pools",
-        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_iam",
-        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "aws_auth",
         "description" : "Directs the schema to enforce authorization on a field",
         "locations" : [ "FIELD_DEFINITION" ],
         "args" : [ {
           "name" : "cognito_groups",
           "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
-        "name" : "aws_subscribe",
-        "description" : "Tells the service which mutation triggers this subscription.",
-        "locations" : [ "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "mutations",
-          "description" : "List of mutations which will trigger this subscription when they are called.",
           "type" : {
             "kind" : "LIST",
             "name" : null,
@@ -5183,10 +5954,31 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
+        "name" : "aws_lambda",
+        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_subscribe",
+        "description" : "Tells the service which mutation triggers this subscription.",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "mutations",
+          "description" : "List of mutations which will trigger this subscription when they are called.",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
@@ -5199,10 +5991,56 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_lambda",
-        "description" : "Tells the service this field/object has access authorized by a Lambda Authorizer.",
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_iam",
+        "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "aws_cognito_user_pools",
+        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

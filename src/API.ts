@@ -184,11 +184,13 @@ export type DeleteLearningCenterCourseInput = {
 
 export type CreateCourseReviewInput = {
   id?: string | null;
+  userId: string;
   userDisplayId?: string | null;
-  userEmail?: string | null;
   userGender?: string | null;
   userAge?: string | null;
   userPrefecture?: string | null;
+  courseStartMonth?: number | null;
+  courseEndMonth?: number | null;
   learningCenterId: string;
   learningCenterCourseId: string;
   reviewTitle: string;
@@ -199,11 +201,13 @@ export type CreateCourseReviewInput = {
 };
 
 export type ModelCourseReviewConditionInput = {
+  userId?: ModelStringInput | null;
   userDisplayId?: ModelStringInput | null;
-  userEmail?: ModelStringInput | null;
   userGender?: ModelStringInput | null;
   userAge?: ModelStringInput | null;
   userPrefecture?: ModelStringInput | null;
+  courseStartMonth?: ModelIntInput | null;
+  courseEndMonth?: ModelIntInput | null;
   learningCenterId?: ModelIDInput | null;
   learningCenterCourseId?: ModelIDInput | null;
   reviewTitle?: ModelStringInput | null;
@@ -219,11 +223,13 @@ export type ModelCourseReviewConditionInput = {
 export type CourseReview = {
   __typename: "CourseReview";
   id: string;
+  userId: string;
   userDisplayId?: string | null;
-  userEmail?: string | null;
   userGender?: string | null;
   userAge?: string | null;
   userPrefecture?: string | null;
+  courseStartMonth?: number | null;
+  courseEndMonth?: number | null;
   learningCenterId: string;
   learningCenterCourseId: string;
   reviewTitle: string;
@@ -237,11 +243,13 @@ export type CourseReview = {
 
 export type UpdateCourseReviewInput = {
   id: string;
+  userId?: string | null;
   userDisplayId?: string | null;
-  userEmail?: string | null;
   userGender?: string | null;
   userAge?: string | null;
   userPrefecture?: string | null;
+  courseStartMonth?: number | null;
+  courseEndMonth?: number | null;
   learningCenterId?: string | null;
   learningCenterCourseId?: string | null;
   reviewTitle?: string | null;
@@ -252,6 +260,43 @@ export type UpdateCourseReviewInput = {
 };
 
 export type DeleteCourseReviewInput = {
+  id: string;
+};
+
+export type CreateContactInput = {
+  id?: string | null;
+  userEmail: string;
+  userName: string;
+  messageInfo: string;
+};
+
+export type ModelContactConditionInput = {
+  userEmail?: ModelStringInput | null;
+  userName?: ModelStringInput | null;
+  messageInfo?: ModelStringInput | null;
+  and?: Array<ModelContactConditionInput | null> | null;
+  or?: Array<ModelContactConditionInput | null> | null;
+  not?: ModelContactConditionInput | null;
+};
+
+export type Contact = {
+  __typename: "Contact";
+  id: string;
+  userEmail: string;
+  userName: string;
+  messageInfo: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateContactInput = {
+  id: string;
+  userEmail?: string | null;
+  userName?: string | null;
+  messageInfo?: string | null;
+};
+
+export type DeleteContactInput = {
   id: string;
 };
 
@@ -297,11 +342,13 @@ export type ModelLearningCenterCourseConnection = {
 
 export type ModelCourseReviewFilterInput = {
   id?: ModelIDInput | null;
+  userId?: ModelStringInput | null;
   userDisplayId?: ModelStringInput | null;
-  userEmail?: ModelStringInput | null;
   userGender?: ModelStringInput | null;
   userAge?: ModelStringInput | null;
   userPrefecture?: ModelStringInput | null;
+  courseStartMonth?: ModelIntInput | null;
+  courseEndMonth?: ModelIntInput | null;
   learningCenterId?: ModelIDInput | null;
   learningCenterCourseId?: ModelIDInput | null;
   reviewTitle?: ModelStringInput | null;
@@ -317,6 +364,22 @@ export type ModelCourseReviewFilterInput = {
 export type ModelCourseReviewConnection = {
   __typename: "ModelCourseReviewConnection";
   items: Array<CourseReview | null>;
+  nextToken?: string | null;
+};
+
+export type ModelContactFilterInput = {
+  id?: ModelIDInput | null;
+  userEmail?: ModelStringInput | null;
+  userName?: ModelStringInput | null;
+  messageInfo?: ModelStringInput | null;
+  and?: Array<ModelContactFilterInput | null> | null;
+  or?: Array<ModelContactFilterInput | null> | null;
+  not?: ModelContactFilterInput | null;
+};
+
+export type ModelContactConnection = {
+  __typename: "ModelContactConnection";
+  items: Array<Contact | null>;
   nextToken?: string | null;
 };
 
@@ -395,11 +458,13 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
 
 export type ModelSubscriptionCourseReviewFilterInput = {
   id?: ModelSubscriptionIDInput | null;
+  userId?: ModelSubscriptionStringInput | null;
   userDisplayId?: ModelSubscriptionStringInput | null;
-  userEmail?: ModelSubscriptionStringInput | null;
   userGender?: ModelSubscriptionStringInput | null;
   userAge?: ModelSubscriptionStringInput | null;
   userPrefecture?: ModelSubscriptionStringInput | null;
+  courseStartMonth?: ModelSubscriptionIntInput | null;
+  courseEndMonth?: ModelSubscriptionIntInput | null;
   learningCenterId?: ModelSubscriptionIDInput | null;
   learningCenterCourseId?: ModelSubscriptionIDInput | null;
   reviewTitle?: ModelSubscriptionStringInput | null;
@@ -409,6 +474,15 @@ export type ModelSubscriptionCourseReviewFilterInput = {
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionCourseReviewFilterInput | null> | null;
   or?: Array<ModelSubscriptionCourseReviewFilterInput | null> | null;
+};
+
+export type ModelSubscriptionContactFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  userEmail?: ModelSubscriptionStringInput | null;
+  userName?: ModelSubscriptionStringInput | null;
+  messageInfo?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionContactFilterInput | null> | null;
+  or?: Array<ModelSubscriptionContactFilterInput | null> | null;
 };
 
 export type CreateLearningCenterMutationVariables = {
@@ -546,11 +620,13 @@ export type CreateCourseReviewMutation = {
   createCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -572,11 +648,13 @@ export type UpdateCourseReviewMutation = {
   updateCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -598,11 +676,13 @@ export type DeleteCourseReviewMutation = {
   deleteCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -610,6 +690,57 @@ export type DeleteCourseReviewMutation = {
     rating: number;
     isPublished: boolean;
     isDeleted?: boolean | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type CreateContactMutationVariables = {
+  input: CreateContactInput;
+  condition?: ModelContactConditionInput | null;
+};
+
+export type CreateContactMutation = {
+  createContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateContactMutationVariables = {
+  input: UpdateContactInput;
+  condition?: ModelContactConditionInput | null;
+};
+
+export type UpdateContactMutation = {
+  updateContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteContactMutationVariables = {
+  input: DeleteContactInput;
+  condition?: ModelContactConditionInput | null;
+};
+
+export type DeleteContactMutation = {
+  deleteContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -715,11 +846,13 @@ export type GetCourseReviewQuery = {
   getCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -744,11 +877,13 @@ export type ListCourseReviewsQuery = {
     items: Array<{
       __typename: "CourseReview";
       id: string;
+      userId: string;
       userDisplayId?: string | null;
-      userEmail?: string | null;
       userGender?: string | null;
       userAge?: string | null;
       userPrefecture?: string | null;
+      courseStartMonth?: number | null;
+      courseEndMonth?: number | null;
       learningCenterId: string;
       learningCenterCourseId: string;
       reviewTitle: string;
@@ -756,6 +891,44 @@ export type ListCourseReviewsQuery = {
       rating: number;
       isPublished: boolean;
       isDeleted?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type GetContactQueryVariables = {
+  id: string;
+};
+
+export type GetContactQuery = {
+  getContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListContactsQueryVariables = {
+  filter?: ModelContactFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListContactsQuery = {
+  listContacts?: {
+    __typename: "ModelContactConnection";
+    items: Array<{
+      __typename: "Contact";
+      id: string;
+      userEmail: string;
+      userName: string;
+      messageInfo: string;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -891,11 +1064,13 @@ export type OnCreateCourseReviewSubscription = {
   onCreateCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -916,11 +1091,13 @@ export type OnUpdateCourseReviewSubscription = {
   onUpdateCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -941,11 +1118,13 @@ export type OnDeleteCourseReviewSubscription = {
   onDeleteCourseReview?: {
     __typename: "CourseReview";
     id: string;
+    userId: string;
     userDisplayId?: string | null;
-    userEmail?: string | null;
     userGender?: string | null;
     userAge?: string | null;
     userPrefecture?: string | null;
+    courseStartMonth?: number | null;
+    courseEndMonth?: number | null;
     learningCenterId: string;
     learningCenterCourseId: string;
     reviewTitle: string;
@@ -953,6 +1132,54 @@ export type OnDeleteCourseReviewSubscription = {
     rating: number;
     isPublished: boolean;
     isDeleted?: boolean | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnCreateContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null;
+};
+
+export type OnCreateContactSubscription = {
+  onCreateContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null;
+};
+
+export type OnUpdateContactSubscription = {
+  onUpdateContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteContactSubscriptionVariables = {
+  filter?: ModelSubscriptionContactFilterInput | null;
+};
+
+export type OnDeleteContactSubscription = {
+  onDeleteContact?: {
+    __typename: "Contact";
+    id: string;
+    userEmail: string;
+    userName: string;
+    messageInfo: string;
     createdAt: string;
     updatedAt: string;
   } | null;

@@ -107,11 +107,13 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
 export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
   getCourseReview(id: $id) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -136,11 +138,13 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
   listCourseReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      userId
       userDisplayId
-      userEmail
       userGender
       userAge
       userPrefecture
+      courseStartMonth
+      courseEndMonth
       learningCenterId
       learningCenterCourseId
       reviewTitle
@@ -159,4 +163,42 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
 ` as GeneratedQuery<
   APITypes.ListCourseReviewsQueryVariables,
   APITypes.ListCourseReviewsQuery
+>;
+export const getContact = /* GraphQL */ `query GetContact($id: ID!) {
+  getContact(id: $id) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetContactQueryVariables,
+  APITypes.GetContactQuery
+>;
+export const listContacts = /* GraphQL */ `query ListContacts(
+  $filter: ModelContactFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userEmail
+      userName
+      messageInfo
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListContactsQueryVariables,
+  APITypes.ListContactsQuery
 >;

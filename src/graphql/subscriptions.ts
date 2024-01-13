@@ -139,11 +139,13 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
 ) {
   onCreateCourseReview(filter: $filter) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -165,11 +167,13 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
 ) {
   onUpdateCourseReview(filter: $filter) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -191,11 +195,13 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
 ) {
   onDeleteCourseReview(filter: $filter) {
     id
+    userId
     userDisplayId
-    userEmail
     userGender
     userAge
     userPrefecture
+    courseStartMonth
+    courseEndMonth
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -211,4 +217,49 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
 ` as GeneratedSubscription<
   APITypes.OnDeleteCourseReviewSubscriptionVariables,
   APITypes.OnDeleteCourseReviewSubscription
+>;
+export const onCreateContact = /* GraphQL */ `subscription OnCreateContact($filter: ModelSubscriptionContactFilterInput) {
+  onCreateContact(filter: $filter) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateContactSubscriptionVariables,
+  APITypes.OnCreateContactSubscription
+>;
+export const onUpdateContact = /* GraphQL */ `subscription OnUpdateContact($filter: ModelSubscriptionContactFilterInput) {
+  onUpdateContact(filter: $filter) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateContactSubscriptionVariables,
+  APITypes.OnUpdateContactSubscription
+>;
+export const onDeleteContact = /* GraphQL */ `subscription OnDeleteContact($filter: ModelSubscriptionContactFilterInput) {
+  onDeleteContact(filter: $filter) {
+    id
+    userEmail
+    userName
+    messageInfo
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteContactSubscriptionVariables,
+  APITypes.OnDeleteContactSubscription
 >;
