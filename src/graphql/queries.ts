@@ -107,7 +107,6 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
 export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
   getCourseReview(id: $id) {
     id
-    userId
     userDisplayId
     userGender
     userAge
@@ -138,7 +137,6 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
   listCourseReviews(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      userId
       userDisplayId
       userGender
       userAge

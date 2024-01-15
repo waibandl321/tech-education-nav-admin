@@ -32,7 +32,7 @@ const headers = [
   { key: "courseName", name: "タイトル" },
   { key: "courseURL", name: "詳細" },
   { key: "postUser", name: "投稿ユーザー" },
-  { key: "couseDetail", name: "公開/非公開" },
+  { key: "couseDetail", name: "公開" },
   { key: "admin", name: "編集/削除" },
 ];
 

@@ -139,7 +139,6 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
 ) {
   onCreateCourseReview(filter: $filter) {
     id
-    userId
     userDisplayId
     userGender
     userAge
@@ -167,7 +166,6 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
 ) {
   onUpdateCourseReview(filter: $filter) {
     id
-    userId
     userDisplayId
     userGender
     userAge
@@ -195,7 +193,6 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
 ) {
   onDeleteCourseReview(filter: $filter) {
     id
-    userId
     userDisplayId
     userGender
     userAge

@@ -146,7 +146,6 @@ export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
 ) {
   createCourseReview(input: $input, condition: $condition) {
     id
-    userId
     userDisplayId
     userGender
     userAge
@@ -175,7 +174,6 @@ export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
 ) {
   updateCourseReview(input: $input, condition: $condition) {
     id
-    userId
     userDisplayId
     userGender
     userAge
@@ -204,7 +202,6 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
 ) {
   deleteCourseReview(input: $input, condition: $condition) {
     id
-    userId
     userDisplayId
     userGender
     userAge

@@ -184,7 +184,6 @@ export type DeleteLearningCenterCourseInput = {
 
 export type CreateCourseReviewInput = {
   id?: string | null;
-  userId: string;
   userDisplayId?: string | null;
   userGender?: string | null;
   userAge?: string | null;
@@ -201,7 +200,6 @@ export type CreateCourseReviewInput = {
 };
 
 export type ModelCourseReviewConditionInput = {
-  userId?: ModelStringInput | null;
   userDisplayId?: ModelStringInput | null;
   userGender?: ModelStringInput | null;
   userAge?: ModelStringInput | null;
@@ -223,7 +221,6 @@ export type ModelCourseReviewConditionInput = {
 export type CourseReview = {
   __typename: "CourseReview";
   id: string;
-  userId: string;
   userDisplayId?: string | null;
   userGender?: string | null;
   userAge?: string | null;
@@ -243,7 +240,6 @@ export type CourseReview = {
 
 export type UpdateCourseReviewInput = {
   id: string;
-  userId?: string | null;
   userDisplayId?: string | null;
   userGender?: string | null;
   userAge?: string | null;
@@ -342,7 +338,6 @@ export type ModelLearningCenterCourseConnection = {
 
 export type ModelCourseReviewFilterInput = {
   id?: ModelIDInput | null;
-  userId?: ModelStringInput | null;
   userDisplayId?: ModelStringInput | null;
   userGender?: ModelStringInput | null;
   userAge?: ModelStringInput | null;
@@ -458,7 +453,6 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
 
 export type ModelSubscriptionCourseReviewFilterInput = {
   id?: ModelSubscriptionIDInput | null;
-  userId?: ModelSubscriptionStringInput | null;
   userDisplayId?: ModelSubscriptionStringInput | null;
   userGender?: ModelSubscriptionStringInput | null;
   userAge?: ModelSubscriptionStringInput | null;
@@ -620,7 +614,6 @@ export type CreateCourseReviewMutation = {
   createCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -648,7 +641,6 @@ export type UpdateCourseReviewMutation = {
   updateCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -676,7 +668,6 @@ export type DeleteCourseReviewMutation = {
   deleteCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -846,7 +837,6 @@ export type GetCourseReviewQuery = {
   getCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -877,7 +867,6 @@ export type ListCourseReviewsQuery = {
     items: Array<{
       __typename: "CourseReview";
       id: string;
-      userId: string;
       userDisplayId?: string | null;
       userGender?: string | null;
       userAge?: string | null;
@@ -1064,7 +1053,6 @@ export type OnCreateCourseReviewSubscription = {
   onCreateCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -1091,7 +1079,6 @@ export type OnUpdateCourseReviewSubscription = {
   onUpdateCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;
@@ -1118,7 +1105,6 @@ export type OnDeleteCourseReviewSubscription = {
   onDeleteCourseReview?: {
     __typename: "CourseReview";
     id: string;
-    userId: string;
     userDisplayId?: string | null;
     userGender?: string | null;
     userAge?: string | null;

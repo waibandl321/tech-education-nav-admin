@@ -16,7 +16,6 @@ import {
 
 const userHeaders = [
   { key: "userDisplayId", name: "表示ID" },
-  { key: "userId", name: "ユーザーID" },
   { key: "userGender", name: "性別" },
   { key: "userAge", name: "年齢" },
   { key: "userPrefecture", name: "都道府県" },
@@ -56,7 +55,6 @@ export default function ReviewUserModal({
             <TableBody>
               <TableRow>
                 <TableCell>{targetReview?.userDisplayId}</TableCell>
-                <TableCell>{targetReview?.userId}</TableCell>
                 <TableCell>{targetReview?.userGender}</TableCell>
                 <TableCell>{targetReview?.userAge}</TableCell>
                 <TableCell>{targetReview?.userPrefecture}</TableCell>
