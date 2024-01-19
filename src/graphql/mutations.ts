@@ -150,8 +150,7 @@ export const createCourseReview = /* GraphQL */ `mutation CreateCourseReview(
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -178,8 +177,7 @@ export const updateCourseReview = /* GraphQL */ `mutation UpdateCourseReview(
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -206,8 +204,7 @@ export const deleteCourseReview = /* GraphQL */ `mutation DeleteCourseReview(
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle

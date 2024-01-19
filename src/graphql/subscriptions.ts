@@ -143,8 +143,7 @@ export const onCreateCourseReview = /* GraphQL */ `subscription OnCreateCourseRe
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -170,8 +169,7 @@ export const onUpdateCourseReview = /* GraphQL */ `subscription OnUpdateCourseRe
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -197,8 +195,7 @@ export const onDeleteCourseReview = /* GraphQL */ `subscription OnDeleteCourseRe
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle

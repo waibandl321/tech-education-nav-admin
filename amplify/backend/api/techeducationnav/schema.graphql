@@ -46,11 +46,10 @@ type CourseReview
   ) {
   id: ID!
   userDisplayId: String
-  userGender: String
-  userAge: String
-  userPrefecture: String
-  courseStartMonth: AWSTimestamp
-  courseEndMonth: AWSTimestamp
+  userGender: String!
+  userAge: String!
+  userPrefecture: String!
+  studyLengthMonths: Int!
   learningCenterId: ID!
   learningCenterCourseId: ID!
   reviewTitle: String!

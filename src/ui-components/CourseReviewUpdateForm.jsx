@@ -35,8 +35,7 @@ export default function CourseReviewUpdateForm(props) {
     userGender: "",
     userAge: "",
     userPrefecture: "",
-    courseStartMonth: "",
-    courseEndMonth: "",
+    studyLengthMonths: "",
     learningCenterId: "",
     learningCenterCourseId: "",
     reviewTitle: "",
@@ -53,11 +52,8 @@ export default function CourseReviewUpdateForm(props) {
   const [userPrefecture, setUserPrefecture] = React.useState(
     initialValues.userPrefecture
   );
-  const [courseStartMonth, setCourseStartMonth] = React.useState(
-    initialValues.courseStartMonth
-  );
-  const [courseEndMonth, setCourseEndMonth] = React.useState(
-    initialValues.courseEndMonth
+  const [studyLengthMonths, setStudyLengthMonths] = React.useState(
+    initialValues.studyLengthMonths
   );
   const [learningCenterId, setLearningCenterId] = React.useState(
     initialValues.learningCenterId
@@ -85,8 +81,7 @@ export default function CourseReviewUpdateForm(props) {
     setUserGender(cleanValues.userGender);
     setUserAge(cleanValues.userAge);
     setUserPrefecture(cleanValues.userPrefecture);
-    setCourseStartMonth(cleanValues.courseStartMonth);
-    setCourseEndMonth(cleanValues.courseEndMonth);
+    setStudyLengthMonths(cleanValues.studyLengthMonths);
     setLearningCenterId(cleanValues.learningCenterId);
     setLearningCenterCourseId(cleanValues.learningCenterCourseId);
     setReviewTitle(cleanValues.reviewTitle);
@@ -116,11 +111,10 @@ export default function CourseReviewUpdateForm(props) {
   React.useEffect(resetStateValues, [courseReviewRecord]);
   const validations = {
     userDisplayId: [],
-    userGender: [],
-    userAge: [],
-    userPrefecture: [],
-    courseStartMonth: [],
-    courseEndMonth: [],
+    userGender: [{ type: "Required" }],
+    userAge: [{ type: "Required" }],
+    userPrefecture: [{ type: "Required" }],
+    studyLengthMonths: [{ type: "Required" }],
     learningCenterId: [{ type: "Required" }],
     learningCenterCourseId: [{ type: "Required" }],
     reviewTitle: [{ type: "Required" }],
@@ -146,29 +140,6 @@ export default function CourseReviewUpdateForm(props) {
     setErrors((errors) => ({ ...errors, [fieldName]: validationResponse }));
     return validationResponse;
   };
-  const convertTimeStampToDate = (ts) => {
-    if (Math.abs(Date.now() - ts) < Math.abs(Date.now() - ts * 1000)) {
-      return new Date(ts);
-    }
-    return new Date(ts * 1000);
-  };
-  const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat("default", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      calendar: "iso8601",
-      numberingSystem: "latn",
-      hourCycle: "h23",
-    });
-    const parts = df.formatToParts(date).reduce((acc, part) => {
-      acc[part.type] = part.value;
-      return acc;
-    }, {});
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
-  };
   return (
     <Grid
       as="form"
@@ -179,11 +150,10 @@ export default function CourseReviewUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           userDisplayId: userDisplayId ?? null,
-          userGender: userGender ?? null,
-          userAge: userAge ?? null,
-          userPrefecture: userPrefecture ?? null,
-          courseStartMonth: courseStartMonth ?? null,
-          courseEndMonth: courseEndMonth ?? null,
+          userGender,
+          userAge,
+          userPrefecture,
+          studyLengthMonths,
           learningCenterId,
           learningCenterCourseId,
           reviewTitle,
@@ -255,8 +225,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -280,7 +249,7 @@ export default function CourseReviewUpdateForm(props) {
       ></TextField>
       <TextField
         label="User gender"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={userGender}
         onChange={(e) => {
@@ -291,8 +260,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender: value,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -316,7 +284,7 @@ export default function CourseReviewUpdateForm(props) {
       ></TextField>
       <TextField
         label="User age"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={userAge}
         onChange={(e) => {
@@ -327,8 +295,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge: value,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -352,7 +319,7 @@ export default function CourseReviewUpdateForm(props) {
       ></TextField>
       <TextField
         label="User prefecture"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={userPrefecture}
         onChange={(e) => {
@@ -363,8 +330,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture: value,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -387,25 +353,23 @@ export default function CourseReviewUpdateForm(props) {
         {...getOverrideProps(overrides, "userPrefecture")}
       ></TextField>
       <TextField
-        label="Course start month"
-        isRequired={false}
+        label="Study length months"
+        isRequired={true}
         isReadOnly={false}
-        type="datetime-local"
-        value={
-          courseStartMonth &&
-          convertToLocal(convertTimeStampToDate(courseStartMonth))
-        }
+        type="number"
+        step="any"
+        value={studyLengthMonths}
         onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : Number(new Date(e.target.value));
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               userDisplayId,
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth: value,
-              courseEndMonth,
+              studyLengthMonths: value,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -415,58 +379,19 @@ export default function CourseReviewUpdateForm(props) {
               isDeleted,
             };
             const result = onChange(modelFields);
-            value = result?.courseStartMonth ?? value;
+            value = result?.studyLengthMonths ?? value;
           }
-          if (errors.courseStartMonth?.hasError) {
-            runValidationTasks("courseStartMonth", value);
+          if (errors.studyLengthMonths?.hasError) {
+            runValidationTasks("studyLengthMonths", value);
           }
-          setCourseStartMonth(value);
+          setStudyLengthMonths(value);
         }}
-        onBlur={() => runValidationTasks("courseStartMonth", courseStartMonth)}
-        errorMessage={errors.courseStartMonth?.errorMessage}
-        hasError={errors.courseStartMonth?.hasError}
-        {...getOverrideProps(overrides, "courseStartMonth")}
-      ></TextField>
-      <TextField
-        label="Course end month"
-        isRequired={false}
-        isReadOnly={false}
-        type="datetime-local"
-        value={
-          courseEndMonth &&
-          convertToLocal(convertTimeStampToDate(courseEndMonth))
+        onBlur={() =>
+          runValidationTasks("studyLengthMonths", studyLengthMonths)
         }
-        onChange={(e) => {
-          let value =
-            e.target.value === "" ? "" : Number(new Date(e.target.value));
-          if (onChange) {
-            const modelFields = {
-              userDisplayId,
-              userGender,
-              userAge,
-              userPrefecture,
-              courseStartMonth,
-              courseEndMonth: value,
-              learningCenterId,
-              learningCenterCourseId,
-              reviewTitle,
-              reviewDetail,
-              rating,
-              isPublished,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.courseEndMonth ?? value;
-          }
-          if (errors.courseEndMonth?.hasError) {
-            runValidationTasks("courseEndMonth", value);
-          }
-          setCourseEndMonth(value);
-        }}
-        onBlur={() => runValidationTasks("courseEndMonth", courseEndMonth)}
-        errorMessage={errors.courseEndMonth?.errorMessage}
-        hasError={errors.courseEndMonth?.hasError}
-        {...getOverrideProps(overrides, "courseEndMonth")}
+        errorMessage={errors.studyLengthMonths?.errorMessage}
+        hasError={errors.studyLengthMonths?.hasError}
+        {...getOverrideProps(overrides, "studyLengthMonths")}
       ></TextField>
       <TextField
         label="Learning center id"
@@ -481,8 +406,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId: value,
               learningCenterCourseId,
               reviewTitle,
@@ -517,8 +441,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId: value,
               reviewTitle,
@@ -555,8 +478,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle: value,
@@ -591,8 +513,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -631,8 +552,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -667,8 +587,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,
@@ -703,8 +622,7 @@ export default function CourseReviewUpdateForm(props) {
               userGender,
               userAge,
               userPrefecture,
-              courseStartMonth,
-              courseEndMonth,
+              studyLengthMonths,
               learningCenterId,
               learningCenterCourseId,
               reviewTitle,

@@ -27,8 +27,7 @@ export declare type CourseReviewUpdateFormInputValues = {
     userGender?: string;
     userAge?: string;
     userPrefecture?: string;
-    courseStartMonth?: number;
-    courseEndMonth?: number;
+    studyLengthMonths?: number;
     learningCenterId?: string;
     learningCenterCourseId?: string;
     reviewTitle?: string;
@@ -42,8 +41,7 @@ export declare type CourseReviewUpdateFormValidationValues = {
     userGender?: ValidationFunction<string>;
     userAge?: ValidationFunction<string>;
     userPrefecture?: ValidationFunction<string>;
-    courseStartMonth?: ValidationFunction<number>;
-    courseEndMonth?: ValidationFunction<number>;
+    studyLengthMonths?: ValidationFunction<number>;
     learningCenterId?: ValidationFunction<string>;
     learningCenterCourseId?: ValidationFunction<string>;
     reviewTitle?: ValidationFunction<string>;
@@ -59,8 +57,7 @@ export declare type CourseReviewUpdateFormOverridesProps = {
     userGender?: PrimitiveOverrideProps<TextFieldProps>;
     userAge?: PrimitiveOverrideProps<TextFieldProps>;
     userPrefecture?: PrimitiveOverrideProps<TextFieldProps>;
-    courseStartMonth?: PrimitiveOverrideProps<TextFieldProps>;
-    courseEndMonth?: PrimitiveOverrideProps<TextFieldProps>;
+    studyLengthMonths?: PrimitiveOverrideProps<TextFieldProps>;
     learningCenterId?: PrimitiveOverrideProps<TextFieldProps>;
     learningCenterCourseId?: PrimitiveOverrideProps<TextFieldProps>;
     reviewTitle?: PrimitiveOverrideProps<TextFieldProps>;

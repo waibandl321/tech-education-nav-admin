@@ -111,8 +111,7 @@ export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
     userGender
     userAge
     userPrefecture
-    courseStartMonth
-    courseEndMonth
+    studyLengthMonths
     learningCenterId
     learningCenterCourseId
     reviewTitle
@@ -141,8 +140,7 @@ export const listCourseReviews = /* GraphQL */ `query ListCourseReviews(
       userGender
       userAge
       userPrefecture
-      courseStartMonth
-      courseEndMonth
+      studyLengthMonths
       learningCenterId
       learningCenterCourseId
       reviewTitle
