@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import useSignOut from "@/hooks/components/auth/useSignOut";
 import { useUserContext } from "@/contexts/UserContext";
+import Link from "next/link";
 /**
  * ヘッダー コンポーネント
  */
@@ -15,21 +16,21 @@ export default function Header() {
   const handleSignOut = useSignOut();
   const { isLoggedIn } = useUserContext();
 
+  const menus = [
+    { name: "スクール情報", path: "/learning-center" },
+    { name: "コース情報", path: "/learning-courses" },
+    { name: "レビュー情報", path: "/reviews" },
+  ];
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#666" }}>
         <Toolbar>
-          <Button
-            variant="text"
-            sx={{
-              display: { xs: "none", sm: "block" },
-              m: "0 24px 0 0",
-              fontSize: 20,
-            }}
-            onClick={() => router.push("/")}
-          >
-            【管理】テック教育ナビ
-          </Button>
+          {menus.map((menu) => (
+            <Link key={menu.path} href={menu.path} style={{ marginRight: 16 }}>
+              {menu.name}
+            </Link>
+          ))}
           <Box sx={{ flexGrow: 1 }} />
           {!isLoggedIn && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>

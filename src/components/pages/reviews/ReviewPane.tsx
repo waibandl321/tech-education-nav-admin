@@ -127,7 +127,7 @@ export default function ReviewPane({
   };
 
   return (
-    <Container>
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Box sx={{ mt: 2 }} display="flex" justifyContent="flex-end">
         <IconButton color="primary" onClick={fetchData}>
           <RefreshIcon></RefreshIcon>

@@ -121,7 +121,7 @@ export default function LearningCoursesPane() {
   }, []);
 
   return (
-    <Container sx={{ px: 4, pt: 2 }}>
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Box>
         <Autocomplete
           id="learningCenterSelect"

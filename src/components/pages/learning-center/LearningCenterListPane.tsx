@@ -73,7 +73,7 @@ export default function LearningCenterList() {
   }, []);
 
   return (
-    <Container sx={{ px: 4, pt: 2 }}>
+    <Container maxWidth="xl" sx={{ py: 2 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box>
           <TextField

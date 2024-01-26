@@ -1,7 +1,5 @@
 import Layout from "@/app/layout";
 import Head from "next/head";
-import { Grid } from "@mui/material";
-import Sidebar from "@/components/common/section/Sidebar";
 import { GetServerSideProps } from "next";
 import { fetchReviewList, fetchSchoolData } from "@/hooks/server/fetchData";
 import { CourseReview, LearningCenter, LearningCenterCourse } from "@/API";
@@ -22,14 +20,7 @@ export default function LearningCoursesIndex({
         <title>【管理】レビュー情報</title>
       </Head>
       <Layout>
-        <Grid container>
-          <Grid item width={200}>
-            <Sidebar />
-          </Grid>
-          <Grid item width={"calc(100% - 200px)"} paddingBottom={10}>
-            <ReviewPane reviews={reviews} centers={centers} courses={courses} />
-          </Grid>
-        </Grid>
+        <ReviewPane reviews={reviews} centers={centers} courses={courses} />
       </Layout>
     </>
   );
