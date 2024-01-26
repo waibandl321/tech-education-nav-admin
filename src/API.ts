@@ -2,32 +2,16 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateLearningCenterInput = {
+export type CreateProgrammingLanguageInput = {
   id?: string | null;
-  name?: string | null;
-  memo?: string | null;
-  operatingCompany?: string | null;
-  headquartersLocation?: string | null;
-  websiteURL?: string | null;
-  logoImageURL?: string | null;
-  establishmentYear?: number | null;
-  representative?: string | null;
-  isDeleted?: boolean | null;
+  name: string;
 };
 
-export type ModelLearningCenterConditionInput = {
+export type ModelProgrammingLanguageConditionInput = {
   name?: ModelStringInput | null;
-  memo?: ModelStringInput | null;
-  operatingCompany?: ModelStringInput | null;
-  headquartersLocation?: ModelStringInput | null;
-  websiteURL?: ModelStringInput | null;
-  logoImageURL?: ModelStringInput | null;
-  establishmentYear?: ModelIntInput | null;
-  representative?: ModelStringInput | null;
-  isDeleted?: ModelBooleanInput | null;
-  and?: Array<ModelLearningCenterConditionInput | null> | null;
-  or?: Array<ModelLearningCenterConditionInput | null> | null;
-  not?: ModelLearningCenterConditionInput | null;
+  and?: Array<ModelProgrammingLanguageConditionInput | null> | null;
+  or?: Array<ModelProgrammingLanguageConditionInput | null> | null;
+  not?: ModelProgrammingLanguageConditionInput | null;
 };
 
 export type ModelStringInput = {
@@ -67,6 +51,109 @@ export type ModelSizeInput = {
   ge?: number | null;
   gt?: number | null;
   between?: Array<number | null> | null;
+};
+
+export type ProgrammingLanguage = {
+  __typename: "ProgrammingLanguage";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateProgrammingLanguageInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeleteProgrammingLanguageInput = {
+  id: string;
+};
+
+export type CreateFrameworkInput = {
+  id?: string | null;
+  name: string;
+};
+
+export type ModelFrameworkConditionInput = {
+  name?: ModelStringInput | null;
+  and?: Array<ModelFrameworkConditionInput | null> | null;
+  or?: Array<ModelFrameworkConditionInput | null> | null;
+  not?: ModelFrameworkConditionInput | null;
+};
+
+export type Framework = {
+  __typename: "Framework";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateFrameworkInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeleteFrameworkInput = {
+  id: string;
+};
+
+export type CreateJobTypeInput = {
+  id?: string | null;
+  name: string;
+};
+
+export type ModelJobTypeConditionInput = {
+  name?: ModelStringInput | null;
+  and?: Array<ModelJobTypeConditionInput | null> | null;
+  or?: Array<ModelJobTypeConditionInput | null> | null;
+  not?: ModelJobTypeConditionInput | null;
+};
+
+export type JobType = {
+  __typename: "JobType";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateJobTypeInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeleteJobTypeInput = {
+  id: string;
+};
+
+export type CreateLearningCenterInput = {
+  id?: string | null;
+  name?: string | null;
+  memo?: string | null;
+  operatingCompany?: string | null;
+  headquartersLocation?: string | null;
+  websiteURL?: string | null;
+  logoImageURL?: string | null;
+  establishmentYear?: number | null;
+  representative?: string | null;
+  isDeleted?: boolean | null;
+};
+
+export type ModelLearningCenterConditionInput = {
+  name?: ModelStringInput | null;
+  memo?: ModelStringInput | null;
+  operatingCompany?: ModelStringInput | null;
+  headquartersLocation?: ModelStringInput | null;
+  websiteURL?: ModelStringInput | null;
+  logoImageURL?: ModelStringInput | null;
+  establishmentYear?: ModelIntInput | null;
+  representative?: ModelStringInput | null;
+  isDeleted?: ModelBooleanInput | null;
+  and?: Array<ModelLearningCenterConditionInput | null> | null;
+  or?: Array<ModelLearningCenterConditionInput | null> | null;
+  not?: ModelLearningCenterConditionInput | null;
 };
 
 export type ModelIntInput = {
@@ -127,14 +214,62 @@ export type CreateLearningCenterCourseInput = {
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
+  duration?: number | null;
+  price?: number | null;
+  isAvailableMoneyBack?: boolean | null;
+  moneyBackDetail?: string | null;
+  isAvailableSubsidy?: boolean | null;
+  subsidyMemo?: string | null;
+  onSale?: boolean | null;
+  saleMemo?: string | null;
+  purposes?: Array<string | null> | null;
+  jobTypes?: Array<string | null> | null;
+  programmingLanguages?: Array<string | null> | null;
+  frameworks?: Array<string | null> | null;
+  paymentOptions?: Array<PaymentOption | null> | null;
+  attendanceType?: AttendanceType | null;
+  locationPref?: string | null;
+  locationCity?: string | null;
+  isMadeToOrder?: boolean | null;
+  especiallyAudiences?: Array<string | null> | null;
   isDeleted?: boolean | null;
 };
+
+export enum PaymentOption {
+  FULL = "FULL",
+  INSTALLMENTS = "INSTALLMENTS",
+  SUBSCRIPTION = "SUBSCRIPTION",
+}
+
+export enum AttendanceType {
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+  HYBRID = "HYBRID",
+}
 
 export type ModelLearningCenterCourseConditionInput = {
   learningCenterId?: ModelIDInput | null;
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
+  duration?: ModelIntInput | null;
+  price?: ModelFloatInput | null;
+  isAvailableMoneyBack?: ModelBooleanInput | null;
+  moneyBackDetail?: ModelStringInput | null;
+  isAvailableSubsidy?: ModelBooleanInput | null;
+  subsidyMemo?: ModelStringInput | null;
+  onSale?: ModelBooleanInput | null;
+  saleMemo?: ModelStringInput | null;
+  purposes?: ModelStringInput | null;
+  jobTypes?: ModelStringInput | null;
+  programmingLanguages?: ModelStringInput | null;
+  frameworks?: ModelStringInput | null;
+  paymentOptions?: ModelPaymentOptionListInput | null;
+  attendanceType?: ModelAttendanceTypeInput | null;
+  locationPref?: ModelStringInput | null;
+  locationCity?: ModelStringInput | null;
+  isMadeToOrder?: ModelBooleanInput | null;
+  especiallyAudiences?: ModelStringInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   or?: Array<ModelLearningCenterCourseConditionInput | null> | null;
@@ -157,6 +292,30 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type ModelFloatInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type ModelPaymentOptionListInput = {
+  eq?: Array<PaymentOption | null> | null;
+  ne?: Array<PaymentOption | null> | null;
+  contains?: PaymentOption | null;
+  notContains?: PaymentOption | null;
+};
+
+export type ModelAttendanceTypeInput = {
+  eq?: AttendanceType | null;
+  ne?: AttendanceType | null;
+};
+
 export type LearningCenterCourse = {
   __typename: "LearningCenterCourse";
   id: string;
@@ -164,6 +323,24 @@ export type LearningCenterCourse = {
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
+  duration?: number | null;
+  price?: number | null;
+  isAvailableMoneyBack?: boolean | null;
+  moneyBackDetail?: string | null;
+  isAvailableSubsidy?: boolean | null;
+  subsidyMemo?: string | null;
+  onSale?: boolean | null;
+  saleMemo?: string | null;
+  purposes?: Array<string | null> | null;
+  jobTypes?: Array<string | null> | null;
+  programmingLanguages?: Array<string | null> | null;
+  frameworks?: Array<string | null> | null;
+  paymentOptions?: Array<PaymentOption | null> | null;
+  attendanceType?: AttendanceType | null;
+  locationPref?: string | null;
+  locationCity?: string | null;
+  isMadeToOrder?: boolean | null;
+  especiallyAudiences?: Array<string | null> | null;
   isDeleted?: boolean | null;
   createdAt: string;
   updatedAt: string;
@@ -175,6 +352,24 @@ export type UpdateLearningCenterCourseInput = {
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
+  duration?: number | null;
+  price?: number | null;
+  isAvailableMoneyBack?: boolean | null;
+  moneyBackDetail?: string | null;
+  isAvailableSubsidy?: boolean | null;
+  subsidyMemo?: string | null;
+  onSale?: boolean | null;
+  saleMemo?: string | null;
+  purposes?: Array<string | null> | null;
+  jobTypes?: Array<string | null> | null;
+  programmingLanguages?: Array<string | null> | null;
+  frameworks?: Array<string | null> | null;
+  paymentOptions?: Array<PaymentOption | null> | null;
+  attendanceType?: AttendanceType | null;
+  locationPref?: string | null;
+  locationCity?: string | null;
+  isMadeToOrder?: boolean | null;
+  especiallyAudiences?: Array<string | null> | null;
   isDeleted?: boolean | null;
 };
 
@@ -292,6 +487,48 @@ export type DeleteContactInput = {
   id: string;
 };
 
+export type ModelProgrammingLanguageFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelProgrammingLanguageFilterInput | null> | null;
+  or?: Array<ModelProgrammingLanguageFilterInput | null> | null;
+  not?: ModelProgrammingLanguageFilterInput | null;
+};
+
+export type ModelProgrammingLanguageConnection = {
+  __typename: "ModelProgrammingLanguageConnection";
+  items: Array<ProgrammingLanguage | null>;
+  nextToken?: string | null;
+};
+
+export type ModelFrameworkFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelFrameworkFilterInput | null> | null;
+  or?: Array<ModelFrameworkFilterInput | null> | null;
+  not?: ModelFrameworkFilterInput | null;
+};
+
+export type ModelFrameworkConnection = {
+  __typename: "ModelFrameworkConnection";
+  items: Array<Framework | null>;
+  nextToken?: string | null;
+};
+
+export type ModelJobTypeFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelJobTypeFilterInput | null> | null;
+  or?: Array<ModelJobTypeFilterInput | null> | null;
+  not?: ModelJobTypeFilterInput | null;
+};
+
+export type ModelJobTypeConnection = {
+  __typename: "ModelJobTypeConnection";
+  items: Array<JobType | null>;
+  nextToken?: string | null;
+};
+
 export type ModelLearningCenterFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
@@ -320,6 +557,24 @@ export type ModelLearningCenterCourseFilterInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
+  duration?: ModelIntInput | null;
+  price?: ModelFloatInput | null;
+  isAvailableMoneyBack?: ModelBooleanInput | null;
+  moneyBackDetail?: ModelStringInput | null;
+  isAvailableSubsidy?: ModelBooleanInput | null;
+  subsidyMemo?: ModelStringInput | null;
+  onSale?: ModelBooleanInput | null;
+  saleMemo?: ModelStringInput | null;
+  purposes?: ModelStringInput | null;
+  jobTypes?: ModelStringInput | null;
+  programmingLanguages?: ModelStringInput | null;
+  frameworks?: ModelStringInput | null;
+  paymentOptions?: ModelPaymentOptionListInput | null;
+  attendanceType?: ModelAttendanceTypeInput | null;
+  locationPref?: ModelStringInput | null;
+  locationCity?: ModelStringInput | null;
+  isMadeToOrder?: ModelBooleanInput | null;
+  especiallyAudiences?: ModelStringInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelLearningCenterCourseFilterInput | null> | null;
@@ -373,19 +628,11 @@ export type ModelContactConnection = {
   nextToken?: string | null;
 };
 
-export type ModelSubscriptionLearningCenterFilterInput = {
+export type ModelSubscriptionProgrammingLanguageFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   name?: ModelSubscriptionStringInput | null;
-  memo?: ModelSubscriptionStringInput | null;
-  operatingCompany?: ModelSubscriptionStringInput | null;
-  headquartersLocation?: ModelSubscriptionStringInput | null;
-  websiteURL?: ModelSubscriptionStringInput | null;
-  logoImageURL?: ModelSubscriptionStringInput | null;
-  establishmentYear?: ModelSubscriptionIntInput | null;
-  representative?: ModelSubscriptionStringInput | null;
-  isDeleted?: ModelSubscriptionBooleanInput | null;
-  and?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
-  or?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
+  and?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
+  or?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
 };
 
 export type ModelSubscriptionIDInput = {
@@ -418,6 +665,35 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array<string | null> | null;
 };
 
+export type ModelSubscriptionFrameworkFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionFrameworkFilterInput | null> | null;
+  or?: Array<ModelSubscriptionFrameworkFilterInput | null> | null;
+};
+
+export type ModelSubscriptionJobTypeFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionJobTypeFilterInput | null> | null;
+  or?: Array<ModelSubscriptionJobTypeFilterInput | null> | null;
+};
+
+export type ModelSubscriptionLearningCenterFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  memo?: ModelSubscriptionStringInput | null;
+  operatingCompany?: ModelSubscriptionStringInput | null;
+  headquartersLocation?: ModelSubscriptionStringInput | null;
+  websiteURL?: ModelSubscriptionStringInput | null;
+  logoImageURL?: ModelSubscriptionStringInput | null;
+  establishmentYear?: ModelSubscriptionIntInput | null;
+  representative?: ModelSubscriptionStringInput | null;
+  isDeleted?: ModelSubscriptionBooleanInput | null;
+  and?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
+  or?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
+};
+
 export type ModelSubscriptionIntInput = {
   ne?: number | null;
   eq?: number | null;
@@ -441,9 +717,39 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   courseName?: ModelSubscriptionStringInput | null;
   courseURL?: ModelSubscriptionStringInput | null;
   couseDetail?: ModelSubscriptionStringInput | null;
+  duration?: ModelSubscriptionIntInput | null;
+  price?: ModelSubscriptionFloatInput | null;
+  isAvailableMoneyBack?: ModelSubscriptionBooleanInput | null;
+  moneyBackDetail?: ModelSubscriptionStringInput | null;
+  isAvailableSubsidy?: ModelSubscriptionBooleanInput | null;
+  subsidyMemo?: ModelSubscriptionStringInput | null;
+  onSale?: ModelSubscriptionBooleanInput | null;
+  saleMemo?: ModelSubscriptionStringInput | null;
+  purposes?: ModelSubscriptionStringInput | null;
+  jobTypes?: ModelSubscriptionStringInput | null;
+  programmingLanguages?: ModelSubscriptionStringInput | null;
+  frameworks?: ModelSubscriptionStringInput | null;
+  paymentOptions?: ModelSubscriptionStringInput | null;
+  attendanceType?: ModelSubscriptionStringInput | null;
+  locationPref?: ModelSubscriptionStringInput | null;
+  locationCity?: ModelSubscriptionStringInput | null;
+  isMadeToOrder?: ModelSubscriptionBooleanInput | null;
+  especiallyAudiences?: ModelSubscriptionStringInput | null;
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
+};
+
+export type ModelSubscriptionFloatInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  in?: Array<number | null> | null;
+  notIn?: Array<number | null> | null;
 };
 
 export type ModelSubscriptionCourseReviewFilterInput = {
@@ -471,6 +777,141 @@ export type ModelSubscriptionContactFilterInput = {
   messageInfo?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionContactFilterInput | null> | null;
   or?: Array<ModelSubscriptionContactFilterInput | null> | null;
+};
+
+export type CreateProgrammingLanguageMutationVariables = {
+  input: CreateProgrammingLanguageInput;
+  condition?: ModelProgrammingLanguageConditionInput | null;
+};
+
+export type CreateProgrammingLanguageMutation = {
+  createProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateProgrammingLanguageMutationVariables = {
+  input: UpdateProgrammingLanguageInput;
+  condition?: ModelProgrammingLanguageConditionInput | null;
+};
+
+export type UpdateProgrammingLanguageMutation = {
+  updateProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteProgrammingLanguageMutationVariables = {
+  input: DeleteProgrammingLanguageInput;
+  condition?: ModelProgrammingLanguageConditionInput | null;
+};
+
+export type DeleteProgrammingLanguageMutation = {
+  deleteProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type CreateFrameworkMutationVariables = {
+  input: CreateFrameworkInput;
+  condition?: ModelFrameworkConditionInput | null;
+};
+
+export type CreateFrameworkMutation = {
+  createFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateFrameworkMutationVariables = {
+  input: UpdateFrameworkInput;
+  condition?: ModelFrameworkConditionInput | null;
+};
+
+export type UpdateFrameworkMutation = {
+  updateFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteFrameworkMutationVariables = {
+  input: DeleteFrameworkInput;
+  condition?: ModelFrameworkConditionInput | null;
+};
+
+export type DeleteFrameworkMutation = {
+  deleteFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type CreateJobTypeMutationVariables = {
+  input: CreateJobTypeInput;
+  condition?: ModelJobTypeConditionInput | null;
+};
+
+export type CreateJobTypeMutation = {
+  createJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateJobTypeMutationVariables = {
+  input: UpdateJobTypeInput;
+  condition?: ModelJobTypeConditionInput | null;
+};
+
+export type UpdateJobTypeMutation = {
+  updateJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteJobTypeMutationVariables = {
+  input: DeleteJobTypeInput;
+  condition?: ModelJobTypeConditionInput | null;
+};
+
+export type DeleteJobTypeMutation = {
+  deleteJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 };
 
 export type CreateLearningCenterMutationVariables = {
@@ -555,6 +996,24 @@ export type CreateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -574,6 +1033,24 @@ export type UpdateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -593,6 +1070,24 @@ export type DeleteLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -728,6 +1223,108 @@ export type DeleteContactMutation = {
   } | null;
 };
 
+export type GetProgrammingLanguageQueryVariables = {
+  id: string;
+};
+
+export type GetProgrammingLanguageQuery = {
+  getProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListProgrammingLanguagesQueryVariables = {
+  filter?: ModelProgrammingLanguageFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListProgrammingLanguagesQuery = {
+  listProgrammingLanguages?: {
+    __typename: "ModelProgrammingLanguageConnection";
+    items: Array<{
+      __typename: "ProgrammingLanguage";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type GetFrameworkQueryVariables = {
+  id: string;
+};
+
+export type GetFrameworkQuery = {
+  getFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListFrameworksQueryVariables = {
+  filter?: ModelFrameworkFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListFrameworksQuery = {
+  listFrameworks?: {
+    __typename: "ModelFrameworkConnection";
+    items: Array<{
+      __typename: "Framework";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type GetJobTypeQueryVariables = {
+  id: string;
+};
+
+export type GetJobTypeQuery = {
+  getJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListJobTypesQueryVariables = {
+  filter?: ModelJobTypeFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListJobTypesQuery = {
+  listJobTypes?: {
+    __typename: "ModelJobTypeConnection";
+    items: Array<{
+      __typename: "JobType";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
 export type GetLearningCenterQueryVariables = {
   id: string;
 };
@@ -790,6 +1387,24 @@ export type GetLearningCenterCourseQuery = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -812,6 +1427,24 @@ export type ListLearningCenterCoursesQuery = {
       courseName?: string | null;
       courseURL?: string | null;
       couseDetail?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      isAvailableMoneyBack?: boolean | null;
+      moneyBackDetail?: string | null;
+      isAvailableSubsidy?: boolean | null;
+      subsidyMemo?: string | null;
+      onSale?: boolean | null;
+      saleMemo?: string | null;
+      purposes?: Array<string | null> | null;
+      jobTypes?: Array<string | null> | null;
+      programmingLanguages?: Array<string | null> | null;
+      frameworks?: Array<string | null> | null;
+      paymentOptions?: Array<PaymentOption | null> | null;
+      attendanceType?: AttendanceType | null;
+      locationPref?: string | null;
+      locationCity?: string | null;
+      isMadeToOrder?: boolean | null;
+      especiallyAudiences?: Array<string | null> | null;
       isDeleted?: boolean | null;
       createdAt: string;
       updatedAt: string;
@@ -914,6 +1547,132 @@ export type ListContactsQuery = {
   } | null;
 };
 
+export type OnCreateProgrammingLanguageSubscriptionVariables = {
+  filter?: ModelSubscriptionProgrammingLanguageFilterInput | null;
+};
+
+export type OnCreateProgrammingLanguageSubscription = {
+  onCreateProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateProgrammingLanguageSubscriptionVariables = {
+  filter?: ModelSubscriptionProgrammingLanguageFilterInput | null;
+};
+
+export type OnUpdateProgrammingLanguageSubscription = {
+  onUpdateProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteProgrammingLanguageSubscriptionVariables = {
+  filter?: ModelSubscriptionProgrammingLanguageFilterInput | null;
+};
+
+export type OnDeleteProgrammingLanguageSubscription = {
+  onDeleteProgrammingLanguage?: {
+    __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnCreateFrameworkSubscriptionVariables = {
+  filter?: ModelSubscriptionFrameworkFilterInput | null;
+};
+
+export type OnCreateFrameworkSubscription = {
+  onCreateFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateFrameworkSubscriptionVariables = {
+  filter?: ModelSubscriptionFrameworkFilterInput | null;
+};
+
+export type OnUpdateFrameworkSubscription = {
+  onUpdateFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteFrameworkSubscriptionVariables = {
+  filter?: ModelSubscriptionFrameworkFilterInput | null;
+};
+
+export type OnDeleteFrameworkSubscription = {
+  onDeleteFramework?: {
+    __typename: "Framework";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnCreateJobTypeSubscriptionVariables = {
+  filter?: ModelSubscriptionJobTypeFilterInput | null;
+};
+
+export type OnCreateJobTypeSubscription = {
+  onCreateJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateJobTypeSubscriptionVariables = {
+  filter?: ModelSubscriptionJobTypeFilterInput | null;
+};
+
+export type OnUpdateJobTypeSubscription = {
+  onUpdateJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteJobTypeSubscriptionVariables = {
+  filter?: ModelSubscriptionJobTypeFilterInput | null;
+};
+
+export type OnDeleteJobTypeSubscription = {
+  onDeleteJobType?: {
+    __typename: "JobType";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
 export type OnCreateLearningCenterSubscriptionVariables = {
   filter?: ModelSubscriptionLearningCenterFilterInput | null;
 };
@@ -992,6 +1751,24 @@ export type OnCreateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1010,6 +1787,24 @@ export type OnUpdateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1028,6 +1823,24 @@ export type OnDeleteLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
+    duration?: number | null;
+    price?: number | null;
+    isAvailableMoneyBack?: boolean | null;
+    moneyBackDetail?: string | null;
+    isAvailableSubsidy?: boolean | null;
+    subsidyMemo?: string | null;
+    onSale?: boolean | null;
+    saleMemo?: string | null;
+    purposes?: Array<string | null> | null;
+    jobTypes?: Array<string | null> | null;
+    programmingLanguages?: Array<string | null> | null;
+    frameworks?: Array<string | null> | null;
+    paymentOptions?: Array<PaymentOption | null> | null;
+    attendanceType?: AttendanceType | null;
+    locationPref?: string | null;
+    locationCity?: string | null;
+    isMadeToOrder?: boolean | null;
+    especiallyAudiences?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;

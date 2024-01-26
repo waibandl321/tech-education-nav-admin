@@ -1,5 +1,46 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+# プログラミング言語マスタ
+type ProgrammingLanguage
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
+# フレームワークマスタ（プログラミング言語とは紐付けない）
+type Framework
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
+# 職種マスタ
+type JobType
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
+# プログラミングスクール情報
 type LearningCenter
   @model
   @auth(
@@ -20,6 +61,21 @@ type LearningCenter
   isDeleted: Boolean
 }
 
+# 支払い方法のenum
+enum PaymentOption {
+  FULL # 一括
+  INSTALLMENTS # 分割
+  SUBSCRIPTION # サブスク
+}
+
+# 受講スタイルのenum
+enum AttendanceType {
+  ONLINE # オンライン
+  OFFLINE # オフライン
+  HYBRID # どちらもOK
+}
+
+# プログラミングスクールのコース情報
 type LearningCenterCourse
   @model
   @auth(
@@ -29,10 +85,28 @@ type LearningCenterCourse
     ]
   ) {
   id: ID!
-  learningCenterId: ID!
-  courseName: String
-  courseURL: String
-  couseDetail: String
+  learningCenterId: ID! # スクールID
+  courseName: String # コース名
+  courseURL: String # 公式サイトURL
+  couseDetail: String # コース詳細
+  duration: Int # 受講期間（単位: ヶ月）
+  price: Float # 料金
+  isAvailableMoneyBack: Boolean # 返金保証の有無
+  moneyBackDetail: String # 返金保証の有無 詳細
+  isAvailableSubsidy: Boolean # 補助金の有無
+  subsidyMemo: String # 補助金の有無 詳細
+  onSale: Boolean # キャンペーン実施中（クーポン/セールなど）
+  saleMemo: String # キャンペーン詳細
+  purposes: [String] # 受講目的
+  jobTypes: [String] # 目指す職種
+  programmingLanguages: [String] # 習得したいプログラミング言語
+  frameworks: [String] # 習得したいフレームワーク
+  paymentOptions: [PaymentOption] # 支払い方法
+  attendanceType: AttendanceType # 受講スタイル
+  locationPref: String # オフラインの場合の場所（県、エリア検索用）
+  locationCity: String # オフラインの場合の場所（市区町村、エリア検索用）
+  isMadeToOrder: Boolean # オーダーメイドカリキュラムの有無
+  especiallyAudiences: [String] # 特別な受講対象者（学生、子供、主婦、高齢者、障害者など）
   isDeleted: Boolean
 }
 

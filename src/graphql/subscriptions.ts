@@ -8,6 +8,129 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateProgrammingLanguage = /* GraphQL */ `subscription OnCreateProgrammingLanguage(
+  $filter: ModelSubscriptionProgrammingLanguageFilterInput
+) {
+  onCreateProgrammingLanguage(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateProgrammingLanguageSubscriptionVariables,
+  APITypes.OnCreateProgrammingLanguageSubscription
+>;
+export const onUpdateProgrammingLanguage = /* GraphQL */ `subscription OnUpdateProgrammingLanguage(
+  $filter: ModelSubscriptionProgrammingLanguageFilterInput
+) {
+  onUpdateProgrammingLanguage(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateProgrammingLanguageSubscriptionVariables,
+  APITypes.OnUpdateProgrammingLanguageSubscription
+>;
+export const onDeleteProgrammingLanguage = /* GraphQL */ `subscription OnDeleteProgrammingLanguage(
+  $filter: ModelSubscriptionProgrammingLanguageFilterInput
+) {
+  onDeleteProgrammingLanguage(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteProgrammingLanguageSubscriptionVariables,
+  APITypes.OnDeleteProgrammingLanguageSubscription
+>;
+export const onCreateFramework = /* GraphQL */ `subscription OnCreateFramework($filter: ModelSubscriptionFrameworkFilterInput) {
+  onCreateFramework(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateFrameworkSubscriptionVariables,
+  APITypes.OnCreateFrameworkSubscription
+>;
+export const onUpdateFramework = /* GraphQL */ `subscription OnUpdateFramework($filter: ModelSubscriptionFrameworkFilterInput) {
+  onUpdateFramework(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateFrameworkSubscriptionVariables,
+  APITypes.OnUpdateFrameworkSubscription
+>;
+export const onDeleteFramework = /* GraphQL */ `subscription OnDeleteFramework($filter: ModelSubscriptionFrameworkFilterInput) {
+  onDeleteFramework(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteFrameworkSubscriptionVariables,
+  APITypes.OnDeleteFrameworkSubscription
+>;
+export const onCreateJobType = /* GraphQL */ `subscription OnCreateJobType($filter: ModelSubscriptionJobTypeFilterInput) {
+  onCreateJobType(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateJobTypeSubscriptionVariables,
+  APITypes.OnCreateJobTypeSubscription
+>;
+export const onUpdateJobType = /* GraphQL */ `subscription OnUpdateJobType($filter: ModelSubscriptionJobTypeFilterInput) {
+  onUpdateJobType(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateJobTypeSubscriptionVariables,
+  APITypes.OnUpdateJobTypeSubscription
+>;
+export const onDeleteJobType = /* GraphQL */ `subscription OnDeleteJobType($filter: ModelSubscriptionJobTypeFilterInput) {
+  onDeleteJobType(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteJobTypeSubscriptionVariables,
+  APITypes.OnDeleteJobTypeSubscription
+>;
 export const onCreateLearningCenter = /* GraphQL */ `subscription OnCreateLearningCenter(
   $filter: ModelSubscriptionLearningCenterFilterInput
 ) {
@@ -86,6 +209,24 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
     courseName
     courseURL
     couseDetail
+    duration
+    price
+    isAvailableMoneyBack
+    moneyBackDetail
+    isAvailableSubsidy
+    subsidyMemo
+    onSale
+    saleMemo
+    purposes
+    jobTypes
+    programmingLanguages
+    frameworks
+    paymentOptions
+    attendanceType
+    locationPref
+    locationCity
+    isMadeToOrder
+    especiallyAudiences
     isDeleted
     createdAt
     updatedAt
@@ -105,6 +246,24 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
     courseName
     courseURL
     couseDetail
+    duration
+    price
+    isAvailableMoneyBack
+    moneyBackDetail
+    isAvailableSubsidy
+    subsidyMemo
+    onSale
+    saleMemo
+    purposes
+    jobTypes
+    programmingLanguages
+    frameworks
+    paymentOptions
+    attendanceType
+    locationPref
+    locationCity
+    isMadeToOrder
+    especiallyAudiences
     isDeleted
     createdAt
     updatedAt
@@ -124,6 +283,24 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
     courseName
     courseURL
     couseDetail
+    duration
+    price
+    isAvailableMoneyBack
+    moneyBackDetail
+    isAvailableSubsidy
+    subsidyMemo
+    onSale
+    saleMemo
+    purposes
+    jobTypes
+    programmingLanguages
+    frameworks
+    paymentOptions
+    attendanceType
+    locationPref
+    locationCity
+    isMadeToOrder
+    especiallyAudiences
     isDeleted
     createdAt
     updatedAt

@@ -7,17 +7,179 @@
 /* eslint-disable */
 import * as React from "react";
 import {
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
+  SelectField,
   SwitchField,
+  Text,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getLearningCenterCourse } from "../graphql/queries";
 import { updateLearningCenterCourse } from "../graphql/mutations";
 const client = generateClient();
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  runValidationTasks,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    const { hasError } = runValidationTasks();
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button size="small" variation="link" onClick={addItem}>
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function LearningCenterCourseUpdateForm(props) {
   const {
     id: idProp,
@@ -35,6 +197,24 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: "",
     courseURL: "",
     couseDetail: "",
+    duration: "",
+    price: "",
+    isAvailableMoneyBack: false,
+    moneyBackDetail: "",
+    isAvailableSubsidy: false,
+    subsidyMemo: "",
+    onSale: false,
+    saleMemo: "",
+    purposes: [],
+    jobTypes: [],
+    programmingLanguages: [],
+    frameworks: [],
+    paymentOptions: [],
+    attendanceType: "",
+    locationPref: "",
+    locationCity: "",
+    isMadeToOrder: false,
+    especiallyAudiences: [],
     isDeleted: false,
   };
   const [learningCenterId, setLearningCenterId] = React.useState(
@@ -44,6 +224,46 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [courseURL, setCourseURL] = React.useState(initialValues.courseURL);
   const [couseDetail, setCouseDetail] = React.useState(
     initialValues.couseDetail
+  );
+  const [duration, setDuration] = React.useState(initialValues.duration);
+  const [price, setPrice] = React.useState(initialValues.price);
+  const [isAvailableMoneyBack, setIsAvailableMoneyBack] = React.useState(
+    initialValues.isAvailableMoneyBack
+  );
+  const [moneyBackDetail, setMoneyBackDetail] = React.useState(
+    initialValues.moneyBackDetail
+  );
+  const [isAvailableSubsidy, setIsAvailableSubsidy] = React.useState(
+    initialValues.isAvailableSubsidy
+  );
+  const [subsidyMemo, setSubsidyMemo] = React.useState(
+    initialValues.subsidyMemo
+  );
+  const [onSale, setOnSale] = React.useState(initialValues.onSale);
+  const [saleMemo, setSaleMemo] = React.useState(initialValues.saleMemo);
+  const [purposes, setPurposes] = React.useState(initialValues.purposes);
+  const [jobTypes, setJobTypes] = React.useState(initialValues.jobTypes);
+  const [programmingLanguages, setProgrammingLanguages] = React.useState(
+    initialValues.programmingLanguages
+  );
+  const [frameworks, setFrameworks] = React.useState(initialValues.frameworks);
+  const [paymentOptions, setPaymentOptions] = React.useState(
+    initialValues.paymentOptions
+  );
+  const [attendanceType, setAttendanceType] = React.useState(
+    initialValues.attendanceType
+  );
+  const [locationPref, setLocationPref] = React.useState(
+    initialValues.locationPref
+  );
+  const [locationCity, setLocationCity] = React.useState(
+    initialValues.locationCity
+  );
+  const [isMadeToOrder, setIsMadeToOrder] = React.useState(
+    initialValues.isMadeToOrder
+  );
+  const [especiallyAudiences, setEspeciallyAudiences] = React.useState(
+    initialValues.especiallyAudiences
   );
   const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
@@ -55,6 +275,30 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCourseName(cleanValues.courseName);
     setCourseURL(cleanValues.courseURL);
     setCouseDetail(cleanValues.couseDetail);
+    setDuration(cleanValues.duration);
+    setPrice(cleanValues.price);
+    setIsAvailableMoneyBack(cleanValues.isAvailableMoneyBack);
+    setMoneyBackDetail(cleanValues.moneyBackDetail);
+    setIsAvailableSubsidy(cleanValues.isAvailableSubsidy);
+    setSubsidyMemo(cleanValues.subsidyMemo);
+    setOnSale(cleanValues.onSale);
+    setSaleMemo(cleanValues.saleMemo);
+    setPurposes(cleanValues.purposes ?? []);
+    setCurrentPurposesValue("");
+    setJobTypes(cleanValues.jobTypes ?? []);
+    setCurrentJobTypesValue("");
+    setProgrammingLanguages(cleanValues.programmingLanguages ?? []);
+    setCurrentProgrammingLanguagesValue("");
+    setFrameworks(cleanValues.frameworks ?? []);
+    setCurrentFrameworksValue("");
+    setPaymentOptions(cleanValues.paymentOptions ?? []);
+    setCurrentPaymentOptionsValue("");
+    setAttendanceType(cleanValues.attendanceType);
+    setLocationPref(cleanValues.locationPref);
+    setLocationCity(cleanValues.locationCity);
+    setIsMadeToOrder(cleanValues.isMadeToOrder);
+    setEspeciallyAudiences(cleanValues.especiallyAudiences ?? []);
+    setCurrentEspeciallyAudiencesValue("");
     setIsDeleted(cleanValues.isDeleted);
     setErrors({});
   };
@@ -75,11 +319,57 @@ export default function LearningCenterCourseUpdateForm(props) {
     queryData();
   }, [idProp, learningCenterCourseModelProp]);
   React.useEffect(resetStateValues, [learningCenterCourseRecord]);
+  const [currentPurposesValue, setCurrentPurposesValue] = React.useState("");
+  const purposesRef = React.createRef();
+  const [currentJobTypesValue, setCurrentJobTypesValue] = React.useState("");
+  const jobTypesRef = React.createRef();
+  const [
+    currentProgrammingLanguagesValue,
+    setCurrentProgrammingLanguagesValue,
+  ] = React.useState("");
+  const programmingLanguagesRef = React.createRef();
+  const [currentFrameworksValue, setCurrentFrameworksValue] =
+    React.useState("");
+  const frameworksRef = React.createRef();
+  const [currentPaymentOptionsValue, setCurrentPaymentOptionsValue] =
+    React.useState("");
+  const paymentOptionsRef = React.createRef();
+  const [currentEspeciallyAudiencesValue, setCurrentEspeciallyAudiencesValue] =
+    React.useState("");
+  const especiallyAudiencesRef = React.createRef();
+  const getDisplayValue = {
+    paymentOptions: (r) => {
+      const enumDisplayValueMap = {
+        FULL: "Full",
+        INSTALLMENTS: "Installments",
+        SUBSCRIPTION: "Subscription",
+      };
+      return enumDisplayValueMap[r];
+    },
+  };
   const validations = {
     learningCenterId: [{ type: "Required" }],
     courseName: [],
     courseURL: [],
     couseDetail: [],
+    duration: [],
+    price: [],
+    isAvailableMoneyBack: [],
+    moneyBackDetail: [],
+    isAvailableSubsidy: [],
+    subsidyMemo: [],
+    onSale: [],
+    saleMemo: [],
+    purposes: [],
+    jobTypes: [],
+    programmingLanguages: [],
+    frameworks: [],
+    paymentOptions: [],
+    attendanceType: [],
+    locationPref: [],
+    locationCity: [],
+    isMadeToOrder: [],
+    especiallyAudiences: [],
     isDeleted: [],
   };
   const runValidationTasks = async (
@@ -112,6 +402,24 @@ export default function LearningCenterCourseUpdateForm(props) {
           courseName: courseName ?? null,
           courseURL: courseURL ?? null,
           couseDetail: couseDetail ?? null,
+          duration: duration ?? null,
+          price: price ?? null,
+          isAvailableMoneyBack: isAvailableMoneyBack ?? null,
+          moneyBackDetail: moneyBackDetail ?? null,
+          isAvailableSubsidy: isAvailableSubsidy ?? null,
+          subsidyMemo: subsidyMemo ?? null,
+          onSale: onSale ?? null,
+          saleMemo: saleMemo ?? null,
+          purposes: purposes ?? null,
+          jobTypes: jobTypes ?? null,
+          programmingLanguages: programmingLanguages ?? null,
+          frameworks: frameworks ?? null,
+          paymentOptions: paymentOptions ?? null,
+          attendanceType: attendanceType ?? null,
+          locationPref: locationPref ?? null,
+          locationCity: locationCity ?? null,
+          isMadeToOrder: isMadeToOrder ?? null,
+          especiallyAudiences: especiallyAudiences ?? null,
           isDeleted: isDeleted ?? null,
         };
         const validationResponses = await Promise.all(
@@ -177,6 +485,24 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -205,6 +531,24 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName: value,
               courseURL,
               couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -233,6 +577,24 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL: value,
               couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -261,6 +623,24 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail: value,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -276,6 +656,1025 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.couseDetail?.hasError}
         {...getOverrideProps(overrides, "couseDetail")}
       ></TextField>
+      <TextField
+        label="Duration"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={duration}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration: value,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.duration ?? value;
+          }
+          if (errors.duration?.hasError) {
+            runValidationTasks("duration", value);
+          }
+          setDuration(value);
+        }}
+        onBlur={() => runValidationTasks("duration", duration)}
+        errorMessage={errors.duration?.errorMessage}
+        hasError={errors.duration?.hasError}
+        {...getOverrideProps(overrides, "duration")}
+      ></TextField>
+      <TextField
+        label="Price"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={price}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price: value,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.price ?? value;
+          }
+          if (errors.price?.hasError) {
+            runValidationTasks("price", value);
+          }
+          setPrice(value);
+        }}
+        onBlur={() => runValidationTasks("price", price)}
+        errorMessage={errors.price?.errorMessage}
+        hasError={errors.price?.hasError}
+        {...getOverrideProps(overrides, "price")}
+      ></TextField>
+      <SwitchField
+        label="Is available money back"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isAvailableMoneyBack}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack: value,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isAvailableMoneyBack ?? value;
+          }
+          if (errors.isAvailableMoneyBack?.hasError) {
+            runValidationTasks("isAvailableMoneyBack", value);
+          }
+          setIsAvailableMoneyBack(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("isAvailableMoneyBack", isAvailableMoneyBack)
+        }
+        errorMessage={errors.isAvailableMoneyBack?.errorMessage}
+        hasError={errors.isAvailableMoneyBack?.hasError}
+        {...getOverrideProps(overrides, "isAvailableMoneyBack")}
+      ></SwitchField>
+      <TextField
+        label="Money back detail"
+        isRequired={false}
+        isReadOnly={false}
+        value={moneyBackDetail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail: value,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.moneyBackDetail ?? value;
+          }
+          if (errors.moneyBackDetail?.hasError) {
+            runValidationTasks("moneyBackDetail", value);
+          }
+          setMoneyBackDetail(value);
+        }}
+        onBlur={() => runValidationTasks("moneyBackDetail", moneyBackDetail)}
+        errorMessage={errors.moneyBackDetail?.errorMessage}
+        hasError={errors.moneyBackDetail?.hasError}
+        {...getOverrideProps(overrides, "moneyBackDetail")}
+      ></TextField>
+      <SwitchField
+        label="Is available subsidy"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isAvailableSubsidy}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy: value,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isAvailableSubsidy ?? value;
+          }
+          if (errors.isAvailableSubsidy?.hasError) {
+            runValidationTasks("isAvailableSubsidy", value);
+          }
+          setIsAvailableSubsidy(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("isAvailableSubsidy", isAvailableSubsidy)
+        }
+        errorMessage={errors.isAvailableSubsidy?.errorMessage}
+        hasError={errors.isAvailableSubsidy?.hasError}
+        {...getOverrideProps(overrides, "isAvailableSubsidy")}
+      ></SwitchField>
+      <TextField
+        label="Subsidy memo"
+        isRequired={false}
+        isReadOnly={false}
+        value={subsidyMemo}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo: value,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.subsidyMemo ?? value;
+          }
+          if (errors.subsidyMemo?.hasError) {
+            runValidationTasks("subsidyMemo", value);
+          }
+          setSubsidyMemo(value);
+        }}
+        onBlur={() => runValidationTasks("subsidyMemo", subsidyMemo)}
+        errorMessage={errors.subsidyMemo?.errorMessage}
+        hasError={errors.subsidyMemo?.hasError}
+        {...getOverrideProps(overrides, "subsidyMemo")}
+      ></TextField>
+      <SwitchField
+        label="On sale"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={onSale}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale: value,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.onSale ?? value;
+          }
+          if (errors.onSale?.hasError) {
+            runValidationTasks("onSale", value);
+          }
+          setOnSale(value);
+        }}
+        onBlur={() => runValidationTasks("onSale", onSale)}
+        errorMessage={errors.onSale?.errorMessage}
+        hasError={errors.onSale?.hasError}
+        {...getOverrideProps(overrides, "onSale")}
+      ></SwitchField>
+      <TextField
+        label="Sale memo"
+        isRequired={false}
+        isReadOnly={false}
+        value={saleMemo}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo: value,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.saleMemo ?? value;
+          }
+          if (errors.saleMemo?.hasError) {
+            runValidationTasks("saleMemo", value);
+          }
+          setSaleMemo(value);
+        }}
+        onBlur={() => runValidationTasks("saleMemo", saleMemo)}
+        errorMessage={errors.saleMemo?.errorMessage}
+        hasError={errors.saleMemo?.hasError}
+        {...getOverrideProps(overrides, "saleMemo")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes: values,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.purposes ?? values;
+          }
+          setPurposes(values);
+          setCurrentPurposesValue("");
+        }}
+        currentFieldValue={currentPurposesValue}
+        label={"Purposes"}
+        items={purposes}
+        hasError={errors?.purposes?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("purposes", currentPurposesValue)
+        }
+        errorMessage={errors?.purposes?.errorMessage}
+        setFieldValue={setCurrentPurposesValue}
+        inputFieldRef={purposesRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Purposes"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentPurposesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.purposes?.hasError) {
+              runValidationTasks("purposes", value);
+            }
+            setCurrentPurposesValue(value);
+          }}
+          onBlur={() => runValidationTasks("purposes", currentPurposesValue)}
+          errorMessage={errors.purposes?.errorMessage}
+          hasError={errors.purposes?.hasError}
+          ref={purposesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "purposes")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes: values,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.jobTypes ?? values;
+          }
+          setJobTypes(values);
+          setCurrentJobTypesValue("");
+        }}
+        currentFieldValue={currentJobTypesValue}
+        label={"Job types"}
+        items={jobTypes}
+        hasError={errors?.jobTypes?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("jobTypes", currentJobTypesValue)
+        }
+        errorMessage={errors?.jobTypes?.errorMessage}
+        setFieldValue={setCurrentJobTypesValue}
+        inputFieldRef={jobTypesRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Job types"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentJobTypesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.jobTypes?.hasError) {
+              runValidationTasks("jobTypes", value);
+            }
+            setCurrentJobTypesValue(value);
+          }}
+          onBlur={() => runValidationTasks("jobTypes", currentJobTypesValue)}
+          errorMessage={errors.jobTypes?.errorMessage}
+          hasError={errors.jobTypes?.hasError}
+          ref={jobTypesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "jobTypes")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages: values,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.programmingLanguages ?? values;
+          }
+          setProgrammingLanguages(values);
+          setCurrentProgrammingLanguagesValue("");
+        }}
+        currentFieldValue={currentProgrammingLanguagesValue}
+        label={"Programming languages"}
+        items={programmingLanguages}
+        hasError={errors?.programmingLanguages?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks(
+            "programmingLanguages",
+            currentProgrammingLanguagesValue
+          )
+        }
+        errorMessage={errors?.programmingLanguages?.errorMessage}
+        setFieldValue={setCurrentProgrammingLanguagesValue}
+        inputFieldRef={programmingLanguagesRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Programming languages"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentProgrammingLanguagesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.programmingLanguages?.hasError) {
+              runValidationTasks("programmingLanguages", value);
+            }
+            setCurrentProgrammingLanguagesValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks(
+              "programmingLanguages",
+              currentProgrammingLanguagesValue
+            )
+          }
+          errorMessage={errors.programmingLanguages?.errorMessage}
+          hasError={errors.programmingLanguages?.hasError}
+          ref={programmingLanguagesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "programmingLanguages")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks: values,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.frameworks ?? values;
+          }
+          setFrameworks(values);
+          setCurrentFrameworksValue("");
+        }}
+        currentFieldValue={currentFrameworksValue}
+        label={"Frameworks"}
+        items={frameworks}
+        hasError={errors?.frameworks?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("frameworks", currentFrameworksValue)
+        }
+        errorMessage={errors?.frameworks?.errorMessage}
+        setFieldValue={setCurrentFrameworksValue}
+        inputFieldRef={frameworksRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Frameworks"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentFrameworksValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.frameworks?.hasError) {
+              runValidationTasks("frameworks", value);
+            }
+            setCurrentFrameworksValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("frameworks", currentFrameworksValue)
+          }
+          errorMessage={errors.frameworks?.errorMessage}
+          hasError={errors.frameworks?.hasError}
+          ref={frameworksRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "frameworks")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions: values,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.paymentOptions ?? values;
+          }
+          setPaymentOptions(values);
+          setCurrentPaymentOptionsValue("");
+        }}
+        currentFieldValue={currentPaymentOptionsValue}
+        label={"Payment options"}
+        items={paymentOptions}
+        hasError={errors?.paymentOptions?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("paymentOptions", currentPaymentOptionsValue)
+        }
+        errorMessage={errors?.paymentOptions?.errorMessage}
+        getBadgeText={getDisplayValue.paymentOptions}
+        setFieldValue={setCurrentPaymentOptionsValue}
+        inputFieldRef={paymentOptionsRef}
+        defaultFieldValue={""}
+      >
+        <SelectField
+          label="Payment options"
+          placeholder="Please select an option"
+          isDisabled={false}
+          value={currentPaymentOptionsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.paymentOptions?.hasError) {
+              runValidationTasks("paymentOptions", value);
+            }
+            setCurrentPaymentOptionsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("paymentOptions", currentPaymentOptionsValue)
+          }
+          errorMessage={errors.paymentOptions?.errorMessage}
+          hasError={errors.paymentOptions?.hasError}
+          ref={paymentOptionsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "paymentOptions")}
+        >
+          <option
+            children="Full"
+            value="FULL"
+            {...getOverrideProps(overrides, "paymentOptionsoption0")}
+          ></option>
+          <option
+            children="Installments"
+            value="INSTALLMENTS"
+            {...getOverrideProps(overrides, "paymentOptionsoption1")}
+          ></option>
+          <option
+            children="Subscription"
+            value="SUBSCRIPTION"
+            {...getOverrideProps(overrides, "paymentOptionsoption2")}
+          ></option>
+        </SelectField>
+      </ArrayField>
+      <SelectField
+        label="Attendance type"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={attendanceType}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType: value,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.attendanceType ?? value;
+          }
+          if (errors.attendanceType?.hasError) {
+            runValidationTasks("attendanceType", value);
+          }
+          setAttendanceType(value);
+        }}
+        onBlur={() => runValidationTasks("attendanceType", attendanceType)}
+        errorMessage={errors.attendanceType?.errorMessage}
+        hasError={errors.attendanceType?.hasError}
+        {...getOverrideProps(overrides, "attendanceType")}
+      >
+        <option
+          children="Online"
+          value="ONLINE"
+          {...getOverrideProps(overrides, "attendanceTypeoption0")}
+        ></option>
+        <option
+          children="Offline"
+          value="OFFLINE"
+          {...getOverrideProps(overrides, "attendanceTypeoption1")}
+        ></option>
+        <option
+          children="Hybrid"
+          value="HYBRID"
+          {...getOverrideProps(overrides, "attendanceTypeoption2")}
+        ></option>
+      </SelectField>
+      <TextField
+        label="Location pref"
+        isRequired={false}
+        isReadOnly={false}
+        value={locationPref}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref: value,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.locationPref ?? value;
+          }
+          if (errors.locationPref?.hasError) {
+            runValidationTasks("locationPref", value);
+          }
+          setLocationPref(value);
+        }}
+        onBlur={() => runValidationTasks("locationPref", locationPref)}
+        errorMessage={errors.locationPref?.errorMessage}
+        hasError={errors.locationPref?.hasError}
+        {...getOverrideProps(overrides, "locationPref")}
+      ></TextField>
+      <TextField
+        label="Location city"
+        isRequired={false}
+        isReadOnly={false}
+        value={locationCity}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity: value,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.locationCity ?? value;
+          }
+          if (errors.locationCity?.hasError) {
+            runValidationTasks("locationCity", value);
+          }
+          setLocationCity(value);
+        }}
+        onBlur={() => runValidationTasks("locationCity", locationCity)}
+        errorMessage={errors.locationCity?.errorMessage}
+        hasError={errors.locationCity?.hasError}
+        {...getOverrideProps(overrides, "locationCity")}
+      ></TextField>
+      <SwitchField
+        label="Is made to order"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isMadeToOrder}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder: value,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isMadeToOrder ?? value;
+          }
+          if (errors.isMadeToOrder?.hasError) {
+            runValidationTasks("isMadeToOrder", value);
+          }
+          setIsMadeToOrder(value);
+        }}
+        onBlur={() => runValidationTasks("isMadeToOrder", isMadeToOrder)}
+        errorMessage={errors.isMadeToOrder?.errorMessage}
+        hasError={errors.isMadeToOrder?.hasError}
+        {...getOverrideProps(overrides, "isMadeToOrder")}
+      ></SwitchField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences: values,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.especiallyAudiences ?? values;
+          }
+          setEspeciallyAudiences(values);
+          setCurrentEspeciallyAudiencesValue("");
+        }}
+        currentFieldValue={currentEspeciallyAudiencesValue}
+        label={"Especially audiences"}
+        items={especiallyAudiences}
+        hasError={errors?.especiallyAudiences?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks(
+            "especiallyAudiences",
+            currentEspeciallyAudiencesValue
+          )
+        }
+        errorMessage={errors?.especiallyAudiences?.errorMessage}
+        setFieldValue={setCurrentEspeciallyAudiencesValue}
+        inputFieldRef={especiallyAudiencesRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Especially audiences"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentEspeciallyAudiencesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.especiallyAudiences?.hasError) {
+              runValidationTasks("especiallyAudiences", value);
+            }
+            setCurrentEspeciallyAudiencesValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks(
+              "especiallyAudiences",
+              currentEspeciallyAudiencesValue
+            )
+          }
+          errorMessage={errors.especiallyAudiences?.errorMessage}
+          hasError={errors.especiallyAudiences?.hasError}
+          ref={especiallyAudiencesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "especiallyAudiences")}
+        ></TextField>
+      </ArrayField>
       <SwitchField
         label="Is deleted"
         defaultChecked={false}
@@ -289,6 +1688,24 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
               isDeleted: value,
             };
             const result = onChange(modelFields);

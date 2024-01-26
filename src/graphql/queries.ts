@@ -8,6 +8,112 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getProgrammingLanguage = /* GraphQL */ `query GetProgrammingLanguage($id: ID!) {
+  getProgrammingLanguage(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetProgrammingLanguageQueryVariables,
+  APITypes.GetProgrammingLanguageQuery
+>;
+export const listProgrammingLanguages = /* GraphQL */ `query ListProgrammingLanguages(
+  $filter: ModelProgrammingLanguageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listProgrammingLanguages(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListProgrammingLanguagesQueryVariables,
+  APITypes.ListProgrammingLanguagesQuery
+>;
+export const getFramework = /* GraphQL */ `query GetFramework($id: ID!) {
+  getFramework(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetFrameworkQueryVariables,
+  APITypes.GetFrameworkQuery
+>;
+export const listFrameworks = /* GraphQL */ `query ListFrameworks(
+  $filter: ModelFrameworkFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFrameworks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListFrameworksQueryVariables,
+  APITypes.ListFrameworksQuery
+>;
+export const getJobType = /* GraphQL */ `query GetJobType($id: ID!) {
+  getJobType(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetJobTypeQueryVariables,
+  APITypes.GetJobTypeQuery
+>;
+export const listJobTypes = /* GraphQL */ `query ListJobTypes(
+  $filter: ModelJobTypeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listJobTypes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListJobTypesQueryVariables,
+  APITypes.ListJobTypesQuery
+>;
 export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!) {
   getLearningCenter(id: $id) {
     id
@@ -65,6 +171,24 @@ export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCou
     courseName
     courseURL
     couseDetail
+    duration
+    price
+    isAvailableMoneyBack
+    moneyBackDetail
+    isAvailableSubsidy
+    subsidyMemo
+    onSale
+    saleMemo
+    purposes
+    jobTypes
+    programmingLanguages
+    frameworks
+    paymentOptions
+    attendanceType
+    locationPref
+    locationCity
+    isMadeToOrder
+    especiallyAudiences
     isDeleted
     createdAt
     updatedAt
@@ -91,6 +215,24 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
       courseName
       courseURL
       couseDetail
+      duration
+      price
+      isAvailableMoneyBack
+      moneyBackDetail
+      isAvailableSubsidy
+      subsidyMemo
+      onSale
+      saleMemo
+      purposes
+      jobTypes
+      programmingLanguages
+      frameworks
+      paymentOptions
+      attendanceType
+      locationPref
+      locationCity
+      isMadeToOrder
+      especiallyAudiences
       isDeleted
       createdAt
       updatedAt
