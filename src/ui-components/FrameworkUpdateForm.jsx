@@ -25,14 +25,19 @@ export default function FrameworkUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    programmingLanguageId: "",
     name: "",
   };
+  const [programmingLanguageId, setProgrammingLanguageId] = React.useState(
+    initialValues.programmingLanguageId
+  );
   const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = frameworkRecord
       ? { ...initialValues, ...frameworkRecord }
       : initialValues;
+    setProgrammingLanguageId(cleanValues.programmingLanguageId);
     setName(cleanValues.name);
     setErrors({});
   };
@@ -54,6 +59,7 @@ export default function FrameworkUpdateForm(props) {
   }, [idProp, frameworkModelProp]);
   React.useEffect(resetStateValues, [frameworkRecord]);
   const validations = {
+    programmingLanguageId: [],
     name: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -82,6 +88,7 @@ export default function FrameworkUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          programmingLanguageId: programmingLanguageId ?? null,
           name,
         };
         const validationResponses = await Promise.all(
@@ -135,6 +142,33 @@ export default function FrameworkUpdateForm(props) {
       {...rest}
     >
       <TextField
+        label="Programming language id"
+        isRequired={false}
+        isReadOnly={false}
+        value={programmingLanguageId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              programmingLanguageId: value,
+              name,
+            };
+            const result = onChange(modelFields);
+            value = result?.programmingLanguageId ?? value;
+          }
+          if (errors.programmingLanguageId?.hasError) {
+            runValidationTasks("programmingLanguageId", value);
+          }
+          setProgrammingLanguageId(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("programmingLanguageId", programmingLanguageId)
+        }
+        errorMessage={errors.programmingLanguageId?.errorMessage}
+        hasError={errors.programmingLanguageId?.hasError}
+        {...getOverrideProps(overrides, "programmingLanguageId")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={true}
         isReadOnly={false}
@@ -143,6 +177,7 @@ export default function FrameworkUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              programmingLanguageId,
               name: value,
             };
             const result = onChange(modelFields);

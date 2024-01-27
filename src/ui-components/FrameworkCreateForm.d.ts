@@ -22,14 +22,17 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type FrameworkCreateFormInputValues = {
+    programmingLanguageId?: string;
     name?: string;
 };
 export declare type FrameworkCreateFormValidationValues = {
+    programmingLanguageId?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type FrameworkCreateFormOverridesProps = {
     FrameworkCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    programmingLanguageId?: PrimitiveOverrideProps<TextFieldProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type FrameworkCreateFormProps = React.PropsWithChildren<{

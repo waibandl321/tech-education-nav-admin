@@ -72,19 +72,38 @@ export type DeleteProgrammingLanguageInput = {
 
 export type CreateFrameworkInput = {
   id?: string | null;
+  programmingLanguageId?: string | null;
   name: string;
 };
 
 export type ModelFrameworkConditionInput = {
+  programmingLanguageId?: ModelIDInput | null;
   name?: ModelStringInput | null;
   and?: Array<ModelFrameworkConditionInput | null> | null;
   or?: Array<ModelFrameworkConditionInput | null> | null;
   not?: ModelFrameworkConditionInput | null;
 };
 
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
 export type Framework = {
   __typename: "Framework";
   id: string;
+  programmingLanguageId?: string | null;
   name: string;
   createdAt: string;
   updatedAt: string;
@@ -92,6 +111,7 @@ export type Framework = {
 
 export type UpdateFrameworkInput = {
   id: string;
+  programmingLanguageId?: string | null;
   name?: string | null;
 };
 
@@ -274,22 +294,6 @@ export type ModelLearningCenterCourseConditionInput = {
   and?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   or?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   not?: ModelLearningCenterCourseConditionInput | null;
-};
-
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
 };
 
 export type ModelFloatInput = {
@@ -503,6 +507,7 @@ export type ModelProgrammingLanguageConnection = {
 
 export type ModelFrameworkFilterInput = {
   id?: ModelIDInput | null;
+  programmingLanguageId?: ModelIDInput | null;
   name?: ModelStringInput | null;
   and?: Array<ModelFrameworkFilterInput | null> | null;
   or?: Array<ModelFrameworkFilterInput | null> | null;
@@ -667,6 +672,7 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionFrameworkFilterInput = {
   id?: ModelSubscriptionIDInput | null;
+  programmingLanguageId?: ModelSubscriptionIDInput | null;
   name?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionFrameworkFilterInput | null> | null;
   or?: Array<ModelSubscriptionFrameworkFilterInput | null> | null;
@@ -833,6 +839,7 @@ export type CreateFrameworkMutation = {
   createFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -848,6 +855,7 @@ export type UpdateFrameworkMutation = {
   updateFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -863,6 +871,7 @@ export type DeleteFrameworkMutation = {
   deleteFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -1265,6 +1274,7 @@ export type GetFrameworkQuery = {
   getFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -1283,6 +1293,7 @@ export type ListFrameworksQuery = {
     items: Array<{
       __typename: "Framework";
       id: string;
+      programmingLanguageId?: string | null;
       name: string;
       createdAt: string;
       updatedAt: string;
@@ -1597,6 +1608,7 @@ export type OnCreateFrameworkSubscription = {
   onCreateFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -1611,6 +1623,7 @@ export type OnUpdateFrameworkSubscription = {
   onUpdateFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -1625,6 +1638,7 @@ export type OnDeleteFrameworkSubscription = {
   onDeleteFramework?: {
     __typename: "Framework";
     id: string;
+    programmingLanguageId?: string | null;
     name: string;
     createdAt: string;
     updatedAt: string;

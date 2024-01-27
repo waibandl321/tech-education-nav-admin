@@ -8,8 +8,7 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const getProgrammingLanguage =
-  /* GraphQL */ `query GetProgrammingLanguage($id: ID!) {
+export const getProgrammingLanguage = /* GraphQL */ `query GetProgrammingLanguage($id: ID!) {
   getProgrammingLanguage(id: $id) {
     id
     name
@@ -19,11 +18,10 @@ export const getProgrammingLanguage =
   }
 }
 ` as GeneratedQuery<
-    APITypes.GetProgrammingLanguageQueryVariables,
-    APITypes.GetProgrammingLanguageQuery
-  >;
-export const listProgrammingLanguages =
-  /* GraphQL */ `query ListProgrammingLanguages(
+  APITypes.GetProgrammingLanguageQueryVariables,
+  APITypes.GetProgrammingLanguageQuery
+>;
+export const listProgrammingLanguages = /* GraphQL */ `query ListProgrammingLanguages(
   $filter: ModelProgrammingLanguageFilterInput
   $limit: Int
   $nextToken: String
@@ -45,12 +43,13 @@ export const listProgrammingLanguages =
   }
 }
 ` as GeneratedQuery<
-    APITypes.ListProgrammingLanguagesQueryVariables,
-    APITypes.ListProgrammingLanguagesQuery
-  >;
+  APITypes.ListProgrammingLanguagesQueryVariables,
+  APITypes.ListProgrammingLanguagesQuery
+>;
 export const getFramework = /* GraphQL */ `query GetFramework($id: ID!) {
   getFramework(id: $id) {
     id
+    programmingLanguageId
     name
     createdAt
     updatedAt
@@ -69,6 +68,7 @@ export const listFrameworks = /* GraphQL */ `query ListFrameworks(
   listFrameworks(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      programmingLanguageId
       name
       createdAt
       updatedAt
@@ -116,8 +116,7 @@ export const listJobTypes = /* GraphQL */ `query ListJobTypes(
   APITypes.ListJobTypesQueryVariables,
   APITypes.ListJobTypesQuery
 >;
-export const getLearningCenter =
-  /* GraphQL */ `query GetLearningCenter($id: ID!) {
+export const getLearningCenter = /* GraphQL */ `query GetLearningCenter($id: ID!) {
   getLearningCenter(id: $id) {
     id
     name
@@ -135,9 +134,9 @@ export const getLearningCenter =
   }
 }
 ` as GeneratedQuery<
-    APITypes.GetLearningCenterQueryVariables,
-    APITypes.GetLearningCenterQuery
-  >;
+  APITypes.GetLearningCenterQueryVariables,
+  APITypes.GetLearningCenterQuery
+>;
 export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
   $filter: ModelLearningCenterFilterInput
   $limit: Int
@@ -167,8 +166,7 @@ export const listLearningCenters = /* GraphQL */ `query ListLearningCenters(
   APITypes.ListLearningCentersQueryVariables,
   APITypes.ListLearningCentersQuery
 >;
-export const getLearningCenterCourse =
-  /* GraphQL */ `query GetLearningCenterCourse($id: ID!) {
+export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCourse($id: ID!) {
   getLearningCenterCourse(id: $id) {
     id
     learningCenterId
@@ -200,11 +198,10 @@ export const getLearningCenterCourse =
   }
 }
 ` as GeneratedQuery<
-    APITypes.GetLearningCenterCourseQueryVariables,
-    APITypes.GetLearningCenterCourseQuery
-  >;
-export const listLearningCenterCourses =
-  /* GraphQL */ `query ListLearningCenterCourses(
+  APITypes.GetLearningCenterCourseQueryVariables,
+  APITypes.GetLearningCenterCourseQuery
+>;
+export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenterCourses(
   $filter: ModelLearningCenterCourseFilterInput
   $limit: Int
   $nextToken: String
@@ -248,9 +245,9 @@ export const listLearningCenterCourses =
   }
 }
 ` as GeneratedQuery<
-    APITypes.ListLearningCenterCoursesQueryVariables,
-    APITypes.ListLearningCenterCoursesQuery
-  >;
+  APITypes.ListLearningCenterCoursesQueryVariables,
+  APITypes.ListLearningCenterCoursesQuery
+>;
 export const getCourseReview = /* GraphQL */ `query GetCourseReview($id: ID!) {
   getCourseReview(id: $id) {
     id

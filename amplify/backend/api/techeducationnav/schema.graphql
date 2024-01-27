@@ -24,6 +24,7 @@ type Framework
     ]
   ) {
   id: ID!
+  programmingLanguageId: ID
   name: String!
 }
 
