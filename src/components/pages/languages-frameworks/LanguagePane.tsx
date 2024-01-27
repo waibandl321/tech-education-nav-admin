@@ -120,6 +120,7 @@ export default function LanguagePane({
             label={item.name}
             variant="outlined"
             onDelete={(e) => handleDelete(e, item)}
+            sx={{ marginBottom: "8px!important" }}
           />
         ))}
       </Stack>

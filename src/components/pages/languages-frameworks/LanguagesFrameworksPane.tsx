@@ -22,7 +22,7 @@ export default function LanguagesFrameworksPane({
           <LanguagePane languages={languages} />
         </Grid>
         <Grid item md={6} padding={2}>
-          <FrameworkPane frameworks={frameworks} />
+          <FrameworkPane languages={languages} frameworks={frameworks} />
         </Grid>
       </Grid>
     </Container>
