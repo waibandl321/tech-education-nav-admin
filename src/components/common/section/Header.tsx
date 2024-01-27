@@ -20,6 +20,7 @@ export default function Header() {
     { name: "スクール情報", path: "/learning-center" },
     { name: "コース情報", path: "/learning-courses" },
     { name: "レビュー情報", path: "/reviews" },
+    { name: "言語/フレームワーク情報", path: "/languages-frameworks" },
   ];
 
   return (
