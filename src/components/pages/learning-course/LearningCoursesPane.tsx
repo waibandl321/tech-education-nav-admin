@@ -1,27 +1,22 @@
 import { LearningCenter, LearningCenterCourse } from "@/API";
-import TextareaComponent from "@/components/common/parts/TextareaComponent";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
 import {
   Box,
   Container,
-  Paper,
-  SelectChangeEvent,
-  Table,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
   Typography,
   Button,
   Grid,
   TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Autocomplete,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  ListItemButton,
+  Divider,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
+import LearningCourseEditPane from "./LearningCourseEditPane";
 
 export default function LearningCoursesPane() {
   // hooks
@@ -32,14 +27,12 @@ export default function LearningCoursesPane() {
     computedItems,
     learningCenters,
     fetchData,
-    updateLearningCourse,
     deleteLearningCourse,
     habdlerBulkDelete,
-    createLearningCourse,
     importCourseListCSV,
     exportCSV,
   } = useLearningCourseLogic();
-  const [isOpenEditUserDialog, setIsOpenEditUserDialog] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [editItem, setEditItem] = useState<LearningCenterCourse | null>(null);
   // input fileのテンプレート参照
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -56,41 +49,7 @@ export default function LearningCoursesPane() {
       createdAt: "",
       updatedAt: "",
     });
-    setIsOpenEditUserDialog(true);
-  };
-
-  // Formの更新
-  const handlerFormChange = (
-    event:
-      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent
-  ) => {
-    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    const { name, value } = target;
-    // 現在のeditItemを基に新しいオブジェクトを作成し、特定のプロパティを更新
-    setEditItem((prevEditItem) => {
-      if (!prevEditItem) return null; // 既存のeditItemがない場合はnullを返す
-      return { ...prevEditItem, [name]: value };
-    });
-  };
-
-  // 保存
-  const handleSaveItem = async () => {
-    if (!editItem || !selectedLearningCenter) return;
-    setIsOpenEditUserDialog(false);
-    if (editItem?.id) {
-      await updateLearningCourse(editItem);
-      return;
-    }
-    // 新規作成
-    const createRequest = {
-      learningCenterId: selectedLearningCenter.id,
-      courseName: editItem.courseName,
-      courseURL: editItem.courseURL,
-      couseDetail: editItem.couseDetail,
-      isDeleted: false,
-    };
-    await createLearningCourse(createRequest);
+    setIsOpenEdit(true);
   };
 
   // インポート登録
@@ -107,12 +66,7 @@ export default function LearningCoursesPane() {
   // 編集
   const handleEditItem = (item: LearningCenterCourse) => {
     setEditItem(item);
-    setIsOpenEditUserDialog(true);
-  };
-
-  const handleCloseEdit = () => {
-    setIsOpenEditUserDialog(false);
-    setEditItem(null);
+    setIsOpenEdit(true);
   };
 
   useEffect(() => {
@@ -148,7 +102,7 @@ export default function LearningCoursesPane() {
         />
       </Box>
       {selectedLearningCenter && (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3 }} position="relative">
           <Grid container justifyContent="space-between" alignItems="center">
             <Typography>コース一覧</Typography>
             <Box>
@@ -164,93 +118,37 @@ export default function LearningCoursesPane() {
               </Button>
             </Box>
           </Grid>
-          <TableContainer component={Paper} sx={{ mt: 2 }} variant="outlined">
-            <Table
-              sx={{ overflow: "auto" }}
-              aria-label="simple table"
-              size="small"
-            >
-              <TableHead sx={{ backgroundColor: "#eee" }}>
-                <TableRow>
-                  {headers.map((item, index) => (
-                    <TableCell key={index} sx={{ whiteSpace: "nowrap" }}>
-                      {item.name}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {computedItems.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.courseName || ""}</TableCell>
-                    <TableCell>{item.courseURL || ""}</TableCell>
-                    <TableCell>{item.couseDetail}</TableCell>
-                    <TableCell width={100}>
-                      <Box display="flex" alignItems="center">
-                        <Button
-                          aria-label="save button"
-                          color="primary"
-                          onClick={() => handleEditItem(item)}
-                        >
-                          編集
-                        </Button>
-                        <Button
-                          aria-label="delete button"
-                          color="error"
-                          onClick={() => deleteLearningCourse(item)}
-                        >
-                          削除
-                        </Button>
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <List>
+            <Divider />
+            {computedItems.map((item) => (
+              <div key={item.id}>
+                <ListItem dense sx={{ p: 0 }}>
+                  <ListItemButton onClick={() => handleEditItem(item)}>
+                    <ListItemText primary={`${item.courseName}: `} />
+                    <ListItemSecondaryAction>
+                      <Button
+                        color="error"
+                        onClick={() => deleteLearningCourse(item)}
+                      >
+                        削除
+                      </Button>
+                    </ListItemSecondaryAction>
+                  </ListItemButton>
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
+          </List>
+          {/* 編集用ダイアログ */}
+          {isOpenEdit && (
+            <LearningCourseEditPane
+              onClose={() => setIsOpenEdit(false)}
+              editItem={editItem}
+              key={editItem?.id}
+            />
+          )}
         </Box>
       )}
-      <Dialog
-        onClose={() => handleCloseEdit()}
-        open={isOpenEditUserDialog}
-        fullWidth
-      >
-        <DialogTitle display="flex" justifyContent="space-between">
-          <Box flexGrow={1}></Box>
-          <Box>
-            <Button onClick={() => handleSaveItem()}>保存</Button>
-            <Button onClick={() => handleCloseEdit()} color="inherit">
-              キャンセル
-            </Button>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            onChange={(event) => handlerFormChange(event)}
-            value={editItem?.courseName || ""}
-            name="courseName"
-            label="コース名"
-            size="small"
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            onChange={(event) => handlerFormChange(event)}
-            value={editItem?.courseURL || ""}
-            name="courseURL"
-            size="small"
-            label="URL"
-            fullWidth
-            sx={{ my: 2 }}
-          />
-          <TextareaComponent
-            onInputChange={(event) => handlerFormChange(event)}
-            inputValue={editItem?.couseDetail ?? ""}
-            name="couseDetail"
-            placeholder="詳細"
-          />
-        </DialogContent>
-      </Dialog>
     </Container>
   );
 }
