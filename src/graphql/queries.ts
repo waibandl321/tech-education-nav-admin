@@ -8,6 +8,40 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getDevelopmentTool = /* GraphQL */ `query GetDevelopmentTool($id: ID!) {
+  getDevelopmentTool(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetDevelopmentToolQueryVariables,
+  APITypes.GetDevelopmentToolQuery
+>;
+export const listDevelopmentTools = /* GraphQL */ `query ListDevelopmentTools(
+  $filter: ModelDevelopmentToolFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDevelopmentTools(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListDevelopmentToolsQueryVariables,
+  APITypes.ListDevelopmentToolsQuery
+>;
 export const getProgrammingLanguage = /* GraphQL */ `query GetProgrammingLanguage($id: ID!) {
   getProgrammingLanguage(id: $id) {
     id
@@ -185,6 +219,7 @@ export const getLearningCenterCourse = /* GraphQL */ `query GetLearningCenterCou
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref
@@ -229,6 +264,7 @@ export const listLearningCenterCourses = /* GraphQL */ `query ListLearningCenter
       jobTypes
       programmingLanguages
       frameworks
+      developmentTools
       paymentOptions
       attendanceType
       locationPref

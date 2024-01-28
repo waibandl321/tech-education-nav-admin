@@ -39,6 +39,7 @@ export declare type LearningCenterCourseUpdateFormInputValues = {
     jobTypes?: string[];
     programmingLanguages?: string[];
     frameworks?: string[];
+    developmentTools?: string[];
     paymentOptions?: string[];
     attendanceType?: string;
     locationPref?: string;
@@ -64,6 +65,7 @@ export declare type LearningCenterCourseUpdateFormValidationValues = {
     jobTypes?: ValidationFunction<string>;
     programmingLanguages?: ValidationFunction<string>;
     frameworks?: ValidationFunction<string>;
+    developmentTools?: ValidationFunction<string>;
     paymentOptions?: ValidationFunction<string>;
     attendanceType?: ValidationFunction<string>;
     locationPref?: ValidationFunction<string>;
@@ -87,16 +89,17 @@ export declare type LearningCenterCourseUpdateFormOverridesProps = {
     subsidyMemo?: PrimitiveOverrideProps<TextFieldProps>;
     onSale?: PrimitiveOverrideProps<SwitchFieldProps>;
     saleMemo?: PrimitiveOverrideProps<TextFieldProps>;
-    purposes?: PrimitiveOverrideProps<TextFieldProps>;
+    purposes?: PrimitiveOverrideProps<SelectFieldProps>;
     jobTypes?: PrimitiveOverrideProps<TextFieldProps>;
     programmingLanguages?: PrimitiveOverrideProps<TextFieldProps>;
     frameworks?: PrimitiveOverrideProps<TextFieldProps>;
+    developmentTools?: PrimitiveOverrideProps<TextFieldProps>;
     paymentOptions?: PrimitiveOverrideProps<SelectFieldProps>;
     attendanceType?: PrimitiveOverrideProps<SelectFieldProps>;
     locationPref?: PrimitiveOverrideProps<TextFieldProps>;
     locationCity?: PrimitiveOverrideProps<TextFieldProps>;
     isMadeToOrder?: PrimitiveOverrideProps<SwitchFieldProps>;
-    especiallyAudiences?: PrimitiveOverrideProps<TextFieldProps>;
+    especiallyAudiences?: PrimitiveOverrideProps<SelectFieldProps>;
     isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type LearningCenterCourseUpdateFormProps = React.PropsWithChildren<{

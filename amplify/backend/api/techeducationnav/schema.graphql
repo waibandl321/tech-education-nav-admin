@@ -1,6 +1,19 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 
+# 開発ツールマスタ
+type DevelopmentTool
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
 # プログラミング言語マスタ
 type ProgrammingLanguage
   @model
@@ -76,6 +89,27 @@ enum AttendanceType {
   HYBRID # どちらもOK
 }
 
+# 受講目的
+enum Purpose {
+  JOB # 就職/転職
+  FREELANCE #フリーランス
+  ENTREPRENEURSHIP # 起業
+  SIDE_JOB # 副業
+  CERTIFICATION # 資格取得
+  LEARNING # 学習/スキルアップ
+}
+
+# 特別な受講対象者（小学生、中学生、高校生、大学・専門学生、主婦、高齢者、障害者）
+enum EspeciallyAudience {
+  FOR_ELEMENTARY_STUDENTS # 小学生
+  FOR_JUNIOR_HIGH_STUDENTS # 中学生
+  FOR_HIGH_SCHOOL_STUDENTS # 高校生
+  FOR_UNIVERSITY_STUDENTS # 大学・専門学生
+  FOR_HOUSEWIVES # 主婦
+  FOR_SENIORS # 高齢者
+  FOR_PEOPLE_WITH_DISABILITIES # 障害者
+}
+
 # プログラミングスクールのコース情報
 type LearningCenterCourse
   @model
@@ -98,16 +132,17 @@ type LearningCenterCourse
   subsidyMemo: String # 補助金の有無 詳細
   onSale: Boolean # キャンペーン実施中（クーポン/セールなど）
   saleMemo: String # キャンペーン詳細
-  purposes: [String] # 受講目的
-  jobTypes: [String] # 目指す職種
-  programmingLanguages: [String] # 習得したいプログラミング言語
-  frameworks: [String] # 習得したいフレームワーク
-  paymentOptions: [PaymentOption] # 支払い方法
-  attendanceType: AttendanceType # 受講スタイル
+  purposes: [Purpose] # 受講目的（選択形式）
+  jobTypes: [String] # 目指す職種（jobTypeのマスタデータのIDを格納する)
+  programmingLanguages: [String] # 学べるプログラミング言語（ProgrammingLanguageマスタのIDを格納する）
+  frameworks: [String] # 学べるフレームワーク（FrameworkマスタのIDを格納する）
+  developmentTools: [String] # 開発用の各種ツール（DevelopmentToolマスタのIDを格納する）
+  paymentOptions: [PaymentOption] # 支払い方法（選択形式）
+  attendanceType: AttendanceType # 受講スタイル（選択形式）
   locationPref: String # オフラインの場合の場所（県、エリア検索用）
   locationCity: String # オフラインの場合の場所（市区町村、エリア検索用）
   isMadeToOrder: Boolean # オーダーメイドカリキュラムの有無
-  especiallyAudiences: [String] # 特別な受講対象者（学生、子供、主婦、高齢者、障害者など）
+  especiallyAudiences: [EspeciallyAudience] # 特別な受講対象者（学生、子供、主婦、高齢者、障害者など）
   isDeleted: Boolean
 }
 

@@ -2,16 +2,16 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateProgrammingLanguageInput = {
+export type CreateDevelopmentToolInput = {
   id?: string | null;
   name: string;
 };
 
-export type ModelProgrammingLanguageConditionInput = {
+export type ModelDevelopmentToolConditionInput = {
   name?: ModelStringInput | null;
-  and?: Array<ModelProgrammingLanguageConditionInput | null> | null;
-  or?: Array<ModelProgrammingLanguageConditionInput | null> | null;
-  not?: ModelProgrammingLanguageConditionInput | null;
+  and?: Array<ModelDevelopmentToolConditionInput | null> | null;
+  or?: Array<ModelDevelopmentToolConditionInput | null> | null;
+  not?: ModelDevelopmentToolConditionInput | null;
 };
 
 export type ModelStringInput = {
@@ -51,6 +51,35 @@ export type ModelSizeInput = {
   ge?: number | null;
   gt?: number | null;
   between?: Array<number | null> | null;
+};
+
+export type DevelopmentTool = {
+  __typename: "DevelopmentTool";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateDevelopmentToolInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeleteDevelopmentToolInput = {
+  id: string;
+};
+
+export type CreateProgrammingLanguageInput = {
+  id?: string | null;
+  name: string;
+};
+
+export type ModelProgrammingLanguageConditionInput = {
+  name?: ModelStringInput | null;
+  and?: Array<ModelProgrammingLanguageConditionInput | null> | null;
+  or?: Array<ModelProgrammingLanguageConditionInput | null> | null;
+  not?: ModelProgrammingLanguageConditionInput | null;
 };
 
 export type ProgrammingLanguage = {
@@ -242,18 +271,28 @@ export type CreateLearningCenterCourseInput = {
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
-  purposes?: Array<string | null> | null;
+  purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
+  developmentTools?: Array<string | null> | null;
   paymentOptions?: Array<PaymentOption | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
   isMadeToOrder?: boolean | null;
-  especiallyAudiences?: Array<string | null> | null;
+  especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
 };
+
+export enum Purpose {
+  JOB = "JOB",
+  FREELANCE = "FREELANCE",
+  ENTREPRENEURSHIP = "ENTREPRENEURSHIP",
+  SIDE_JOB = "SIDE_JOB",
+  CERTIFICATION = "CERTIFICATION",
+  LEARNING = "LEARNING",
+}
 
 export enum PaymentOption {
   FULL = "FULL",
@@ -265,6 +304,16 @@ export enum AttendanceType {
   ONLINE = "ONLINE",
   OFFLINE = "OFFLINE",
   HYBRID = "HYBRID",
+}
+
+export enum EspeciallyAudience {
+  FOR_ELEMENTARY_STUDENTS = "FOR_ELEMENTARY_STUDENTS",
+  FOR_JUNIOR_HIGH_STUDENTS = "FOR_JUNIOR_HIGH_STUDENTS",
+  FOR_HIGH_SCHOOL_STUDENTS = "FOR_HIGH_SCHOOL_STUDENTS",
+  FOR_UNIVERSITY_STUDENTS = "FOR_UNIVERSITY_STUDENTS",
+  FOR_HOUSEWIVES = "FOR_HOUSEWIVES",
+  FOR_SENIORS = "FOR_SENIORS",
+  FOR_PEOPLE_WITH_DISABILITIES = "FOR_PEOPLE_WITH_DISABILITIES",
 }
 
 export type ModelLearningCenterCourseConditionInput = {
@@ -280,16 +329,17 @@ export type ModelLearningCenterCourseConditionInput = {
   subsidyMemo?: ModelStringInput | null;
   onSale?: ModelBooleanInput | null;
   saleMemo?: ModelStringInput | null;
-  purposes?: ModelStringInput | null;
+  purposes?: ModelPurposeListInput | null;
   jobTypes?: ModelStringInput | null;
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
+  developmentTools?: ModelStringInput | null;
   paymentOptions?: ModelPaymentOptionListInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
   isMadeToOrder?: ModelBooleanInput | null;
-  especiallyAudiences?: ModelStringInput | null;
+  especiallyAudiences?: ModelEspeciallyAudienceListInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   or?: Array<ModelLearningCenterCourseConditionInput | null> | null;
@@ -308,6 +358,13 @@ export type ModelFloatInput = {
   attributeType?: ModelAttributeTypes | null;
 };
 
+export type ModelPurposeListInput = {
+  eq?: Array<Purpose | null> | null;
+  ne?: Array<Purpose | null> | null;
+  contains?: Purpose | null;
+  notContains?: Purpose | null;
+};
+
 export type ModelPaymentOptionListInput = {
   eq?: Array<PaymentOption | null> | null;
   ne?: Array<PaymentOption | null> | null;
@@ -318,6 +375,13 @@ export type ModelPaymentOptionListInput = {
 export type ModelAttendanceTypeInput = {
   eq?: AttendanceType | null;
   ne?: AttendanceType | null;
+};
+
+export type ModelEspeciallyAudienceListInput = {
+  eq?: Array<EspeciallyAudience | null> | null;
+  ne?: Array<EspeciallyAudience | null> | null;
+  contains?: EspeciallyAudience | null;
+  notContains?: EspeciallyAudience | null;
 };
 
 export type LearningCenterCourse = {
@@ -335,16 +399,17 @@ export type LearningCenterCourse = {
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
-  purposes?: Array<string | null> | null;
+  purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
+  developmentTools?: Array<string | null> | null;
   paymentOptions?: Array<PaymentOption | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
   isMadeToOrder?: boolean | null;
-  especiallyAudiences?: Array<string | null> | null;
+  especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
   createdAt: string;
   updatedAt: string;
@@ -364,16 +429,17 @@ export type UpdateLearningCenterCourseInput = {
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
-  purposes?: Array<string | null> | null;
+  purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
+  developmentTools?: Array<string | null> | null;
   paymentOptions?: Array<PaymentOption | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
   isMadeToOrder?: boolean | null;
-  especiallyAudiences?: Array<string | null> | null;
+  especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
 };
 
@@ -491,6 +557,20 @@ export type DeleteContactInput = {
   id: string;
 };
 
+export type ModelDevelopmentToolFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelDevelopmentToolFilterInput | null> | null;
+  or?: Array<ModelDevelopmentToolFilterInput | null> | null;
+  not?: ModelDevelopmentToolFilterInput | null;
+};
+
+export type ModelDevelopmentToolConnection = {
+  __typename: "ModelDevelopmentToolConnection";
+  items: Array<DevelopmentTool | null>;
+  nextToken?: string | null;
+};
+
 export type ModelProgrammingLanguageFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
@@ -570,16 +650,17 @@ export type ModelLearningCenterCourseFilterInput = {
   subsidyMemo?: ModelStringInput | null;
   onSale?: ModelBooleanInput | null;
   saleMemo?: ModelStringInput | null;
-  purposes?: ModelStringInput | null;
+  purposes?: ModelPurposeListInput | null;
   jobTypes?: ModelStringInput | null;
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
+  developmentTools?: ModelStringInput | null;
   paymentOptions?: ModelPaymentOptionListInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
   isMadeToOrder?: ModelBooleanInput | null;
-  especiallyAudiences?: ModelStringInput | null;
+  especiallyAudiences?: ModelEspeciallyAudienceListInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelLearningCenterCourseFilterInput | null> | null;
@@ -633,11 +714,11 @@ export type ModelContactConnection = {
   nextToken?: string | null;
 };
 
-export type ModelSubscriptionProgrammingLanguageFilterInput = {
+export type ModelSubscriptionDevelopmentToolFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   name?: ModelSubscriptionStringInput | null;
-  and?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
-  or?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
+  and?: Array<ModelSubscriptionDevelopmentToolFilterInput | null> | null;
+  or?: Array<ModelSubscriptionDevelopmentToolFilterInput | null> | null;
 };
 
 export type ModelSubscriptionIDInput = {
@@ -668,6 +749,13 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null;
   in?: Array<string | null> | null;
   notIn?: Array<string | null> | null;
+};
+
+export type ModelSubscriptionProgrammingLanguageFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
+  or?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
 };
 
 export type ModelSubscriptionFrameworkFilterInput = {
@@ -735,6 +823,7 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   jobTypes?: ModelSubscriptionStringInput | null;
   programmingLanguages?: ModelSubscriptionStringInput | null;
   frameworks?: ModelSubscriptionStringInput | null;
+  developmentTools?: ModelSubscriptionStringInput | null;
   paymentOptions?: ModelSubscriptionStringInput | null;
   attendanceType?: ModelSubscriptionStringInput | null;
   locationPref?: ModelSubscriptionStringInput | null;
@@ -783,6 +872,51 @@ export type ModelSubscriptionContactFilterInput = {
   messageInfo?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionContactFilterInput | null> | null;
   or?: Array<ModelSubscriptionContactFilterInput | null> | null;
+};
+
+export type CreateDevelopmentToolMutationVariables = {
+  input: CreateDevelopmentToolInput;
+  condition?: ModelDevelopmentToolConditionInput | null;
+};
+
+export type CreateDevelopmentToolMutation = {
+  createDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateDevelopmentToolMutationVariables = {
+  input: UpdateDevelopmentToolInput;
+  condition?: ModelDevelopmentToolConditionInput | null;
+};
+
+export type UpdateDevelopmentToolMutation = {
+  updateDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteDevelopmentToolMutationVariables = {
+  input: DeleteDevelopmentToolInput;
+  condition?: ModelDevelopmentToolConditionInput | null;
+};
+
+export type DeleteDevelopmentToolMutation = {
+  deleteDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 };
 
 export type CreateProgrammingLanguageMutationVariables = {
@@ -1013,16 +1147,17 @@ export type CreateLearningCenterCourseMutation = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1050,16 +1185,17 @@ export type UpdateLearningCenterCourseMutation = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1087,16 +1223,17 @@ export type DeleteLearningCenterCourseMutation = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1229,6 +1366,40 @@ export type DeleteContactMutation = {
     messageInfo: string;
     createdAt: string;
     updatedAt: string;
+  } | null;
+};
+
+export type GetDevelopmentToolQueryVariables = {
+  id: string;
+};
+
+export type GetDevelopmentToolQuery = {
+  getDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListDevelopmentToolsQueryVariables = {
+  filter?: ModelDevelopmentToolFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListDevelopmentToolsQuery = {
+  listDevelopmentTools?: {
+    __typename: "ModelDevelopmentToolConnection";
+    items: Array<{
+      __typename: "DevelopmentTool";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
   } | null;
 };
 
@@ -1406,16 +1577,17 @@ export type GetLearningCenterCourseQuery = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1446,16 +1618,17 @@ export type ListLearningCenterCoursesQuery = {
       subsidyMemo?: string | null;
       onSale?: boolean | null;
       saleMemo?: string | null;
-      purposes?: Array<string | null> | null;
+      purposes?: Array<Purpose | null> | null;
       jobTypes?: Array<string | null> | null;
       programmingLanguages?: Array<string | null> | null;
       frameworks?: Array<string | null> | null;
+      developmentTools?: Array<string | null> | null;
       paymentOptions?: Array<PaymentOption | null> | null;
       attendanceType?: AttendanceType | null;
       locationPref?: string | null;
       locationCity?: string | null;
       isMadeToOrder?: boolean | null;
-      especiallyAudiences?: Array<string | null> | null;
+      especiallyAudiences?: Array<EspeciallyAudience | null> | null;
       isDeleted?: boolean | null;
       createdAt: string;
       updatedAt: string;
@@ -1555,6 +1728,48 @@ export type ListContactsQuery = {
       updatedAt: string;
     } | null>;
     nextToken?: string | null;
+  } | null;
+};
+
+export type OnCreateDevelopmentToolSubscriptionVariables = {
+  filter?: ModelSubscriptionDevelopmentToolFilterInput | null;
+};
+
+export type OnCreateDevelopmentToolSubscription = {
+  onCreateDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateDevelopmentToolSubscriptionVariables = {
+  filter?: ModelSubscriptionDevelopmentToolFilterInput | null;
+};
+
+export type OnUpdateDevelopmentToolSubscription = {
+  onUpdateDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteDevelopmentToolSubscriptionVariables = {
+  filter?: ModelSubscriptionDevelopmentToolFilterInput | null;
+};
+
+export type OnDeleteDevelopmentToolSubscription = {
+  onDeleteDevelopmentTool?: {
+    __typename: "DevelopmentTool";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
   } | null;
 };
 
@@ -1773,16 +1988,17 @@ export type OnCreateLearningCenterCourseSubscription = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1809,16 +2025,17 @@ export type OnUpdateLearningCenterCourseSubscription = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1845,16 +2062,17 @@ export type OnDeleteLearningCenterCourseSubscription = {
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
-    purposes?: Array<string | null> | null;
+    purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
+    developmentTools?: Array<string | null> | null;
     paymentOptions?: Array<PaymentOption | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
     isMadeToOrder?: boolean | null;
-    especiallyAudiences?: Array<string | null> | null;
+    especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;

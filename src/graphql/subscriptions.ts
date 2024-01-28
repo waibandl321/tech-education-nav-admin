@@ -8,6 +8,51 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateDevelopmentTool = /* GraphQL */ `subscription OnCreateDevelopmentTool(
+  $filter: ModelSubscriptionDevelopmentToolFilterInput
+) {
+  onCreateDevelopmentTool(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateDevelopmentToolSubscriptionVariables,
+  APITypes.OnCreateDevelopmentToolSubscription
+>;
+export const onUpdateDevelopmentTool = /* GraphQL */ `subscription OnUpdateDevelopmentTool(
+  $filter: ModelSubscriptionDevelopmentToolFilterInput
+) {
+  onUpdateDevelopmentTool(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateDevelopmentToolSubscriptionVariables,
+  APITypes.OnUpdateDevelopmentToolSubscription
+>;
+export const onDeleteDevelopmentTool = /* GraphQL */ `subscription OnDeleteDevelopmentTool(
+  $filter: ModelSubscriptionDevelopmentToolFilterInput
+) {
+  onDeleteDevelopmentTool(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteDevelopmentToolSubscriptionVariables,
+  APITypes.OnDeleteDevelopmentToolSubscription
+>;
 export const onCreateProgrammingLanguage = /* GraphQL */ `subscription OnCreateProgrammingLanguage(
   $filter: ModelSubscriptionProgrammingLanguageFilterInput
 ) {
@@ -224,6 +269,7 @@ export const onCreateLearningCenterCourse = /* GraphQL */ `subscription OnCreate
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref
@@ -261,6 +307,7 @@ export const onUpdateLearningCenterCourse = /* GraphQL */ `subscription OnUpdate
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref
@@ -298,6 +345,7 @@ export const onDeleteLearningCenterCourse = /* GraphQL */ `subscription OnDelete
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref

@@ -4,7 +4,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import { Button } from "@mui/material";
-import { useRouter } from "next/navigation";
 import useSignOut from "@/hooks/components/auth/useSignOut";
 import { useUserContext } from "@/contexts/UserContext";
 import Link from "next/link";
@@ -12,7 +11,6 @@ import Link from "next/link";
  * ヘッダー コンポーネント
  */
 export default function Header() {
-  const router = useRouter();
   const handleSignOut = useSignOut();
   const { isLoggedIn } = useUserContext();
 
@@ -20,7 +18,14 @@ export default function Header() {
     { name: "スクール情報", path: "/learning-center" },
     { name: "コース情報", path: "/learning-courses" },
     { name: "レビュー情報", path: "/reviews" },
-    { name: "言語/フレームワーク情報", path: "/languages-frameworks" },
+    {
+      name: "言語/フレームワーク/ツール",
+      path: "/languages-frameworks",
+    },
+    {
+      name: "職種",
+      path: "/job-type",
+    },
   ];
 
   return (
@@ -35,14 +40,7 @@ export default function Header() {
           <Box sx={{ flexGrow: 1 }} />
           {!isLoggedIn && (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ m: "0 8px" }}
-                href="/auth/login"
-              >
-                ログイン
-              </Button>
+              <Link href="/auth/login">ログイン</Link>
             </Box>
           )}
           {isLoggedIn && (

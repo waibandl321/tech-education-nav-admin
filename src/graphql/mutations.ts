@@ -8,6 +8,54 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createDevelopmentTool = /* GraphQL */ `mutation CreateDevelopmentTool(
+  $input: CreateDevelopmentToolInput!
+  $condition: ModelDevelopmentToolConditionInput
+) {
+  createDevelopmentTool(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateDevelopmentToolMutationVariables,
+  APITypes.CreateDevelopmentToolMutation
+>;
+export const updateDevelopmentTool = /* GraphQL */ `mutation UpdateDevelopmentTool(
+  $input: UpdateDevelopmentToolInput!
+  $condition: ModelDevelopmentToolConditionInput
+) {
+  updateDevelopmentTool(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateDevelopmentToolMutationVariables,
+  APITypes.UpdateDevelopmentToolMutation
+>;
+export const deleteDevelopmentTool = /* GraphQL */ `mutation DeleteDevelopmentTool(
+  $input: DeleteDevelopmentToolInput!
+  $condition: ModelDevelopmentToolConditionInput
+) {
+  deleteDevelopmentTool(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteDevelopmentToolMutationVariables,
+  APITypes.DeleteDevelopmentToolMutation
+>;
 export const createProgrammingLanguage = /* GraphQL */ `mutation CreateProgrammingLanguage(
   $input: CreateProgrammingLanguageInput!
   $condition: ModelProgrammingLanguageConditionInput
@@ -249,6 +297,7 @@ export const createLearningCenterCourse = /* GraphQL */ `mutation CreateLearning
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref
@@ -287,6 +336,7 @@ export const updateLearningCenterCourse = /* GraphQL */ `mutation UpdateLearning
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref
@@ -325,6 +375,7 @@ export const deleteLearningCenterCourse = /* GraphQL */ `mutation DeleteLearning
     jobTypes
     programmingLanguages
     frameworks
+    developmentTools
     paymentOptions
     attendanceType
     locationPref

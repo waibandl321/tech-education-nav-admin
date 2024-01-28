@@ -8,6 +8,8 @@ export { default as ContactCreateForm } from "./ContactCreateForm";
 export { default as ContactUpdateForm } from "./ContactUpdateForm";
 export { default as CourseReviewCreateForm } from "./CourseReviewCreateForm";
 export { default as CourseReviewUpdateForm } from "./CourseReviewUpdateForm";
+export { default as DevelopmentToolCreateForm } from "./DevelopmentToolCreateForm";
+export { default as DevelopmentToolUpdateForm } from "./DevelopmentToolUpdateForm";
 export { default as FrameworkCreateForm } from "./FrameworkCreateForm";
 export { default as FrameworkUpdateForm } from "./FrameworkUpdateForm";
 export { default as JobTypeCreateForm } from "./JobTypeCreateForm";

@@ -209,6 +209,7 @@ export default function LearningCenterCourseUpdateForm(props) {
     jobTypes: [],
     programmingLanguages: [],
     frameworks: [],
+    developmentTools: [],
     paymentOptions: [],
     attendanceType: "",
     locationPref: "",
@@ -247,6 +248,9 @@ export default function LearningCenterCourseUpdateForm(props) {
     initialValues.programmingLanguages
   );
   const [frameworks, setFrameworks] = React.useState(initialValues.frameworks);
+  const [developmentTools, setDevelopmentTools] = React.useState(
+    initialValues.developmentTools
+  );
   const [paymentOptions, setPaymentOptions] = React.useState(
     initialValues.paymentOptions
   );
@@ -291,6 +295,8 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCurrentProgrammingLanguagesValue("");
     setFrameworks(cleanValues.frameworks ?? []);
     setCurrentFrameworksValue("");
+    setDevelopmentTools(cleanValues.developmentTools ?? []);
+    setCurrentDevelopmentToolsValue("");
     setPaymentOptions(cleanValues.paymentOptions ?? []);
     setCurrentPaymentOptionsValue("");
     setAttendanceType(cleanValues.attendanceType);
@@ -331,6 +337,9 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [currentFrameworksValue, setCurrentFrameworksValue] =
     React.useState("");
   const frameworksRef = React.createRef();
+  const [currentDevelopmentToolsValue, setCurrentDevelopmentToolsValue] =
+    React.useState("");
+  const developmentToolsRef = React.createRef();
   const [currentPaymentOptionsValue, setCurrentPaymentOptionsValue] =
     React.useState("");
   const paymentOptionsRef = React.createRef();
@@ -338,11 +347,34 @@ export default function LearningCenterCourseUpdateForm(props) {
     React.useState("");
   const especiallyAudiencesRef = React.createRef();
   const getDisplayValue = {
+    purposes: (r) => {
+      const enumDisplayValueMap = {
+        JOB: "Job",
+        FREELANCE: "Freelance",
+        ENTREPRENEURSHIP: "Entrepreneurship",
+        SIDE_JOB: "Side job",
+        CERTIFICATION: "Certification",
+        LEARNING: "Learning",
+      };
+      return enumDisplayValueMap[r];
+    },
     paymentOptions: (r) => {
       const enumDisplayValueMap = {
         FULL: "Full",
         INSTALLMENTS: "Installments",
         SUBSCRIPTION: "Subscription",
+      };
+      return enumDisplayValueMap[r];
+    },
+    especiallyAudiences: (r) => {
+      const enumDisplayValueMap = {
+        FOR_ELEMENTARY_STUDENTS: "For elementary students",
+        FOR_JUNIOR_HIGH_STUDENTS: "For junior high students",
+        FOR_HIGH_SCHOOL_STUDENTS: "For high school students",
+        FOR_UNIVERSITY_STUDENTS: "For university students",
+        FOR_HOUSEWIVES: "For housewives",
+        FOR_SENIORS: "For seniors",
+        FOR_PEOPLE_WITH_DISABILITIES: "For people with disabilities",
       };
       return enumDisplayValueMap[r];
     },
@@ -364,6 +396,7 @@ export default function LearningCenterCourseUpdateForm(props) {
     jobTypes: [],
     programmingLanguages: [],
     frameworks: [],
+    developmentTools: [],
     paymentOptions: [],
     attendanceType: [],
     locationPref: [],
@@ -414,6 +447,7 @@ export default function LearningCenterCourseUpdateForm(props) {
           jobTypes: jobTypes ?? null,
           programmingLanguages: programmingLanguages ?? null,
           frameworks: frameworks ?? null,
+          developmentTools: developmentTools ?? null,
           paymentOptions: paymentOptions ?? null,
           attendanceType: attendanceType ?? null,
           locationPref: locationPref ?? null,
@@ -497,6 +531,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -543,6 +578,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -589,6 +625,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -635,6 +672,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -685,6 +723,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -735,6 +774,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -781,6 +821,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -829,6 +870,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -875,6 +917,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -923,6 +966,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -969,6 +1013,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1015,6 +1060,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1057,6 +1103,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1079,14 +1126,15 @@ export default function LearningCenterCourseUpdateForm(props) {
           await runValidationTasks("purposes", currentPurposesValue)
         }
         errorMessage={errors?.purposes?.errorMessage}
+        getBadgeText={getDisplayValue.purposes}
         setFieldValue={setCurrentPurposesValue}
         inputFieldRef={purposesRef}
         defaultFieldValue={""}
       >
-        <TextField
+        <SelectField
           label="Purposes"
-          isRequired={false}
-          isReadOnly={false}
+          placeholder="Please select an option"
+          isDisabled={false}
           value={currentPurposesValue}
           onChange={(e) => {
             let { value } = e.target;
@@ -1101,7 +1149,38 @@ export default function LearningCenterCourseUpdateForm(props) {
           ref={purposesRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "purposes")}
-        ></TextField>
+        >
+          <option
+            children="Job"
+            value="JOB"
+            {...getOverrideProps(overrides, "purposesoption0")}
+          ></option>
+          <option
+            children="Freelance"
+            value="FREELANCE"
+            {...getOverrideProps(overrides, "purposesoption1")}
+          ></option>
+          <option
+            children="Entrepreneurship"
+            value="ENTREPRENEURSHIP"
+            {...getOverrideProps(overrides, "purposesoption2")}
+          ></option>
+          <option
+            children="Side job"
+            value="SIDE_JOB"
+            {...getOverrideProps(overrides, "purposesoption3")}
+          ></option>
+          <option
+            children="Certification"
+            value="CERTIFICATION"
+            {...getOverrideProps(overrides, "purposesoption4")}
+          ></option>
+          <option
+            children="Learning"
+            value="LEARNING"
+            {...getOverrideProps(overrides, "purposesoption5")}
+          ></option>
+        </SelectField>
       </ArrayField>
       <ArrayField
         onChange={async (items) => {
@@ -1124,6 +1203,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes: values,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1191,6 +1271,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages: values,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1266,6 +1347,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks: values,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1335,6 +1417,80 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools: values,
+              paymentOptions,
+              attendanceType,
+              locationPref,
+              locationCity,
+              isMadeToOrder,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.developmentTools ?? values;
+          }
+          setDevelopmentTools(values);
+          setCurrentDevelopmentToolsValue("");
+        }}
+        currentFieldValue={currentDevelopmentToolsValue}
+        label={"Development tools"}
+        items={developmentTools}
+        hasError={errors?.developmentTools?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks(
+            "developmentTools",
+            currentDevelopmentToolsValue
+          )
+        }
+        errorMessage={errors?.developmentTools?.errorMessage}
+        setFieldValue={setCurrentDevelopmentToolsValue}
+        inputFieldRef={developmentToolsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Development tools"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentDevelopmentToolsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.developmentTools?.hasError) {
+              runValidationTasks("developmentTools", value);
+            }
+            setCurrentDevelopmentToolsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("developmentTools", currentDevelopmentToolsValue)
+          }
+          errorMessage={errors.developmentTools?.errorMessage}
+          hasError={errors.developmentTools?.hasError}
+          ref={developmentToolsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "developmentTools")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              duration,
+              price,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
               paymentOptions: values,
               attendanceType,
               locationPref,
@@ -1425,6 +1581,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType: value,
               locationPref,
@@ -1487,6 +1644,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref: value,
@@ -1533,6 +1691,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1579,6 +1738,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1621,6 +1781,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,
@@ -1646,14 +1807,15 @@ export default function LearningCenterCourseUpdateForm(props) {
           )
         }
         errorMessage={errors?.especiallyAudiences?.errorMessage}
+        getBadgeText={getDisplayValue.especiallyAudiences}
         setFieldValue={setCurrentEspeciallyAudiencesValue}
         inputFieldRef={especiallyAudiencesRef}
         defaultFieldValue={""}
       >
-        <TextField
+        <SelectField
           label="Especially audiences"
-          isRequired={false}
-          isReadOnly={false}
+          placeholder="Please select an option"
+          isDisabled={false}
           value={currentEspeciallyAudiencesValue}
           onChange={(e) => {
             let { value } = e.target;
@@ -1673,7 +1835,43 @@ export default function LearningCenterCourseUpdateForm(props) {
           ref={especiallyAudiencesRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "especiallyAudiences")}
-        ></TextField>
+        >
+          <option
+            children="For elementary students"
+            value="FOR_ELEMENTARY_STUDENTS"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption0")}
+          ></option>
+          <option
+            children="For junior high students"
+            value="FOR_JUNIOR_HIGH_STUDENTS"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption1")}
+          ></option>
+          <option
+            children="For high school students"
+            value="FOR_HIGH_SCHOOL_STUDENTS"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption2")}
+          ></option>
+          <option
+            children="For university students"
+            value="FOR_UNIVERSITY_STUDENTS"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption3")}
+          ></option>
+          <option
+            children="For housewives"
+            value="FOR_HOUSEWIVES"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption4")}
+          ></option>
+          <option
+            children="For seniors"
+            value="FOR_SENIORS"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption5")}
+          ></option>
+          <option
+            children="For people with disabilities"
+            value="FOR_PEOPLE_WITH_DISABILITIES"
+            {...getOverrideProps(overrides, "especiallyAudiencesoption6")}
+          ></option>
+        </SelectField>
       </ArrayField>
       <SwitchField
         label="Is deleted"
@@ -1700,6 +1898,7 @@ export default function LearningCenterCourseUpdateForm(props) {
               jobTypes,
               programmingLanguages,
               frameworks,
+              developmentTools,
               paymentOptions,
               attendanceType,
               locationPref,

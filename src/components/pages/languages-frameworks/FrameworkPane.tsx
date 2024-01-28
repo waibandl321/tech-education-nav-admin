@@ -13,6 +13,7 @@ import {
   ListItemText,
   FormControl,
   InputLabel,
+  FormControlLabel,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useMemo, useState } from "react";
@@ -21,15 +22,15 @@ import { CreateFrameworkInput, Framework, ProgrammingLanguage } from "@/API";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      width: 250,
-    },
-  },
-};
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       width: 250,
+//     },
+//   },
+// };
 
 const initFrameworkInput: CreateFrameworkInput = {
   programmingLanguageId: null,
@@ -77,14 +78,14 @@ export default function FrameworkPane({
 
   // 作成
   const handleCreateFramework = async () => {
-    // 同じ言語が登録されている場合はエラーにする
+    // 同じフレームワークが登録されている場合はエラーにする
     const isExist = frameworkList.some(
       (v) => v.name.toLowerCase() === inputValue.name.toLowerCase()
     );
     if (isExist) {
       setAlertMessage({
         type: "error",
-        message: "同じ言語が登録されています。",
+        message: "同じフレームワークが登録されています。",
       });
       return;
     }
@@ -163,33 +164,37 @@ export default function FrameworkPane({
   return (
     <Box>
       <Typography>フレームワークマスタ</Typography>
-      <Box flex="" alignItems="start">
-        <FormControl sx={{ mt: 2, width: 300 }}>
-          <InputLabel id="select-language-label">
-            プログラミング言語を選択
-          </InputLabel>
+      <Box flex="" alignItems="start" sx={{ mb: 2 }}>
+        <FormControl sx={{ mt: 2, width: 150 }}>
+          <InputLabel id="select-language-label">プログラミング言語</InputLabel>
           <Select
             labelId="select-language-label"
             id="select-language"
             name="programmingLanguageId"
             value={inputValue.programmingLanguageId ?? ""}
             onChange={(e) => handleFormChange(e)}
-            input={<OutlinedInput label="プログラミング言語を選択" />}
-            MenuProps={MenuProps}
+            input={<OutlinedInput label="プログラミング言語" />}
             renderValue={(selected) => getLanguageName(selected)}
+            size="small"
           >
             {languages.map((language) => (
               <MenuItem key={language.id} value={language.id} dense>
-                <Checkbox
-                  checked={language.id === inputValue.programmingLanguageId}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="onSale"
+                      checked={language.id === inputValue.programmingLanguageId}
+                    />
+                  }
+                  label={language.name}
                 />
-                <ListItemText primary={language.name} />
               </MenuItem>
             ))}
           </Select>
         </FormControl>
         <OutlinedInput
           type="text"
+          size="small"
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -203,14 +208,14 @@ export default function FrameworkPane({
               </IconButton>
             </InputAdornment>
           }
-          sx={{ mt: 2, ml: 2 }}
+          sx={{ mt: 2 }}
           name="name"
           value={inputValue.name}
           onChange={(e) => handleFormChange(e)}
         />
       </Box>
       {Object.entries(frameworksById).map(([key, frameworks]) => (
-        <Box key={key} sx={{ mt: 2 }}>
+        <Box key={key} sx={{ mt: 1 }}>
           <Typography>
             {frameworks[0].programmingLanguageId
               ? getLanguageName(frameworks[0].programmingLanguageId)
@@ -223,7 +228,7 @@ export default function FrameworkPane({
                 label={framework.name}
                 variant="outlined"
                 onDelete={(e) => handleDelete(e, framework)}
-                sx={{ mt: 1, mb: 1 }}
+                sx={{ mt: 1, marginBottom: "8px!important" }}
               />
             ))}
           </Stack>

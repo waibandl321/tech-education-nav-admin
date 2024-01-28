@@ -8,30 +8,30 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { useEffect, useState } from "react";
-import useProgrammingLanguage from "@/hooks/api/useProgrammingLanguage";
-import { CreateProgrammingLanguageInput, ProgrammingLanguage } from "@/API";
+import { useState } from "react";
+import useDevelopmentTool from "@/hooks/api/useDevelopmentTool";
+import { CreateDevelopmentToolInput, DevelopmentTool } from "@/API";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 
-export default function LanguagePane({
-  languages,
+export default function DevelopmentToolPane({
+  developmentTools,
 }: {
-  languages: Array<ProgrammingLanguage>;
+  developmentTools: Array<DevelopmentTool>;
 }) {
   // hook
   const {
-    apiCreateProgrammingLanguage,
-    apiGetProgrammingLanguages,
-    apiDeleteProgrammingLanguage,
-  } = useProgrammingLanguage();
+    apiCreateDevelopmentTool,
+    apiGetDevelopmentTools,
+    apiDeleteDevelopmentTool,
+  } = useDevelopmentTool();
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
 
   // state
   const [inputValue, setInputValue] = useState("");
-  const [languageList, setLanguageList] =
-    useState<Array<ProgrammingLanguage>>(languages);
+  const [developmentToolList, setDevelopmentToolList] =
+    useState<Array<DevelopmentTool>>(developmentTools);
 
   // form変更
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,31 +39,31 @@ export default function LanguagePane({
   };
 
   // 取得
-  const getLanguages = async () => {
-    const getResult = await apiGetProgrammingLanguages();
-    setLanguageList(getResult.data ?? []);
+  const getDevelopmentTools = async () => {
+    const getResult = await apiGetDevelopmentTools();
+    setDevelopmentToolList(getResult.data ?? []);
   };
 
   // 作成
   const handleCreateLanguage = async () => {
-    // 同じ言語が登録されている場合はエラーにする
-    const isExist = languageList.some(
+    // 同じツールが登録されている場合はエラーにする
+    const isExist = developmentToolList.some(
       (v) => v.name.toLowerCase() === inputValue.toLowerCase()
     );
     if (isExist) {
       setAlertMessage({
         type: "error",
-        message: "同じ言語が登録されています。",
+        message: "同じツールが登録されています。",
       });
       return;
     }
     setLoading(true);
     try {
-      const request: CreateProgrammingLanguageInput = {
+      const request: CreateDevelopmentToolInput = {
         name: inputValue,
       };
-      await apiCreateProgrammingLanguage(request);
-      await getLanguages();
+      await apiCreateDevelopmentTool(request);
+      await getDevelopmentTools();
       setInputValue("");
     } catch (error) {
       setAlertMessage({
@@ -76,11 +76,11 @@ export default function LanguagePane({
   };
 
   // 削除
-  const handleDelete = async (e: Event, item: ProgrammingLanguage) => {
+  const handleDelete = async (e: Event, item: DevelopmentTool) => {
     setLoading(true);
     try {
-      await apiDeleteProgrammingLanguage(item);
-      await getLanguages();
+      await apiDeleteDevelopmentTool(item);
+      await getDevelopmentTools();
     } catch (error) {
       setAlertMessage({
         type: "error",
@@ -93,7 +93,7 @@ export default function LanguagePane({
 
   return (
     <Box>
-      <Typography>プログラミング言語マスタ</Typography>
+      <Typography>開発ツールマスタ</Typography>
       <OutlinedInput
         type="text"
         size="small"
@@ -115,7 +115,7 @@ export default function LanguagePane({
         onChange={handleInputChange}
       />
       <Stack direction="row" flexWrap="wrap" spacing={1} sx={{ mt: 4 }}>
-        {languageList.map((item) => (
+        {developmentToolList.map((item) => (
           <Chip
             key={item.id}
             label={item.name}
