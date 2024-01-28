@@ -197,8 +197,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: "",
     courseURL: "",
     couseDetail: "",
-    duration: "",
-    price: "",
     isAvailableMoneyBack: false,
     moneyBackDetail: "",
     isAvailableSubsidy: false,
@@ -226,8 +224,6 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [couseDetail, setCouseDetail] = React.useState(
     initialValues.couseDetail
   );
-  const [duration, setDuration] = React.useState(initialValues.duration);
-  const [price, setPrice] = React.useState(initialValues.price);
   const [isAvailableMoneyBack, setIsAvailableMoneyBack] = React.useState(
     initialValues.isAvailableMoneyBack
   );
@@ -279,8 +275,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCourseName(cleanValues.courseName);
     setCourseURL(cleanValues.courseURL);
     setCouseDetail(cleanValues.couseDetail);
-    setDuration(cleanValues.duration);
-    setPrice(cleanValues.price);
     setIsAvailableMoneyBack(cleanValues.isAvailableMoneyBack);
     setMoneyBackDetail(cleanValues.moneyBackDetail);
     setIsAvailableSubsidy(cleanValues.isAvailableSubsidy);
@@ -384,8 +378,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: [],
     courseURL: [],
     couseDetail: [],
-    duration: [],
-    price: [],
     isAvailableMoneyBack: [],
     moneyBackDetail: [],
     isAvailableSubsidy: [],
@@ -435,8 +427,6 @@ export default function LearningCenterCourseUpdateForm(props) {
           courseName: courseName ?? null,
           courseURL: courseURL ?? null,
           couseDetail: couseDetail ?? null,
-          duration: duration ?? null,
-          price: price ?? null,
           isAvailableMoneyBack: isAvailableMoneyBack ?? null,
           moneyBackDetail: moneyBackDetail ?? null,
           isAvailableSubsidy: isAvailableSubsidy ?? null,
@@ -519,8 +509,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -566,8 +554,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName: value,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -613,8 +599,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL: value,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -660,8 +644,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail: value,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -694,108 +676,6 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.couseDetail?.hasError}
         {...getOverrideProps(overrides, "couseDetail")}
       ></TextField>
-      <TextField
-        label="Duration"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={duration}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              duration: value,
-              price,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions,
-              attendanceType,
-              locationPref,
-              locationCity,
-              isMadeToOrder,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.duration ?? value;
-          }
-          if (errors.duration?.hasError) {
-            runValidationTasks("duration", value);
-          }
-          setDuration(value);
-        }}
-        onBlur={() => runValidationTasks("duration", duration)}
-        errorMessage={errors.duration?.errorMessage}
-        hasError={errors.duration?.hasError}
-        {...getOverrideProps(overrides, "duration")}
-      ></TextField>
-      <TextField
-        label="Price"
-        isRequired={false}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={price}
-        onChange={(e) => {
-          let value = isNaN(parseFloat(e.target.value))
-            ? e.target.value
-            : parseFloat(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              duration,
-              price: value,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions,
-              attendanceType,
-              locationPref,
-              locationCity,
-              isMadeToOrder,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.price ?? value;
-          }
-          if (errors.price?.hasError) {
-            runValidationTasks("price", value);
-          }
-          setPrice(value);
-        }}
-        onBlur={() => runValidationTasks("price", price)}
-        errorMessage={errors.price?.errorMessage}
-        hasError={errors.price?.hasError}
-        {...getOverrideProps(overrides, "price")}
-      ></TextField>
       <SwitchField
         label="Is available money back"
         defaultChecked={false}
@@ -809,8 +689,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack: value,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -858,8 +736,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail: value,
               isAvailableSubsidy,
@@ -905,8 +781,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy: value,
@@ -954,8 +828,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1001,8 +873,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1048,8 +918,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1091,8 +959,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1191,8 +1057,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1259,8 +1123,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1335,8 +1197,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1405,8 +1265,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1478,8 +1336,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1569,8 +1425,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1632,8 +1486,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1679,8 +1531,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1726,8 +1576,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1769,8 +1617,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1886,8 +1732,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              duration,
-              price,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,

@@ -263,8 +263,7 @@ export type CreateLearningCenterCourseInput = {
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
-  duration?: number | null;
-  price?: number | null;
+  plans?: Array<CoursePlanInput | null> | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -283,6 +282,15 @@ export type CreateLearningCenterCourseInput = {
   isMadeToOrder?: boolean | null;
   especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
+};
+
+export type CoursePlanInput = {
+  id: string;
+  planName?: string | null;
+  planMemo?: string | null;
+  duration?: number | null;
+  price?: number | null;
+  splitPrice?: number | null;
 };
 
 export enum Purpose {
@@ -321,8 +329,6 @@ export type ModelLearningCenterCourseConditionInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
-  duration?: ModelIntInput | null;
-  price?: ModelFloatInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
@@ -344,18 +350,6 @@ export type ModelLearningCenterCourseConditionInput = {
   and?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   or?: Array<ModelLearningCenterCourseConditionInput | null> | null;
   not?: ModelLearningCenterCourseConditionInput | null;
-};
-
-export type ModelFloatInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
 };
 
 export type ModelPurposeListInput = {
@@ -391,8 +385,7 @@ export type LearningCenterCourse = {
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
-  duration?: number | null;
-  price?: number | null;
+  plans?: Array<CoursePlan | null> | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -415,14 +408,23 @@ export type LearningCenterCourse = {
   updatedAt: string;
 };
 
+export type CoursePlan = {
+  __typename: "CoursePlan";
+  id: string;
+  planName?: string | null;
+  planMemo?: string | null;
+  duration?: number | null;
+  price?: number | null;
+  splitPrice?: number | null;
+};
+
 export type UpdateLearningCenterCourseInput = {
   id: string;
   learningCenterId?: string | null;
   courseName?: string | null;
   courseURL?: string | null;
   couseDetail?: string | null;
-  duration?: number | null;
-  price?: number | null;
+  plans?: Array<CoursePlanInput | null> | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -642,8 +644,6 @@ export type ModelLearningCenterCourseFilterInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
-  duration?: ModelIntInput | null;
-  price?: ModelFloatInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
@@ -811,8 +811,6 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   courseName?: ModelSubscriptionStringInput | null;
   courseURL?: ModelSubscriptionStringInput | null;
   couseDetail?: ModelSubscriptionStringInput | null;
-  duration?: ModelSubscriptionIntInput | null;
-  price?: ModelSubscriptionFloatInput | null;
   isAvailableMoneyBack?: ModelSubscriptionBooleanInput | null;
   moneyBackDetail?: ModelSubscriptionStringInput | null;
   isAvailableSubsidy?: ModelSubscriptionBooleanInput | null;
@@ -833,18 +831,6 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
   or?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
-};
-
-export type ModelSubscriptionFloatInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  in?: Array<number | null> | null;
-  notIn?: Array<number | null> | null;
 };
 
 export type ModelSubscriptionCourseReviewFilterInput = {
@@ -1139,8 +1125,15 @@ export type CreateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1177,8 +1170,15 @@ export type UpdateLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1215,8 +1215,15 @@ export type DeleteLearningCenterCourseMutation = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1569,8 +1576,15 @@ export type GetLearningCenterCourseQuery = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1610,8 +1624,6 @@ export type ListLearningCenterCoursesQuery = {
       courseName?: string | null;
       courseURL?: string | null;
       couseDetail?: string | null;
-      duration?: number | null;
-      price?: number | null;
       isAvailableMoneyBack?: boolean | null;
       moneyBackDetail?: string | null;
       isAvailableSubsidy?: boolean | null;
@@ -1980,8 +1992,15 @@ export type OnCreateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -2017,8 +2036,15 @@ export type OnUpdateLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -2054,8 +2080,15 @@ export type OnDeleteLearningCenterCourseSubscription = {
     courseName?: string | null;
     courseURL?: string | null;
     couseDetail?: string | null;
-    duration?: number | null;
-    price?: number | null;
+    plans?: Array<{
+      __typename: "CoursePlan";
+      id: string;
+      planName?: string | null;
+      planMemo?: string | null;
+      duration?: number | null;
+      price?: number | null;
+      splitPrice?: number | null;
+    } | null> | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;

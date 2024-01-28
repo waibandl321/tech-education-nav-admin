@@ -110,6 +110,16 @@ enum EspeciallyAudience {
   FOR_PEOPLE_WITH_DISABILITIES # 障害者
 }
 
+# コースに紐づく料金プラン
+type CoursePlan {
+  id: ID!
+  planName: String # プラン名
+  planMemo: String # プラン備考
+  duration: Int # 受講期間（単位: ヶ月）
+  price: Float # 料金
+  splitPrice: Float # 分割払いの金額（月額）
+}
+
 # プログラミングスクールのコース情報
 type LearningCenterCourse
   @model
@@ -124,8 +134,7 @@ type LearningCenterCourse
   courseName: String # コース名
   courseURL: String # 公式サイトURL
   couseDetail: String # コース詳細
-  duration: Int # 受講期間（単位: ヶ月）
-  price: Float # 料金
+  plans: [CoursePlan] # プラン一覧
   isAvailableMoneyBack: Boolean # 返金保証の有無
   moneyBackDetail: String # 返金保証の有無 詳細
   isAvailableSubsidy: Boolean # 補助金の有無

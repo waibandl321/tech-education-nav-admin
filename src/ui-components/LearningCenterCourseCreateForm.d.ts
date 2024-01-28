@@ -26,8 +26,6 @@ export declare type LearningCenterCourseCreateFormInputValues = {
     courseName?: string;
     courseURL?: string;
     couseDetail?: string;
-    duration?: number;
-    price?: number;
     isAvailableMoneyBack?: boolean;
     moneyBackDetail?: string;
     isAvailableSubsidy?: boolean;
@@ -52,8 +50,6 @@ export declare type LearningCenterCourseCreateFormValidationValues = {
     courseName?: ValidationFunction<string>;
     courseURL?: ValidationFunction<string>;
     couseDetail?: ValidationFunction<string>;
-    duration?: ValidationFunction<number>;
-    price?: ValidationFunction<number>;
     isAvailableMoneyBack?: ValidationFunction<boolean>;
     moneyBackDetail?: ValidationFunction<string>;
     isAvailableSubsidy?: ValidationFunction<boolean>;
@@ -80,8 +76,6 @@ export declare type LearningCenterCourseCreateFormOverridesProps = {
     courseName?: PrimitiveOverrideProps<TextFieldProps>;
     courseURL?: PrimitiveOverrideProps<TextFieldProps>;
     couseDetail?: PrimitiveOverrideProps<TextFieldProps>;
-    duration?: PrimitiveOverrideProps<TextFieldProps>;
-    price?: PrimitiveOverrideProps<TextFieldProps>;
     isAvailableMoneyBack?: PrimitiveOverrideProps<SwitchFieldProps>;
     moneyBackDetail?: PrimitiveOverrideProps<TextFieldProps>;
     isAvailableSubsidy?: PrimitiveOverrideProps<SwitchFieldProps>;

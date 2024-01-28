@@ -57,6 +57,7 @@ export default function LearningCoursesPane({
   const { setAlertMessage } = useMessageAlert();
   const { getImportedCSV, convertStringToCSV, download } = useCSV();
   const {
+    apiGetLearningCourseById,
     apiCreateLearningCourse,
     apiUpdateLearningCourse,
     apiDeleteLearningCourse,
@@ -196,10 +197,24 @@ export default function LearningCoursesPane({
     }
   };
 
-  // 編集
-  const handleEditItem = (item: LearningCenterCourse) => {
-    setEditItem(item);
-    setIsOpenEdit(true);
+  // 編集: 詳細データを取得する
+  const handleEditItem = async (item: LearningCenterCourse) => {
+    setIsOpenEdit(false);
+    setLoading(true);
+    try {
+      const result = await apiGetLearningCourseById(item.id);
+      if (result.isSuccess && result.data) {
+        setEditItem(result.data);
+        setIsOpenEdit(true);
+      }
+    } catch (error) {
+      setAlertMessage({
+        type: "error",
+        message: "データの取得に失敗しました。",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

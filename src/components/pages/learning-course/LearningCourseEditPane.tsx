@@ -9,7 +9,9 @@ import {
   DevelopmentTool,
   JobType,
   AttendanceType,
+  CoursePlanInput,
 } from "@/API";
+import { v4 as uuidv4 } from "uuid";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
 import {
   AttendanceTypeLabels,
@@ -38,9 +40,28 @@ import {
   SelectChangeEvent,
   FormControl,
   InputLabel,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
 } from "@mui/material";
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+
+const initPlan: CoursePlanInput = {
+  // __typename: "CoursePlan",
+  id: "",
+  planName: "",
+  planMemo: "",
+  duration: 0,
+  price: 0,
+  splitPrice: 0,
+};
 
 export default function LearningCourseEditPane({
   editItem: initialEditItem,
@@ -70,6 +91,41 @@ export default function LearningCourseEditPane({
   const [editItem, setEditItem] = useState<LearningCenterCourse | null>(
     initialEditItem
   );
+  // plansは別にstateを定義して管理し、保存時にマージする
+  const [plans, setPlans] = useState<(CoursePlanInput | null)[]>([]);
+  const [municipalityList, setMunicipalityList] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+
+  /**
+   * 市区町村の一覧取得
+   * 土地総合情報システム - 国土交通省
+   * @see https://www.land.mlit.go.jp/webland/api.html
+   */
+  const fetchMunicipalities = async () => {
+    if (!editItem?.locationPref) return;
+    try {
+      const response = await fetch(
+        `https://www.land.mlit.go.jp/webland/api/CitySearch?area=${editItem?.locationPref}`
+      );
+      if (!response.ok) {
+        throw new Error("ネットワーク応答が異常です");
+      }
+      const result = await response.json();
+      setMunicipalityList(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchMunicipalities();
+  }, [editItem?.locationPref]);
+
+  useEffect(() => {
+    if (initialEditItem?.plans) {
+      setPlans(initialEditItem?.plans);
+    }
+  }, []);
 
   // Formの更新
   const handlerFormChange = (
@@ -96,7 +152,8 @@ export default function LearningCourseEditPane({
   ) => {
     setLoading(true);
     try {
-      const result = await apiCreateLearningCourse(data);
+      delete data.id;
+      const result = await apiCreateLearningCourse({ ...data, plans: plans });
       if (!result.isSuccess) {
         setAlertMessage({
           type: "error",
@@ -104,6 +161,7 @@ export default function LearningCourseEditPane({
         });
         return;
       }
+      setPlans([]);
       setAlertMessage({
         type: "success",
         message: "データを保存しました。",
@@ -115,7 +173,7 @@ export default function LearningCourseEditPane({
         message: "データの作成に失敗しました。",
       });
     } finally {
-      router.reload();
+      // router.reload();
       setLoading(false);
     }
   };
@@ -126,6 +184,7 @@ export default function LearningCourseEditPane({
     try {
       const request: UpdateLearningCenterCourseInput = getUpdateRequest({
         ...data,
+        plans: plans,
       });
       const result = await apiUpdateLearningCourse(request);
       if (!result.isSuccess || !result.data) {
@@ -135,6 +194,7 @@ export default function LearningCourseEditPane({
         });
         return;
       }
+      setPlans([]);
       setAlertMessage({
         type: "success",
         message: "データを更新しました。",
@@ -146,7 +206,7 @@ export default function LearningCourseEditPane({
         message: "データの更新に失敗しました。",
       });
     } finally {
-      router.reload();
+      // router.reload();
       setLoading(false);
     }
   };
@@ -166,6 +226,42 @@ export default function LearningCourseEditPane({
       isDeleted: false,
     };
     await createLearningCourse(createRequest);
+  };
+
+  // プラン新規作成
+  const handleCreatePlan = () => {
+    setPlans((prevValue) => [
+      ...prevValue,
+      {
+        ...initPlan,
+        // DB保存前は擬似的に識別子（ID）を付与する
+        id: uuidv4(),
+      },
+    ]);
+  };
+
+  // プラン入力変更ハンドラ
+  const handlerPlansChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    item: CoursePlanInput | null
+  ) => {
+    if (!item) return;
+    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+    const { name, value } = target;
+    setPlans((prevValue) => {
+      // 更新されるべきプランの id が現在処理中のプランの id と一致するかどうかをチェック
+      return prevValue.map((plan) =>
+        plan?.id === item.id ? { ...plan, [name]: value } : plan
+      );
+    });
+  };
+
+  // プラン削除
+  const handlerPlanDelete = (item: CoursePlanInput | null) => {
+    setPlans((prevValue) => {
+      // 更新されるべきプランの id が現在処理中のプランの id と一致するかどうかをチェック
+      return prevValue.filter((plan) => plan?.id !== item?.id);
+    });
   };
 
   const handleCloseEdit = () => {
@@ -218,6 +314,128 @@ export default function LearningCourseEditPane({
             placeholder="コース詳細"
           />
           <Box sx={{ my: 2 }}>
+            <Typography>料金プラン</Typography>
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small" stickyHeader sx={{ overflow: "auto" }}>
+                <TableHead sx={{ whiteSpace: "nowrap" }}>
+                  <TableRow>
+                    {plans.length > 0 && (
+                      <TableCell align="left">---</TableCell>
+                    )}
+                    <TableCell sx={{ minWidth: 150 }} align="left">
+                      プラン名
+                    </TableCell>
+                    <TableCell sx={{ minWidth: 150 }} align="left">
+                      受講期間（単位: ヶ月）
+                    </TableCell>
+                    <TableCell sx={{ minWidth: 150 }} align="left">
+                      料金
+                    </TableCell>
+                    <TableCell sx={{ minWidth: 150 }} align="left">
+                      分割払いの金額（月額）
+                    </TableCell>
+                    <TableCell sx={{ minWidth: 300 }} align="left">
+                      プラン備考
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="left" colSpan={6}>
+                      <Button size="small" onClick={handleCreatePlan}>
+                        + 新規追加
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  {plans.map((row, index) => (
+                    <TableRow
+                      key={index}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      {plans.length > 0 && (
+                        <TableCell align="left">
+                          <IconButton
+                            color="error"
+                            onClick={() => handlerPlanDelete(row)}
+                          >
+                            <DeleteOutline></DeleteOutline>
+                          </IconButton>
+                        </TableCell>
+                      )}
+                      <TableCell align="left">
+                        <TextField
+                          value={row?.planName || ""}
+                          name="planName"
+                          placeholder="プラン名"
+                          size="small"
+                          fullWidth
+                          onChange={(e) => handlerPlansChange(e, row)}
+                        />
+                      </TableCell>
+                      <TableCell align="left">
+                        <TextField
+                          label="受講期間"
+                          type="number"
+                          name="duration"
+                          size="small"
+                          value={row?.duration || ""}
+                          onChange={(e) => handlerPlansChange(e, row)}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                ヶ月
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell align="left">
+                        <TextField
+                          label="料金"
+                          type="number"
+                          name="price"
+                          size="small"
+                          value={row?.price || ""}
+                          onChange={(e) => handlerPlansChange(e, row)}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">円</InputAdornment>
+                            ),
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell align="left">
+                        <TextField
+                          label="月額"
+                          type="number"
+                          name="splitPrice"
+                          size="small"
+                          value={row?.splitPrice || ""}
+                          onChange={(e) => handlerPlansChange(e, row)}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">円</InputAdornment>
+                            ),
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell align="left">
+                        <TextareaComponent
+                          onInputChange={(e) => handlerPlansChange(e, row)}
+                          inputValue={row?.planMemo ?? ""}
+                          name="planMemo"
+                          placeholder="備考"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+          {/* <Box sx={{ my: 2 }}>
             <TextField
               label="受講期間"
               type="number"
@@ -246,7 +464,7 @@ export default function LearningCourseEditPane({
                 ),
               }}
             />
-          </Box>
+          </Box> */}
           <Box>
             <FormControlLabel
               control={
@@ -314,9 +532,7 @@ export default function LearningCourseEditPane({
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
+            <FormControl sx={{ ml: 2 }}>
               <InputLabel id="select-job-types-label">目指す職種</InputLabel>
               <Select
                 labelId="select-job-types-label"
@@ -361,9 +577,7 @@ export default function LearningCourseEditPane({
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
+            <FormControl sx={{ ml: 2 }}>
               <InputLabel id="select-frameworks">
                 学べるフレームワーク
               </InputLabel>
@@ -428,9 +642,7 @@ export default function LearningCourseEditPane({
                 ))}
               </Select>
             </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
+            <FormControl sx={{ ml: 2 }}>
               <InputLabel id="select-attendance-type">受講スタイル</InputLabel>
               <Select
                 labelId="select-attendance-type"
@@ -475,7 +687,7 @@ export default function LearningCourseEditPane({
                 ))}
               </Select>
             </FormControl>
-            <FormControl>
+            <FormControl sx={{ ml: 2 }}>
               <InputLabel id="select-location-city">
                 場所（市区町村、エリア検索用）
               </InputLabel>
@@ -485,6 +697,7 @@ export default function LearningCourseEditPane({
                 name="locationCity"
                 value={editItem?.locationCity ?? ""}
                 onChange={(event) => handlerFormChange(event)}
+                disabled={municipalityList.length === 0}
                 input={
                   <OutlinedInput
                     sx={{ width: 300 }}
@@ -493,11 +706,11 @@ export default function LearningCourseEditPane({
                 }
               >
                 {/* TODO: 都道府県に一致する市町村区を取得して表示させる */}
-                {/* {[].map((p) => (
-                  <MenuItem key={p.key} value={p.key}>
-                    {p.value}
+                {municipalityList.map((p) => (
+                  <MenuItem key={p.id} value={p.id}>
+                    {p.name}
                   </MenuItem>
-                ))} */}
+                ))}
               </Select>
             </FormControl>
           </Box>

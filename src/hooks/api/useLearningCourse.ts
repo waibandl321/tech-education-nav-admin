@@ -4,15 +4,18 @@ import { generateClient } from "aws-amplify/api";
 import {
   CreateLearningCenterCourseInput,
   DeleteLearningCenterCourseInput,
+  GetLearningCenterCourseQuery,
   LearningCenterCourse,
   UpdateLearningCenterCourseInput,
   UpdateLearningCenterCourseMutation,
 } from "@/API";
 import useAPIResponse from "./useAPIResponse";
 import { orderBy } from "lodash";
+import useConvertData from "../utils/useConvertData";
 
 export default function useLearningCourse() {
   const { getErrorMessage } = useAPIResponse();
+  const { ensureString } = useConvertData();
   const client = generateClient();
   // 一覧取得
   const apiGetLearningCourses = async (): Promise<
@@ -30,6 +33,29 @@ export default function useLearningCourse() {
           "createdAt",
           "desc"
         ),
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: getErrorMessage(error),
+      };
+    }
+  };
+
+  const apiGetLearningCourseById = async (
+    id: string | string[]
+  ): Promise<
+    ApiResponse<GetLearningCenterCourseQuery["getLearningCenterCourse"]>
+  > => {
+    try {
+      const result = await client.graphql({
+        query: queries.getLearningCenterCourse,
+        authMode: "apiKey",
+        variables: { id: ensureString(id) },
+      });
+      return {
+        isSuccess: true,
+        data: result.data.getLearningCenterCourse ?? null,
       };
     } catch (error) {
       return {
@@ -111,6 +137,7 @@ export default function useLearningCourse() {
 
   return {
     apiGetLearningCourses,
+    apiGetLearningCourseById,
     apiCreateLearningCourse,
     apiUpdateLearningCourse,
     apiDeleteLearningCourse,

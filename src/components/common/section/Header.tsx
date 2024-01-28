@@ -30,7 +30,7 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#666" }}>
+      <AppBar position="sticky" sx={{ backgroundColor: "#fff", color: "#666" }}>
         <Toolbar>
           {menus.map((menu) => (
             <Link key={menu.path} href={menu.path} style={{ marginRight: 16 }}>
