@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import LanguagePane from "./LanguagePane";
 import FrameworkPane from "./FrameworkPane";
 import { DevelopmentTool, Framework, ProgrammingLanguage } from "@/API";
@@ -15,27 +15,18 @@ export default function LanguagesFrameworksPane({
 }) {
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
-      <Grid container>
-        <Grid
-          item
-          md={4}
-          padding={2}
-          sx={{ borderRight: 2, borderColor: "divider" }}
-        >
-          <LanguagePane languages={languages} />
-        </Grid>
-        <Grid
-          item
-          md={4}
-          padding={2}
-          sx={{ borderRight: 2, borderColor: "divider" }}
-        >
-          <FrameworkPane languages={languages} frameworks={frameworks} />
-        </Grid>
-        <Grid item md={4} padding={2}>
-          <DevelopmentToolPane developmentTools={developmentTools} />
-        </Grid>
-      </Grid>
+      <Box sx={{ mb: 4 }}>
+        <LanguagePane languages={languages} />
+      </Box>
+      <Box sx={{ mb: 4 }}>
+        <FrameworkPane languages={languages} frameworks={frameworks} />
+      </Box>
+      <Box sx={{ mb: 4 }}>
+        <DevelopmentToolPane developmentTools={developmentTools} />
+      </Box>
+      <Box sx={{ mb: 4 }}>
+        <DevelopmentToolPane developmentTools={developmentTools} />
+      </Box>
     </Container>
   );
 }

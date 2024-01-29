@@ -8,6 +8,8 @@ export { default as ContactCreateForm } from "./ContactCreateForm";
 export { default as ContactUpdateForm } from "./ContactUpdateForm";
 export { default as CourseReviewCreateForm } from "./CourseReviewCreateForm";
 export { default as CourseReviewUpdateForm } from "./CourseReviewUpdateForm";
+export { default as CreditCardCreateForm } from "./CreditCardCreateForm";
+export { default as CreditCardUpdateForm } from "./CreditCardUpdateForm";
 export { default as DevelopmentToolCreateForm } from "./DevelopmentToolCreateForm";
 export { default as DevelopmentToolUpdateForm } from "./DevelopmentToolUpdateForm";
 export { default as FrameworkCreateForm } from "./FrameworkCreateForm";
@@ -18,6 +20,8 @@ export { default as LearningCenterCourseCreateForm } from "./LearningCenterCours
 export { default as LearningCenterCourseUpdateForm } from "./LearningCenterCourseUpdateForm";
 export { default as LearningCenterCreateForm } from "./LearningCenterCreateForm";
 export { default as LearningCenterUpdateForm } from "./LearningCenterUpdateForm";
+export { default as PaymentMethodCreateForm } from "./PaymentMethodCreateForm";
+export { default as PaymentMethodUpdateForm } from "./PaymentMethodUpdateForm";
 export { default as ProgrammingLanguageCreateForm } from "./ProgrammingLanguageCreateForm";
 export { default as ProgrammingLanguageUpdateForm } from "./ProgrammingLanguageUpdateForm";
 export { default as studioTheme } from "./studioTheme";

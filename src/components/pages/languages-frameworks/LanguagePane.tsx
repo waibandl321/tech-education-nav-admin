@@ -93,16 +93,14 @@ export default function LanguagePane({
 
   return (
     <Box>
-      <Typography>プログラミング言語マスタ</Typography>
+      <Typography>◾️ プログラミング言語マスタ</Typography>
       <OutlinedInput
         type="text"
-        size="small"
         endAdornment={
           <InputAdornment position="end">
             <IconButton
               edge="end"
               color="primary"
-              size="small"
               disabled={!inputValue}
               onClick={handleCreateLanguage}
             >
@@ -114,7 +112,7 @@ export default function LanguagePane({
         value={inputValue}
         onChange={handleInputChange}
       />
-      <Stack direction="row" flexWrap="wrap" spacing={1} sx={{ mt: 4 }}>
+      <Stack direction="row" flexWrap="wrap" spacing={1} sx={{ mt: 2 }}>
         {languageList.map((item) => (
           <Chip
             key={item.id}

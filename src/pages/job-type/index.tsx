@@ -5,7 +5,7 @@ import { fetchJobTypes } from "@/hooks/server/fetchData";
 import { GetServerSideProps } from "next";
 import { JobType } from "@/API";
 
-export default function LanguagesFrameworksPage({
+export default function JobTypePage({
   jobTypes,
 }: {
   jobTypes: Array<JobType>;

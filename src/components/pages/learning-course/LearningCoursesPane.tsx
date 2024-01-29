@@ -8,6 +8,8 @@ import {
   LearningCenter,
   LearningCenterCourse,
   ProgrammingLanguage,
+  PaymentMethod,
+  CreditCard,
 } from "@/API";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
 import {
@@ -40,6 +42,8 @@ export default function LearningCoursesPane({
   frameworks,
   developmentTools,
   jobTypes,
+  paymentMethods,
+  creditCards,
 }: {
   centers: Array<LearningCenter>;
   courses: Array<LearningCenterCourse>;
@@ -47,6 +51,8 @@ export default function LearningCoursesPane({
   frameworks: Array<Framework>;
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
+  paymentMethods: Array<PaymentMethod>;
+  creditCards: Array<CreditCard>;
 }) {
   // state
   const [selectedLearningCenter, setSelectedLearningCenter] =
@@ -199,6 +205,7 @@ export default function LearningCoursesPane({
 
   // 編集: 詳細データを取得する
   const handleEditItem = async (item: LearningCenterCourse) => {
+    setEditItem(null);
     setIsOpenEdit(false);
     setLoading(true);
     try {
@@ -284,7 +291,7 @@ export default function LearningCoursesPane({
             ))}
           </List>
           {/* 編集用ダイアログ */}
-          {isOpenEdit && (
+          {editItem && isOpenEdit && (
             <LearningCourseEditPane
               onClose={() => setIsOpenEdit(false)}
               editItem={editItem}
@@ -294,6 +301,8 @@ export default function LearningCoursesPane({
               frameworks={frameworks}
               developmentTools={developmentTools}
               jobTypes={jobTypes}
+              paymentMethods={paymentMethods}
+              creditCards={creditCards}
             />
           )}
         </Box>

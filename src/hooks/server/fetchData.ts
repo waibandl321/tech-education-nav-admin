@@ -1,11 +1,13 @@
 import { generateClient } from "aws-amplify/api";
 import {
   listCourseReviews,
+  listCreditCards,
   listDevelopmentTools,
   listFrameworks,
   listJobTypes,
   listLearningCenterCourses,
   listLearningCenters,
+  listPaymentMethods,
   listProgrammingLanguages,
 } from "@/graphql/queries";
 
@@ -40,7 +42,7 @@ export const fetchSchoolData = async () => {
 
 /**
  * コース情報画面で必要なデータを取得
- * @returns スクール一覧、コース一覧、職種、言語、フレームワーク、開発ツール
+ * @returns スクール一覧、コース一覧、職種、言語、フレームワーク、開発ツール、支払い方法、クレジットカード
  */
 export const fetchCoursePageData = async () => {
   try {
@@ -51,6 +53,8 @@ export const fetchCoursePageData = async () => {
       frameworksResult,
       developmentToolResult,
       getJobTypesResult,
+      getPaymentMethodsResult,
+      getCreditCardsResult,
     ] = await Promise.all([
       client.graphql({
         query: listLearningCenters,
@@ -76,6 +80,14 @@ export const fetchCoursePageData = async () => {
         query: listJobTypes,
         authMode: "apiKey",
       }),
+      client.graphql({
+        query: listPaymentMethods,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listCreditCards,
+        authMode: "apiKey",
+      }),
     ]);
     return {
       centers: learningCentersResult.data.listLearningCenters.items,
@@ -84,6 +96,8 @@ export const fetchCoursePageData = async () => {
       frameworks: frameworksResult.data.listFrameworks.items,
       developmentTools: developmentToolResult.data.listDevelopmentTools.items,
       jobTypes: getJobTypesResult.data.listJobTypes.items,
+      paymentMethods: getPaymentMethodsResult.data.listPaymentMethods.items,
+      creditCards: getCreditCardsResult.data.listCreditCards.items,
     };
   } catch (error) {
     console.error("Error fetching listLearningCenters:", error);
@@ -94,6 +108,8 @@ export const fetchCoursePageData = async () => {
       frameworks: [],
       developmentTools: [],
       jobTypes: [],
+      paymentMethods: [],
+      creditCards: [],
     };
   }
 };
@@ -162,6 +178,35 @@ export const fetchJobTypes = async () => {
     console.error("Error fetchJobTypes:", error);
     return {
       jobTypes: [],
+    };
+  }
+};
+
+/**
+ * 支払いマスタ画面で必要なデータを取得
+ * @returns 支払い方法、クレジットカード
+ */
+export const fetchPaymentPageData = async () => {
+  try {
+    const [getPaymentMethodsResult, getCreditCardsResult] = await Promise.all([
+      client.graphql({
+        query: listPaymentMethods,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listCreditCards,
+        authMode: "apiKey",
+      }),
+    ]);
+    return {
+      paymentMethods: getPaymentMethodsResult.data.listPaymentMethods.items,
+      creditCards: getCreditCardsResult.data.listCreditCards.items,
+    };
+  } catch (error) {
+    console.error("Error fetching Payment:", error);
+    return {
+      paymentMethods: [],
+      creditCards: [],
     };
   }
 };

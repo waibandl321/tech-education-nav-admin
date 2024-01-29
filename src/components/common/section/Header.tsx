@@ -26,6 +26,10 @@ export default function Header() {
       name: "職種",
       path: "/job-type",
     },
+    {
+      name: "支払い方法",
+      path: "/payment",
+    },
   ];
 
   return (

@@ -110,6 +110,102 @@ export const deleteProgrammingLanguage =
     APITypes.DeleteProgrammingLanguageMutationVariables,
     APITypes.DeleteProgrammingLanguageMutation
   >;
+export const createPaymentMethod = /* GraphQL */ `mutation CreatePaymentMethod(
+  $input: CreatePaymentMethodInput!
+  $condition: ModelPaymentMethodConditionInput
+) {
+  createPaymentMethod(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreatePaymentMethodMutationVariables,
+  APITypes.CreatePaymentMethodMutation
+>;
+export const updatePaymentMethod = /* GraphQL */ `mutation UpdatePaymentMethod(
+  $input: UpdatePaymentMethodInput!
+  $condition: ModelPaymentMethodConditionInput
+) {
+  updatePaymentMethod(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdatePaymentMethodMutationVariables,
+  APITypes.UpdatePaymentMethodMutation
+>;
+export const deletePaymentMethod = /* GraphQL */ `mutation DeletePaymentMethod(
+  $input: DeletePaymentMethodInput!
+  $condition: ModelPaymentMethodConditionInput
+) {
+  deletePaymentMethod(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeletePaymentMethodMutationVariables,
+  APITypes.DeletePaymentMethodMutation
+>;
+export const createCreditCard = /* GraphQL */ `mutation CreateCreditCard(
+  $input: CreateCreditCardInput!
+  $condition: ModelCreditCardConditionInput
+) {
+  createCreditCard(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateCreditCardMutationVariables,
+  APITypes.CreateCreditCardMutation
+>;
+export const updateCreditCard = /* GraphQL */ `mutation UpdateCreditCard(
+  $input: UpdateCreditCardInput!
+  $condition: ModelCreditCardConditionInput
+) {
+  updateCreditCard(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateCreditCardMutationVariables,
+  APITypes.UpdateCreditCardMutation
+>;
+export const deleteCreditCard = /* GraphQL */ `mutation DeleteCreditCard(
+  $input: DeleteCreditCardInput!
+  $condition: ModelCreditCardConditionInput
+) {
+  deleteCreditCard(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteCreditCardMutationVariables,
+  APITypes.DeleteCreditCardMutation
+>;
 export const createFramework = /* GraphQL */ `mutation CreateFramework(
   $input: CreateFrameworkInput!
   $condition: ModelFrameworkConditionInput
@@ -304,22 +400,29 @@ export const createLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt
@@ -351,22 +454,29 @@ export const updateLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt
@@ -398,22 +508,29 @@ export const deleteLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt

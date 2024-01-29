@@ -162,9 +162,9 @@ export default function FrameworkPane({
 
   return (
     <Box>
-      <Typography>フレームワークマスタ</Typography>
+      <Typography>◾️ フレームワークマスタ</Typography>
       <Box flex="" alignItems="start" sx={{ mb: 2 }}>
-        <FormControl sx={{ mt: 2, width: 150 }}>
+        <FormControl sx={{ mt: 2, width: 300 }}>
           <InputLabel id="select-language-label">プログラミング言語</InputLabel>
           <Select
             labelId="select-language-label"
@@ -174,7 +174,6 @@ export default function FrameworkPane({
             onChange={(e) => handleFormChange(e)}
             input={<OutlinedInput label="プログラミング言語" />}
             renderValue={(selected) => getLanguageName(selected)}
-            size="small"
           >
             {languages.map((language) => (
               <MenuItem key={language.id} value={language.id} dense>
@@ -193,7 +192,6 @@ export default function FrameworkPane({
         </FormControl>
         <OutlinedInput
           type="text"
-          size="small"
           endAdornment={
             <InputAdornment position="end">
               <IconButton

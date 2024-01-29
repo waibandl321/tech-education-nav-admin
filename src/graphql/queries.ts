@@ -83,6 +83,75 @@ export const listProgrammingLanguages =
     APITypes.ListProgrammingLanguagesQueryVariables,
     APITypes.ListProgrammingLanguagesQuery
   >;
+export const getPaymentMethod =
+  /* GraphQL */ `query GetPaymentMethod($id: ID!) {
+  getPaymentMethod(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+    APITypes.GetPaymentMethodQueryVariables,
+    APITypes.GetPaymentMethodQuery
+  >;
+export const listPaymentMethods = /* GraphQL */ `query ListPaymentMethods(
+  $filter: ModelPaymentMethodFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPaymentMethods(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListPaymentMethodsQueryVariables,
+  APITypes.ListPaymentMethodsQuery
+>;
+export const getCreditCard = /* GraphQL */ `query GetCreditCard($id: ID!) {
+  getCreditCard(id: $id) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetCreditCardQueryVariables,
+  APITypes.GetCreditCardQuery
+>;
+export const listCreditCards = /* GraphQL */ `query ListCreditCards(
+  $filter: ModelCreditCardFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCreditCards(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListCreditCardsQueryVariables,
+  APITypes.ListCreditCardsQuery
+>;
 export const getFramework = /* GraphQL */ `query GetFramework($id: ID!) {
   getFramework(id: $id) {
     id
@@ -221,22 +290,29 @@ export const getLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt
@@ -265,22 +341,29 @@ export const listLearningCenterCourses =
       courseName
       courseURL
       couseDetail
+      cancelPolicy
       isAvailableMoneyBack
       moneyBackDetail
       isAvailableSubsidy
       subsidyMemo
       onSale
       saleMemo
+      isMadeToOrder
+      madeToOrderDetail
+      isJobIntroductionAvailable
+      jobIntroductionDetail
+      isJobHuntingSupport
+      jobHuntingSupportDetail
       purposes
       jobTypes
       programmingLanguages
       frameworks
       developmentTools
       paymentOptions
+      creditCards
       attendanceType
       locationPref
       locationCity
-      isMadeToOrder
       especiallyAudiences
       isDeleted
       createdAt

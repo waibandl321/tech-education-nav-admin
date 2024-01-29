@@ -10,6 +10,9 @@ import {
   JobType,
   AttendanceType,
   CoursePlanInput,
+  PaymentMethod,
+  CreditCard,
+  CoursePlan,
 } from "@/API";
 import { v4 as uuidv4 } from "uuid";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
@@ -48,10 +51,13 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Grid,
 } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { useRouter } from "next/router";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 const initPlan: CoursePlanInput = {
   // __typename: "CoursePlan",
@@ -71,6 +77,8 @@ export default function LearningCourseEditPane({
   frameworks,
   developmentTools,
   jobTypes,
+  paymentMethods,
+  creditCards,
 }: {
   editItem: LearningCenterCourse | null;
   onClose: () => void;
@@ -79,6 +87,8 @@ export default function LearningCourseEditPane({
   frameworks: Array<Framework>;
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
+  paymentMethods: Array<PaymentMethod>;
+  creditCards: Array<CreditCard>;
 }) {
   // hooks
   const router = useRouter();
@@ -109,7 +119,9 @@ export default function LearningCourseEditPane({
         `https://www.land.mlit.go.jp/webland/api/CitySearch?area=${editItem?.locationPref}`
       );
       if (!response.ok) {
-        throw new Error("ネットワーク応答が異常です");
+        throw new Error(
+          "ネットワーク応答が異常です 土地総合情報システム - 国土交通省"
+        );
       }
       const result = await response.json();
       setMunicipalityList(result.data);
@@ -138,8 +150,15 @@ export default function LearningCourseEditPane({
           | string
         >
   ) => {
-    const target = event.target as HTMLInputElement | HTMLTextAreaElement;
-    const { name, value } = target;
+    const target = event.target;
+    let value: any;
+    if (target instanceof HTMLInputElement && target.type === "checkbox") {
+      // checkboxの考慮
+      value = target.checked;
+    } else {
+      value = target.value;
+    }
+    const name = target.name;
     setEditItem((prevEditItem) => {
       if (!prevEditItem) return null; // 既存のeditItemがない場合はnullを返す
       return { ...prevEditItem, [name]: value };
@@ -184,8 +203,14 @@ export default function LearningCourseEditPane({
     try {
       const request: UpdateLearningCenterCourseInput = getUpdateRequest({
         ...data,
-        plans: plans,
+        plans: plans.map((plan) => {
+          // __typenameを削除する
+          const { __typename, ...rest } = plan as CoursePlan;
+          return rest;
+        }),
       });
+      console.log(request);
+
       const result = await apiUpdateLearningCourse(request);
       if (!result.isSuccess || !result.data) {
         setAlertMessage({
@@ -289,30 +314,53 @@ export default function LearningCourseEditPane({
               キャンセル
             </Button>
           </Box>
-          <TextField
-            onChange={(event) => handlerFormChange(event)}
-            value={editItem?.courseName || ""}
-            name="courseName"
-            label="コース名"
-            size="small"
-            fullWidth
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            onChange={(event) => handlerFormChange(event)}
-            value={editItem?.courseURL || ""}
-            name="courseURL"
-            size="small"
-            label="URL"
-            fullWidth
-            sx={{ my: 2 }}
-          />
-          <TextareaComponent
-            onInputChange={(event) => handlerFormChange(event)}
-            inputValue={editItem?.couseDetail ?? ""}
-            name="couseDetail"
-            placeholder="コース詳細"
-          />
+
+          <Box sx={{ my: 2 }}>
+            <TextField
+              onChange={(event) => handlerFormChange(event)}
+              value={editItem?.courseName || ""}
+              name="courseName"
+              label="コース名"
+              size="small"
+              fullWidth
+              sx={{ mt: 2 }}
+            />
+          </Box>
+
+          <Box sx={{ my: 2 }}>
+            {editItem && editItem.courseURL && (
+              <Link target="_blank" href={editItem.courseURL}>
+                <OpenInNewIcon></OpenInNewIcon>
+              </Link>
+            )}
+            <TextField
+              onChange={(event) => handlerFormChange(event)}
+              value={editItem?.courseURL || ""}
+              name="courseURL"
+              size="small"
+              label="URL"
+              fullWidth
+              sx={{ my: 2 }}
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Typography>コース詳細</Typography>
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.couseDetail ?? ""}
+              name="couseDetail"
+              placeholder="コース詳細"
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <Typography>キャンセルポリシー</Typography>
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.cancelPolicy ?? ""}
+              name="cancelPolicy"
+              placeholder="キャンセルポリシー"
+            />
+          </Box>
           <Box sx={{ my: 2 }}>
             <Typography>料金プラン</Typography>
             <TableContainer component={Paper} variant="outlined">
@@ -435,42 +483,13 @@ export default function LearningCourseEditPane({
               </Table>
             </TableContainer>
           </Box>
-          {/* <Box sx={{ my: 2 }}>
-            <TextField
-              label="受講期間"
-              type="number"
-              name="duration"
-              size="small"
-              value={editItem?.duration || ""}
-              onChange={(event) => handlerFormChange(event)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">ヶ月</InputAdornment>
-                ),
-              }}
-            />
-          </Box>
           <Box sx={{ my: 2 }}>
-            <TextField
-              label="料金"
-              type="number"
-              name="price"
-              size="small"
-              value={editItem?.price || ""}
-              onChange={(event) => handlerFormChange(event)}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">円</InputAdornment>
-                ),
-              }}
-            />
-          </Box> */}
-          <Box>
             <FormControlLabel
               control={
                 <Checkbox
                   name="isAvailableMoneyBack"
-                  value={editItem?.isAvailableMoneyBack || false}
+                  checked={editItem?.isAvailableMoneyBack || false}
+                  onChange={handlerFormChange}
                 />
               }
               label="返金保証の有無"
@@ -482,12 +501,13 @@ export default function LearningCourseEditPane({
               placeholder="返金保証の有無 詳細"
             />
           </Box>
-          <Box>
+          <Box sx={{ my: 2 }}>
             <FormControlLabel
               control={
                 <Checkbox
                   name="isAvailableSubsidy"
-                  value={editItem?.isAvailableSubsidy || false}
+                  checked={editItem?.isAvailableSubsidy ?? false}
+                  onChange={handlerFormChange}
                 />
               }
               label="補助金の有無"
@@ -499,10 +519,14 @@ export default function LearningCourseEditPane({
               placeholder="補助金の有無 詳細"
             />
           </Box>
-          <Box>
+          <Box sx={{ my: 2 }}>
             <FormControlLabel
               control={
-                <Checkbox name="onSale" value={editItem?.onSale || false} />
+                <Checkbox
+                  name="onSale"
+                  checked={editItem?.onSale ?? false}
+                  onChange={handlerFormChange}
+                />
               }
               label="キャンペーン実施中（クーポン/セールなど）"
             />
@@ -514,240 +538,322 @@ export default function LearningCourseEditPane({
             />
           </Box>
           <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-purposes-label">受講目的</InputLabel>
-              <Select
-                labelId="select-purposes-label"
-                id="select-purposes"
-                name="purposes"
-                value={editItem?.purposes ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={<OutlinedInput sx={{ width: 300 }} label="受講目的" />}
-                multiple
-              >
-                {Object.entries(PurposeLabels).map(([key, purpose]) => (
-                  <MenuItem key={key} value={purpose.value}>
-                    {purpose.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ ml: 2 }}>
-              <InputLabel id="select-job-types-label">目指す職種</InputLabel>
-              <Select
-                labelId="select-job-types-label"
-                id="select-job-types"
-                name="jobTypes"
-                value={editItem?.jobTypes ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={<OutlinedInput sx={{ width: 300 }} label="目指す職種" />}
-                multiple
-              >
-                {jobTypes.map((job) => (
-                  <MenuItem key={job.id} value={job.id}>
-                    {job.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-languages">
-                学べるプログラミング言語
-              </InputLabel>
-              <Select
-                labelId="select-languages"
-                id="select-languages"
-                name="programmingLanguages"
-                value={editItem?.programmingLanguages ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={
-                  <OutlinedInput
-                    sx={{ width: 300 }}
-                    label="学べるプログラミング言語"
-                  />
-                }
-                multiple
-              >
-                {languages.map((language) => (
-                  <MenuItem key={language.id} value={language.id}>
-                    {language.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ ml: 2 }}>
-              <InputLabel id="select-frameworks">
-                学べるフレームワーク
-              </InputLabel>
-              <Select
-                labelId="select-frameworks"
-                id="select-frameworks"
-                name="frameworks"
-                value={editItem?.frameworks ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={
-                  <OutlinedInput
-                    sx={{ width: 300 }}
-                    label="学べるフレームワーク"
-                  />
-                }
-                multiple
-              >
-                {frameworks.map((framework) => (
-                  <MenuItem key={framework.id} value={framework.id}>
-                    {framework.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-development-tools">開発ツール</InputLabel>
-              <Select
-                labelId="select-development-tools"
-                id="select-development-tools"
-                name="developmentTools"
-                value={editItem?.developmentTools ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={<OutlinedInput sx={{ width: 300 }} label="開発ツール" />}
-                multiple
-              >
-                {developmentTools.map((framework) => (
-                  <MenuItem key={framework.id} value={framework.id}>
-                    {framework.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-payment-options">支払い方法</InputLabel>
-              <Select
-                labelId="select-payment-options"
-                id="select-payment-options"
-                name="paymentOptions"
-                value={editItem?.paymentOptions ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={<OutlinedInput sx={{ width: 300 }} label="支払い方法" />}
-                multiple
-              >
-                {Object.entries(PaymentOptionLabels).map(([key, option]) => (
-                  <MenuItem key={key} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ ml: 2 }}>
-              <InputLabel id="select-attendance-type">受講スタイル</InputLabel>
-              <Select
-                labelId="select-attendance-type"
-                id="select-attendance-type"
-                name="attendanceType"
-                value={editItem?.attendanceType ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={
-                  <OutlinedInput sx={{ width: 300 }} label="受講スタイル" />
-                }
-              >
-                {Object.entries(AttendanceTypeLabels).map(([key, option]) => (
-                  <MenuItem key={key} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-location-pref">
-                場所（県、エリア検索用）
-              </InputLabel>
-              <Select
-                labelId="select-location-pref"
-                id="select-location-pref"
-                name="locationPref"
-                value={editItem?.locationPref ?? ""}
-                onChange={(event) => handlerFormChange(event)}
-                input={
-                  <OutlinedInput
-                    sx={{ width: 300 }}
-                    label="場所（県、エリア検索用）"
-                  />
-                }
-              >
-                {prefectures.map((p) => (
-                  <MenuItem key={p.key} value={p.key}>
-                    {p.value}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ ml: 2 }}>
-              <InputLabel id="select-location-city">
-                場所（市区町村、エリア検索用）
-              </InputLabel>
-              <Select
-                labelId="select-location-city"
-                id="select-location-city"
-                name="locationCity"
-                value={editItem?.locationCity ?? ""}
-                onChange={(event) => handlerFormChange(event)}
-                disabled={municipalityList.length === 0}
-                input={
-                  <OutlinedInput
-                    sx={{ width: 300 }}
-                    label="場所（市区町村、エリア検索用）"
-                  />
-                }
-              >
-                {/* TODO: 都道府県に一致する市町村区を取得して表示させる */}
-                {municipalityList.map((p) => (
-                  <MenuItem key={p.id} value={p.id}>
-                    {p.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControl>
-              <InputLabel id="select-especially-audiences">
-                特別な受講対象者
-              </InputLabel>
-              <Select
-                labelId="select-especially-audiences"
-                id="select-especially-audiences"
-                name="especiallyAudiences"
-                value={editItem?.especiallyAudiences ?? []}
-                onChange={(event) => handlerFormChange(event)}
-                input={
-                  <OutlinedInput sx={{ width: 300 }} label="特別な受講対象者" />
-                }
-              >
-                {Object.entries(EspeciallyAudienceLabels).map(([key, item]) => (
-                  <MenuItem key={key} value={item.value}>
-                    {item.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box>
             <FormControlLabel
               control={
                 <Checkbox
                   name="isMadeToOrder"
-                  value={editItem?.isMadeToOrder || false}
+                  checked={editItem?.isMadeToOrder ?? false}
+                  onChange={handlerFormChange}
                 />
               }
               label="オーダーメイドカリキュラムの有無"
             />
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.madeToOrderDetail ?? ""}
+              name="madeToOrderDetail"
+              placeholder="オーダーメイドカリキュラムの詳細"
+            />
           </Box>
+          <Box sx={{ my: 2 }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="isJobIntroductionAvailable"
+                  checked={editItem?.isJobIntroductionAvailable ?? false}
+                  onChange={handlerFormChange}
+                />
+              }
+              label="案件紹介の有無"
+            />
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.jobIntroductionDetail ?? ""}
+              name="jobIntroductionDetail"
+              placeholder="案件紹介の詳細"
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="isJobHuntingSupport"
+                  checked={editItem?.isJobHuntingSupport ?? false}
+                  onChange={handlerFormChange}
+                />
+              }
+              label="転職サポートの有無"
+            />
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.jobHuntingSupportDetail ?? ""}
+              name="jobHuntingSupportDetail"
+              placeholder="転職サポートの詳細"
+            />
+          </Box>
+          <Grid container sx={{ my: 2 }} spacing={2}>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-purposes-label">受講目的</InputLabel>
+                <Select
+                  labelId="select-purposes-label"
+                  id="select-purposes"
+                  name="purposes"
+                  value={editItem?.purposes ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="受講目的" />}
+                  multiple
+                >
+                  {Object.entries(PurposeLabels).map(([key, purpose]) => (
+                    <MenuItem key={key} value={purpose.value}>
+                      {purpose.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-job-types-label">目指す職種</InputLabel>
+                <Select
+                  labelId="select-job-types-label"
+                  id="select-job-types"
+                  name="jobTypes"
+                  value={editItem?.jobTypes ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="目指す職種" />}
+                  multiple
+                >
+                  {jobTypes.map((job) => (
+                    <MenuItem key={job.id} value={job.id}>
+                      {job.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ my: 2 }} spacing={2}>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-languages">
+                  学べるプログラミング言語
+                </InputLabel>
+                <Select
+                  labelId="select-languages"
+                  id="select-languages"
+                  name="programmingLanguages"
+                  value={editItem?.programmingLanguages ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={
+                    <OutlinedInput fullWidth label="学べるプログラミング言語" />
+                  }
+                  multiple
+                >
+                  {languages.map((language) => (
+                    <MenuItem key={language.id} value={language.id}>
+                      {language.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-frameworks">
+                  学べるフレームワーク
+                </InputLabel>
+                <Select
+                  labelId="select-frameworks"
+                  id="select-frameworks"
+                  name="frameworks"
+                  value={editItem?.frameworks ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={
+                    <OutlinedInput fullWidth label="学べるフレームワーク" />
+                  }
+                  multiple
+                >
+                  {frameworks.map((framework) => (
+                    <MenuItem key={framework.id} value={framework.id}>
+                      {framework.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-development-tools">
+                  開発ツール
+                </InputLabel>
+                <Select
+                  labelId="select-development-tools"
+                  id="select-development-tools"
+                  name="developmentTools"
+                  value={editItem?.developmentTools ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="開発ツール" />}
+                  multiple
+                >
+                  {developmentTools.map((framework) => (
+                    <MenuItem key={framework.id} value={framework.id}>
+                      {framework.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ my: 2 }} spacing={2}>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-payment-options">支払い方法</InputLabel>
+                <Select
+                  labelId="select-payment-options"
+                  id="select-payment-options"
+                  name="paymentOptions"
+                  value={editItem?.paymentOptions ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="支払い方法" />}
+                  multiple
+                >
+                  {paymentMethods.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-credit-cards">
+                  対応しているクレジットカード
+                </InputLabel>
+                <Select
+                  labelId="select-credit-cards"
+                  id="select-credit-cards"
+                  name="creditCards"
+                  value={editItem?.creditCards ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={
+                    <OutlinedInput
+                      fullWidth
+                      label="対応しているクレジットカード"
+                    />
+                  }
+                  multiple
+                >
+                  {creditCards.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+
+          <Grid container sx={{ my: 2 }} spacing={2}>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-attendance-type">
+                  受講スタイル
+                </InputLabel>
+                <Select
+                  labelId="select-attendance-type"
+                  id="select-attendance-type"
+                  name="attendanceType"
+                  value={editItem?.attendanceType ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="受講スタイル" />}
+                >
+                  {Object.entries(AttendanceTypeLabels).map(([key, option]) => (
+                    <MenuItem key={key} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-location-pref">
+                  場所（県、エリア検索用）
+                </InputLabel>
+                <Select
+                  labelId="select-location-pref"
+                  id="select-location-pref"
+                  name="locationPref"
+                  value={editItem?.locationPref ?? ""}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={
+                    <OutlinedInput fullWidth label="場所（県、エリア検索用）" />
+                  }
+                >
+                  {prefectures.map((p) => (
+                    <MenuItem key={p.key} value={p.key}>
+                      {p.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-location-city">
+                  場所（市区町村、エリア検索用）
+                </InputLabel>
+                <Select
+                  labelId="select-location-city"
+                  id="select-location-city"
+                  name="locationCity"
+                  value={editItem?.locationCity ?? ""}
+                  onChange={(event) => handlerFormChange(event)}
+                  disabled={municipalityList.length === 0}
+                  input={
+                    <OutlinedInput
+                      fullWidth
+                      label="場所（市区町村、エリア検索用）"
+                    />
+                  }
+                >
+                  {/* TODO: 都道府県に一致する市町村区を取得して表示させる */}
+                  {municipalityList.map((p) => (
+                    <MenuItem key={p.id} value={p.id}>
+                      {p.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ my: 2 }} spacing={2}>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-especially-audiences">
+                  特別な受講対象者
+                </InputLabel>
+                <Select
+                  labelId="select-especially-audiences"
+                  id="select-especially-audiences"
+                  name="especiallyAudiences"
+                  value={editItem?.especiallyAudiences ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="特別な受講対象者" />}
+                >
+                  {Object.entries(EspeciallyAudienceLabels).map(
+                    ([key, item]) => (
+                      <MenuItem key={key} value={item.value}>
+                        {item.label}
+                      </MenuItem>
+                    )
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
         </CardContent>
       </Card>
     </Paper>

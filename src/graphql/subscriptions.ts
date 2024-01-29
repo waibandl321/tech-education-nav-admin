@@ -104,6 +104,102 @@ export const onDeleteProgrammingLanguage =
     APITypes.OnDeleteProgrammingLanguageSubscriptionVariables,
     APITypes.OnDeleteProgrammingLanguageSubscription
   >;
+export const onCreatePaymentMethod =
+  /* GraphQL */ `subscription OnCreatePaymentMethod(
+  $filter: ModelSubscriptionPaymentMethodFilterInput
+) {
+  onCreatePaymentMethod(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnCreatePaymentMethodSubscriptionVariables,
+    APITypes.OnCreatePaymentMethodSubscription
+  >;
+export const onUpdatePaymentMethod =
+  /* GraphQL */ `subscription OnUpdatePaymentMethod(
+  $filter: ModelSubscriptionPaymentMethodFilterInput
+) {
+  onUpdatePaymentMethod(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnUpdatePaymentMethodSubscriptionVariables,
+    APITypes.OnUpdatePaymentMethodSubscription
+  >;
+export const onDeletePaymentMethod =
+  /* GraphQL */ `subscription OnDeletePaymentMethod(
+  $filter: ModelSubscriptionPaymentMethodFilterInput
+) {
+  onDeletePaymentMethod(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnDeletePaymentMethodSubscriptionVariables,
+    APITypes.OnDeletePaymentMethodSubscription
+  >;
+export const onCreateCreditCard =
+  /* GraphQL */ `subscription OnCreateCreditCard(
+  $filter: ModelSubscriptionCreditCardFilterInput
+) {
+  onCreateCreditCard(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnCreateCreditCardSubscriptionVariables,
+    APITypes.OnCreateCreditCardSubscription
+  >;
+export const onUpdateCreditCard =
+  /* GraphQL */ `subscription OnUpdateCreditCard(
+  $filter: ModelSubscriptionCreditCardFilterInput
+) {
+  onUpdateCreditCard(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnUpdateCreditCardSubscriptionVariables,
+    APITypes.OnUpdateCreditCardSubscription
+  >;
+export const onDeleteCreditCard =
+  /* GraphQL */ `subscription OnDeleteCreditCard(
+  $filter: ModelSubscriptionCreditCardFilterInput
+) {
+  onDeleteCreditCard(filter: $filter) {
+    id
+    name
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+    APITypes.OnDeleteCreditCardSubscriptionVariables,
+    APITypes.OnDeleteCreditCardSubscription
+  >;
 export const onCreateFramework =
   /* GraphQL */ `subscription OnCreateFramework($filter: ModelSubscriptionFrameworkFilterInput) {
   onCreateFramework(filter: $filter) {
@@ -282,22 +378,29 @@ export const onCreateLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt
@@ -328,22 +431,29 @@ export const onUpdateLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt
@@ -374,22 +484,29 @@ export const onDeleteLearningCenterCourse =
       splitPrice
       __typename
     }
+    cancelPolicy
     isAvailableMoneyBack
     moneyBackDetail
     isAvailableSubsidy
     subsidyMemo
     onSale
     saleMemo
+    isMadeToOrder
+    madeToOrderDetail
+    isJobIntroductionAvailable
+    jobIntroductionDetail
+    isJobHuntingSupport
+    jobHuntingSupportDetail
     purposes
     jobTypes
     programmingLanguages
     frameworks
     developmentTools
     paymentOptions
+    creditCards
     attendanceType
     locationPref
     locationCity
-    isMadeToOrder
     especiallyAudiences
     isDeleted
     createdAt

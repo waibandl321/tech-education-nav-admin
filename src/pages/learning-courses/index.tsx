@@ -4,11 +4,13 @@ import LearningCoursesPane from "@/components/pages/learning-course/LearningCour
 import { GetServerSideProps } from "next";
 import { fetchCoursePageData } from "@/hooks/server/fetchData";
 import {
+  CreditCard,
   DevelopmentTool,
   Framework,
   JobType,
   LearningCenter,
   LearningCenterCourse,
+  PaymentMethod,
   ProgrammingLanguage,
 } from "@/API";
 
@@ -19,6 +21,8 @@ export default function LearningCoursesIndex({
   frameworks,
   developmentTools,
   jobTypes,
+  paymentMethods,
+  creditCards,
 }: {
   centers: Array<LearningCenter>;
   courses: Array<LearningCenterCourse>;
@@ -26,6 +30,8 @@ export default function LearningCoursesIndex({
   frameworks: Array<Framework>;
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
+  paymentMethods: Array<PaymentMethod>;
+  creditCards: Array<CreditCard>;
 }) {
   return (
     <>
@@ -40,6 +46,8 @@ export default function LearningCoursesIndex({
           frameworks={frameworks}
           developmentTools={developmentTools}
           jobTypes={jobTypes}
+          paymentMethods={paymentMethods}
+          creditCards={creditCards}
         />
       </Layout>
     </>
@@ -56,6 +64,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       frameworks: result.frameworks,
       developmentTools: result.developmentTools,
       jobTypes: result.jobTypes,
+      paymentMethods: result.paymentMethods,
+      creditCards: result.creditCards,
     },
   };
 };

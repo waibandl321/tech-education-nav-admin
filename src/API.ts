@@ -99,6 +99,64 @@ export type DeleteProgrammingLanguageInput = {
   id: string;
 };
 
+export type CreatePaymentMethodInput = {
+  id?: string | null;
+  name: string;
+};
+
+export type ModelPaymentMethodConditionInput = {
+  name?: ModelStringInput | null;
+  and?: Array<ModelPaymentMethodConditionInput | null> | null;
+  or?: Array<ModelPaymentMethodConditionInput | null> | null;
+  not?: ModelPaymentMethodConditionInput | null;
+};
+
+export type PaymentMethod = {
+  __typename: "PaymentMethod";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdatePaymentMethodInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeletePaymentMethodInput = {
+  id: string;
+};
+
+export type CreateCreditCardInput = {
+  id?: string | null;
+  name: string;
+};
+
+export type ModelCreditCardConditionInput = {
+  name?: ModelStringInput | null;
+  and?: Array<ModelCreditCardConditionInput | null> | null;
+  or?: Array<ModelCreditCardConditionInput | null> | null;
+  not?: ModelCreditCardConditionInput | null;
+};
+
+export type CreditCard = {
+  __typename: "CreditCard";
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateCreditCardInput = {
+  id: string;
+  name?: string | null;
+};
+
+export type DeleteCreditCardInput = {
+  id: string;
+};
+
 export type CreateFrameworkInput = {
   id?: string | null;
   programmingLanguageId?: string | null;
@@ -264,22 +322,29 @@ export type CreateLearningCenterCourseInput = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlanInput | null> | null;
+  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
+  isMadeToOrder?: boolean | null;
+  madeToOrderDetail?: string | null;
+  isJobIntroductionAvailable?: boolean | null;
+  jobIntroductionDetail?: string | null;
+  isJobHuntingSupport?: boolean | null;
+  jobHuntingSupportDetail?: string | null;
   purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<PaymentOption | null> | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
-  isMadeToOrder?: boolean | null;
   especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
 };
@@ -300,12 +365,6 @@ export enum Purpose {
   SIDE_JOB = "SIDE_JOB",
   CERTIFICATION = "CERTIFICATION",
   LEARNING = "LEARNING",
-}
-
-export enum PaymentOption {
-  FULL = "FULL",
-  INSTALLMENTS = "INSTALLMENTS",
-  SUBSCRIPTION = "SUBSCRIPTION",
 }
 
 export enum AttendanceType {
@@ -329,22 +388,29 @@ export type ModelLearningCenterCourseConditionInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
+  cancelPolicy?: ModelStringInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
   subsidyMemo?: ModelStringInput | null;
   onSale?: ModelBooleanInput | null;
   saleMemo?: ModelStringInput | null;
+  isMadeToOrder?: ModelBooleanInput | null;
+  madeToOrderDetail?: ModelStringInput | null;
+  isJobIntroductionAvailable?: ModelBooleanInput | null;
+  jobIntroductionDetail?: ModelStringInput | null;
+  isJobHuntingSupport?: ModelBooleanInput | null;
+  jobHuntingSupportDetail?: ModelStringInput | null;
   purposes?: ModelPurposeListInput | null;
   jobTypes?: ModelStringInput | null;
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
   developmentTools?: ModelStringInput | null;
-  paymentOptions?: ModelPaymentOptionListInput | null;
+  paymentOptions?: ModelStringInput | null;
+  creditCards?: ModelStringInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
-  isMadeToOrder?: ModelBooleanInput | null;
   especiallyAudiences?: ModelEspeciallyAudienceListInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseConditionInput | null> | null;
@@ -357,13 +423,6 @@ export type ModelPurposeListInput = {
   ne?: Array<Purpose | null> | null;
   contains?: Purpose | null;
   notContains?: Purpose | null;
-};
-
-export type ModelPaymentOptionListInput = {
-  eq?: Array<PaymentOption | null> | null;
-  ne?: Array<PaymentOption | null> | null;
-  contains?: PaymentOption | null;
-  notContains?: PaymentOption | null;
 };
 
 export type ModelAttendanceTypeInput = {
@@ -386,22 +445,29 @@ export type LearningCenterCourse = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlan | null> | null;
+  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
+  isMadeToOrder?: boolean | null;
+  madeToOrderDetail?: string | null;
+  isJobIntroductionAvailable?: boolean | null;
+  jobIntroductionDetail?: string | null;
+  isJobHuntingSupport?: boolean | null;
+  jobHuntingSupportDetail?: string | null;
   purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<PaymentOption | null> | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
-  isMadeToOrder?: boolean | null;
   especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
   createdAt: string;
@@ -425,22 +491,29 @@ export type UpdateLearningCenterCourseInput = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlanInput | null> | null;
+  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
   subsidyMemo?: string | null;
   onSale?: boolean | null;
   saleMemo?: string | null;
+  isMadeToOrder?: boolean | null;
+  madeToOrderDetail?: string | null;
+  isJobIntroductionAvailable?: boolean | null;
+  jobIntroductionDetail?: string | null;
+  isJobHuntingSupport?: boolean | null;
+  jobHuntingSupportDetail?: string | null;
   purposes?: Array<Purpose | null> | null;
   jobTypes?: Array<string | null> | null;
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<PaymentOption | null> | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
-  isMadeToOrder?: boolean | null;
   especiallyAudiences?: Array<EspeciallyAudience | null> | null;
   isDeleted?: boolean | null;
 };
@@ -587,6 +660,34 @@ export type ModelProgrammingLanguageConnection = {
   nextToken?: string | null;
 };
 
+export type ModelPaymentMethodFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelPaymentMethodFilterInput | null> | null;
+  or?: Array<ModelPaymentMethodFilterInput | null> | null;
+  not?: ModelPaymentMethodFilterInput | null;
+};
+
+export type ModelPaymentMethodConnection = {
+  __typename: "ModelPaymentMethodConnection";
+  items: Array<PaymentMethod | null>;
+  nextToken?: string | null;
+};
+
+export type ModelCreditCardFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  and?: Array<ModelCreditCardFilterInput | null> | null;
+  or?: Array<ModelCreditCardFilterInput | null> | null;
+  not?: ModelCreditCardFilterInput | null;
+};
+
+export type ModelCreditCardConnection = {
+  __typename: "ModelCreditCardConnection";
+  items: Array<CreditCard | null>;
+  nextToken?: string | null;
+};
+
 export type ModelFrameworkFilterInput = {
   id?: ModelIDInput | null;
   programmingLanguageId?: ModelIDInput | null;
@@ -644,22 +745,29 @@ export type ModelLearningCenterCourseFilterInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
+  cancelPolicy?: ModelStringInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
   subsidyMemo?: ModelStringInput | null;
   onSale?: ModelBooleanInput | null;
   saleMemo?: ModelStringInput | null;
+  isMadeToOrder?: ModelBooleanInput | null;
+  madeToOrderDetail?: ModelStringInput | null;
+  isJobIntroductionAvailable?: ModelBooleanInput | null;
+  jobIntroductionDetail?: ModelStringInput | null;
+  isJobHuntingSupport?: ModelBooleanInput | null;
+  jobHuntingSupportDetail?: ModelStringInput | null;
   purposes?: ModelPurposeListInput | null;
   jobTypes?: ModelStringInput | null;
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
   developmentTools?: ModelStringInput | null;
-  paymentOptions?: ModelPaymentOptionListInput | null;
+  paymentOptions?: ModelStringInput | null;
+  creditCards?: ModelStringInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
-  isMadeToOrder?: ModelBooleanInput | null;
   especiallyAudiences?: ModelEspeciallyAudienceListInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterCourseFilterInput | null> | null;
@@ -758,6 +866,20 @@ export type ModelSubscriptionProgrammingLanguageFilterInput = {
   or?: Array<ModelSubscriptionProgrammingLanguageFilterInput | null> | null;
 };
 
+export type ModelSubscriptionPaymentMethodFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionPaymentMethodFilterInput | null> | null;
+  or?: Array<ModelSubscriptionPaymentMethodFilterInput | null> | null;
+};
+
+export type ModelSubscriptionCreditCardFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  name?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionCreditCardFilterInput | null> | null;
+  or?: Array<ModelSubscriptionCreditCardFilterInput | null> | null;
+};
+
 export type ModelSubscriptionFrameworkFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   programmingLanguageId?: ModelSubscriptionIDInput | null;
@@ -811,22 +933,29 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   courseName?: ModelSubscriptionStringInput | null;
   courseURL?: ModelSubscriptionStringInput | null;
   couseDetail?: ModelSubscriptionStringInput | null;
+  cancelPolicy?: ModelSubscriptionStringInput | null;
   isAvailableMoneyBack?: ModelSubscriptionBooleanInput | null;
   moneyBackDetail?: ModelSubscriptionStringInput | null;
   isAvailableSubsidy?: ModelSubscriptionBooleanInput | null;
   subsidyMemo?: ModelSubscriptionStringInput | null;
   onSale?: ModelSubscriptionBooleanInput | null;
   saleMemo?: ModelSubscriptionStringInput | null;
+  isMadeToOrder?: ModelSubscriptionBooleanInput | null;
+  madeToOrderDetail?: ModelSubscriptionStringInput | null;
+  isJobIntroductionAvailable?: ModelSubscriptionBooleanInput | null;
+  jobIntroductionDetail?: ModelSubscriptionStringInput | null;
+  isJobHuntingSupport?: ModelSubscriptionBooleanInput | null;
+  jobHuntingSupportDetail?: ModelSubscriptionStringInput | null;
   purposes?: ModelSubscriptionStringInput | null;
   jobTypes?: ModelSubscriptionStringInput | null;
   programmingLanguages?: ModelSubscriptionStringInput | null;
   frameworks?: ModelSubscriptionStringInput | null;
   developmentTools?: ModelSubscriptionStringInput | null;
   paymentOptions?: ModelSubscriptionStringInput | null;
+  creditCards?: ModelSubscriptionStringInput | null;
   attendanceType?: ModelSubscriptionStringInput | null;
   locationPref?: ModelSubscriptionStringInput | null;
   locationCity?: ModelSubscriptionStringInput | null;
-  isMadeToOrder?: ModelSubscriptionBooleanInput | null;
   especiallyAudiences?: ModelSubscriptionStringInput | null;
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionLearningCenterCourseFilterInput | null> | null;
@@ -943,6 +1072,96 @@ export type DeleteProgrammingLanguageMutationVariables = {
 export type DeleteProgrammingLanguageMutation = {
   deleteProgrammingLanguage?: {
     __typename: "ProgrammingLanguage";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type CreatePaymentMethodMutationVariables = {
+  input: CreatePaymentMethodInput;
+  condition?: ModelPaymentMethodConditionInput | null;
+};
+
+export type CreatePaymentMethodMutation = {
+  createPaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdatePaymentMethodMutationVariables = {
+  input: UpdatePaymentMethodInput;
+  condition?: ModelPaymentMethodConditionInput | null;
+};
+
+export type UpdatePaymentMethodMutation = {
+  updatePaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeletePaymentMethodMutationVariables = {
+  input: DeletePaymentMethodInput;
+  condition?: ModelPaymentMethodConditionInput | null;
+};
+
+export type DeletePaymentMethodMutation = {
+  deletePaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type CreateCreditCardMutationVariables = {
+  input: CreateCreditCardInput;
+  condition?: ModelCreditCardConditionInput | null;
+};
+
+export type CreateCreditCardMutation = {
+  createCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type UpdateCreditCardMutationVariables = {
+  input: UpdateCreditCardInput;
+  condition?: ModelCreditCardConditionInput | null;
+};
+
+export type UpdateCreditCardMutation = {
+  updateCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type DeleteCreditCardMutationVariables = {
+  input: DeleteCreditCardInput;
+  condition?: ModelCreditCardConditionInput | null;
+};
+
+export type DeleteCreditCardMutation = {
+  deleteCreditCard?: {
+    __typename: "CreditCard";
     id: string;
     name: string;
     createdAt: string;
@@ -1134,22 +1353,29 @@ export type CreateLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -1179,22 +1405,29 @@ export type UpdateLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -1224,22 +1457,29 @@ export type DeleteLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -1444,6 +1684,74 @@ export type ListProgrammingLanguagesQuery = {
   } | null;
 };
 
+export type GetPaymentMethodQueryVariables = {
+  id: string;
+};
+
+export type GetPaymentMethodQuery = {
+  getPaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListPaymentMethodsQueryVariables = {
+  filter?: ModelPaymentMethodFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListPaymentMethodsQuery = {
+  listPaymentMethods?: {
+    __typename: "ModelPaymentMethodConnection";
+    items: Array<{
+      __typename: "PaymentMethod";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type GetCreditCardQueryVariables = {
+  id: string;
+};
+
+export type GetCreditCardQuery = {
+  getCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type ListCreditCardsQueryVariables = {
+  filter?: ModelCreditCardFilterInput | null;
+  limit?: number | null;
+  nextToken?: string | null;
+};
+
+export type ListCreditCardsQuery = {
+  listCreditCards?: {
+    __typename: "ModelCreditCardConnection";
+    items: Array<{
+      __typename: "CreditCard";
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+};
+
 export type GetFrameworkQueryVariables = {
   id: string;
 };
@@ -1585,22 +1893,29 @@ export type GetLearningCenterCourseQuery = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -1624,22 +1939,29 @@ export type ListLearningCenterCoursesQuery = {
       courseName?: string | null;
       courseURL?: string | null;
       couseDetail?: string | null;
+      cancelPolicy?: string | null;
       isAvailableMoneyBack?: boolean | null;
       moneyBackDetail?: string | null;
       isAvailableSubsidy?: boolean | null;
       subsidyMemo?: string | null;
       onSale?: boolean | null;
       saleMemo?: string | null;
+      isMadeToOrder?: boolean | null;
+      madeToOrderDetail?: string | null;
+      isJobIntroductionAvailable?: boolean | null;
+      jobIntroductionDetail?: string | null;
+      isJobHuntingSupport?: boolean | null;
+      jobHuntingSupportDetail?: string | null;
       purposes?: Array<Purpose | null> | null;
       jobTypes?: Array<string | null> | null;
       programmingLanguages?: Array<string | null> | null;
       frameworks?: Array<string | null> | null;
       developmentTools?: Array<string | null> | null;
-      paymentOptions?: Array<PaymentOption | null> | null;
+      paymentOptions?: Array<string | null> | null;
+      creditCards?: Array<string | null> | null;
       attendanceType?: AttendanceType | null;
       locationPref?: string | null;
       locationCity?: string | null;
-      isMadeToOrder?: boolean | null;
       especiallyAudiences?: Array<EspeciallyAudience | null> | null;
       isDeleted?: boolean | null;
       createdAt: string;
@@ -1827,6 +2149,90 @@ export type OnDeleteProgrammingLanguageSubscription = {
   } | null;
 };
 
+export type OnCreatePaymentMethodSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentMethodFilterInput | null;
+};
+
+export type OnCreatePaymentMethodSubscription = {
+  onCreatePaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdatePaymentMethodSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentMethodFilterInput | null;
+};
+
+export type OnUpdatePaymentMethodSubscription = {
+  onUpdatePaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeletePaymentMethodSubscriptionVariables = {
+  filter?: ModelSubscriptionPaymentMethodFilterInput | null;
+};
+
+export type OnDeletePaymentMethodSubscription = {
+  onDeletePaymentMethod?: {
+    __typename: "PaymentMethod";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnCreateCreditCardSubscriptionVariables = {
+  filter?: ModelSubscriptionCreditCardFilterInput | null;
+};
+
+export type OnCreateCreditCardSubscription = {
+  onCreateCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnUpdateCreditCardSubscriptionVariables = {
+  filter?: ModelSubscriptionCreditCardFilterInput | null;
+};
+
+export type OnUpdateCreditCardSubscription = {
+  onUpdateCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
+export type OnDeleteCreditCardSubscriptionVariables = {
+  filter?: ModelSubscriptionCreditCardFilterInput | null;
+};
+
+export type OnDeleteCreditCardSubscription = {
+  onDeleteCreditCard?: {
+    __typename: "CreditCard";
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+};
+
 export type OnCreateFrameworkSubscriptionVariables = {
   filter?: ModelSubscriptionFrameworkFilterInput | null;
 };
@@ -2001,22 +2407,29 @@ export type OnCreateLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -2045,22 +2458,29 @@ export type OnUpdateLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
@@ -2089,22 +2509,29 @@ export type OnDeleteLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
+    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
     subsidyMemo?: string | null;
     onSale?: boolean | null;
     saleMemo?: string | null;
+    isMadeToOrder?: boolean | null;
+    madeToOrderDetail?: string | null;
+    isJobIntroductionAvailable?: boolean | null;
+    jobIntroductionDetail?: string | null;
+    isJobHuntingSupport?: boolean | null;
+    jobHuntingSupportDetail?: string | null;
     purposes?: Array<Purpose | null> | null;
     jobTypes?: Array<string | null> | null;
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<PaymentOption | null> | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
-    isMadeToOrder?: boolean | null;
     especiallyAudiences?: Array<EspeciallyAudience | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;

@@ -27,6 +27,31 @@ type ProgrammingLanguage
   name: String!
 }
 
+# 支払い方法マスタ
+type PaymentMethod
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+# クレジットカードマスタ
+type CreditCard
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
 # フレームワークマスタ（プログラミング言語とは紐付けない）
 type Framework
   @model
@@ -135,22 +160,29 @@ type LearningCenterCourse
   courseURL: String # 公式サイトURL
   couseDetail: String # コース詳細
   plans: [CoursePlan] # プラン一覧
+  cancelPolicy: String # キャンセルポリシー詳細
   isAvailableMoneyBack: Boolean # 返金保証の有無
   moneyBackDetail: String # 返金保証の有無 詳細
   isAvailableSubsidy: Boolean # 補助金の有無
   subsidyMemo: String # 補助金の有無 詳細
   onSale: Boolean # キャンペーン実施中（クーポン/セールなど）
   saleMemo: String # キャンペーン詳細
+  isMadeToOrder: Boolean # オーダーメイドカリキュラムの有無
+  madeToOrderDetail: String # オーダーメイドカリキュラムの詳細
+  isJobIntroductionAvailable: Boolean # 案件紹介の有無
+  jobIntroductionDetail: String # 案件紹介の詳細
+  isJobHuntingSupport: Boolean # 転職サポートの有無
+  jobHuntingSupportDetail: String # 転職サポートの詳細
   purposes: [Purpose] # 受講目的（選択形式）
   jobTypes: [String] # 目指す職種（jobTypeのマスタデータのIDを格納する)
   programmingLanguages: [String] # 学べるプログラミング言語（ProgrammingLanguageマスタのIDを格納する）
   frameworks: [String] # 学べるフレームワーク（FrameworkマスタのIDを格納する）
   developmentTools: [String] # 開発用の各種ツール（DevelopmentToolマスタのIDを格納する）
-  paymentOptions: [PaymentOption] # 支払い方法（選択形式）
+  paymentOptions: [String] # 支払い方法（PaymentMethodマスタのIDを格納する）
+  creditCards: [String] # 対応しているクレジットカード（CreditCardマスタのIDを格納する）
   attendanceType: AttendanceType # 受講スタイル（選択形式）
   locationPref: String # オフラインの場合の場所（県、エリア検索用）
   locationCity: String # オフラインの場合の場所（市区町村、エリア検索用）
-  isMadeToOrder: Boolean # オーダーメイドカリキュラムの有無
   especiallyAudiences: [EspeciallyAudience] # 特別な受講対象者（学生、子供、主婦、高齢者、障害者など）
   isDeleted: Boolean
 }

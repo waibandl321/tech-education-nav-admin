@@ -197,22 +197,29 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: "",
     courseURL: "",
     couseDetail: "",
+    cancelPolicy: "",
     isAvailableMoneyBack: false,
     moneyBackDetail: "",
     isAvailableSubsidy: false,
     subsidyMemo: "",
     onSale: false,
     saleMemo: "",
+    isMadeToOrder: false,
+    madeToOrderDetail: "",
+    isJobIntroductionAvailable: false,
+    jobIntroductionDetail: "",
+    isJobHuntingSupport: false,
+    jobHuntingSupportDetail: "",
     purposes: [],
     jobTypes: [],
     programmingLanguages: [],
     frameworks: [],
     developmentTools: [],
     paymentOptions: [],
+    creditCards: [],
     attendanceType: "",
     locationPref: "",
     locationCity: "",
-    isMadeToOrder: false,
     especiallyAudiences: [],
     isDeleted: false,
   };
@@ -223,6 +230,9 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [courseURL, setCourseURL] = React.useState(initialValues.courseURL);
   const [couseDetail, setCouseDetail] = React.useState(
     initialValues.couseDetail
+  );
+  const [cancelPolicy, setCancelPolicy] = React.useState(
+    initialValues.cancelPolicy
   );
   const [isAvailableMoneyBack, setIsAvailableMoneyBack] = React.useState(
     initialValues.isAvailableMoneyBack
@@ -238,6 +248,23 @@ export default function LearningCenterCourseUpdateForm(props) {
   );
   const [onSale, setOnSale] = React.useState(initialValues.onSale);
   const [saleMemo, setSaleMemo] = React.useState(initialValues.saleMemo);
+  const [isMadeToOrder, setIsMadeToOrder] = React.useState(
+    initialValues.isMadeToOrder
+  );
+  const [madeToOrderDetail, setMadeToOrderDetail] = React.useState(
+    initialValues.madeToOrderDetail
+  );
+  const [isJobIntroductionAvailable, setIsJobIntroductionAvailable] =
+    React.useState(initialValues.isJobIntroductionAvailable);
+  const [jobIntroductionDetail, setJobIntroductionDetail] = React.useState(
+    initialValues.jobIntroductionDetail
+  );
+  const [isJobHuntingSupport, setIsJobHuntingSupport] = React.useState(
+    initialValues.isJobHuntingSupport
+  );
+  const [jobHuntingSupportDetail, setJobHuntingSupportDetail] = React.useState(
+    initialValues.jobHuntingSupportDetail
+  );
   const [purposes, setPurposes] = React.useState(initialValues.purposes);
   const [jobTypes, setJobTypes] = React.useState(initialValues.jobTypes);
   const [programmingLanguages, setProgrammingLanguages] = React.useState(
@@ -250,6 +277,9 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [paymentOptions, setPaymentOptions] = React.useState(
     initialValues.paymentOptions
   );
+  const [creditCards, setCreditCards] = React.useState(
+    initialValues.creditCards
+  );
   const [attendanceType, setAttendanceType] = React.useState(
     initialValues.attendanceType
   );
@@ -258,9 +288,6 @@ export default function LearningCenterCourseUpdateForm(props) {
   );
   const [locationCity, setLocationCity] = React.useState(
     initialValues.locationCity
-  );
-  const [isMadeToOrder, setIsMadeToOrder] = React.useState(
-    initialValues.isMadeToOrder
   );
   const [especiallyAudiences, setEspeciallyAudiences] = React.useState(
     initialValues.especiallyAudiences
@@ -275,12 +302,19 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCourseName(cleanValues.courseName);
     setCourseURL(cleanValues.courseURL);
     setCouseDetail(cleanValues.couseDetail);
+    setCancelPolicy(cleanValues.cancelPolicy);
     setIsAvailableMoneyBack(cleanValues.isAvailableMoneyBack);
     setMoneyBackDetail(cleanValues.moneyBackDetail);
     setIsAvailableSubsidy(cleanValues.isAvailableSubsidy);
     setSubsidyMemo(cleanValues.subsidyMemo);
     setOnSale(cleanValues.onSale);
     setSaleMemo(cleanValues.saleMemo);
+    setIsMadeToOrder(cleanValues.isMadeToOrder);
+    setMadeToOrderDetail(cleanValues.madeToOrderDetail);
+    setIsJobIntroductionAvailable(cleanValues.isJobIntroductionAvailable);
+    setJobIntroductionDetail(cleanValues.jobIntroductionDetail);
+    setIsJobHuntingSupport(cleanValues.isJobHuntingSupport);
+    setJobHuntingSupportDetail(cleanValues.jobHuntingSupportDetail);
     setPurposes(cleanValues.purposes ?? []);
     setCurrentPurposesValue("");
     setJobTypes(cleanValues.jobTypes ?? []);
@@ -293,10 +327,11 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCurrentDevelopmentToolsValue("");
     setPaymentOptions(cleanValues.paymentOptions ?? []);
     setCurrentPaymentOptionsValue("");
+    setCreditCards(cleanValues.creditCards ?? []);
+    setCurrentCreditCardsValue("");
     setAttendanceType(cleanValues.attendanceType);
     setLocationPref(cleanValues.locationPref);
     setLocationCity(cleanValues.locationCity);
-    setIsMadeToOrder(cleanValues.isMadeToOrder);
     setEspeciallyAudiences(cleanValues.especiallyAudiences ?? []);
     setCurrentEspeciallyAudiencesValue("");
     setIsDeleted(cleanValues.isDeleted);
@@ -337,6 +372,9 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [currentPaymentOptionsValue, setCurrentPaymentOptionsValue] =
     React.useState("");
   const paymentOptionsRef = React.createRef();
+  const [currentCreditCardsValue, setCurrentCreditCardsValue] =
+    React.useState("");
+  const creditCardsRef = React.createRef();
   const [currentEspeciallyAudiencesValue, setCurrentEspeciallyAudiencesValue] =
     React.useState("");
   const especiallyAudiencesRef = React.createRef();
@@ -349,14 +387,6 @@ export default function LearningCenterCourseUpdateForm(props) {
         SIDE_JOB: "Side job",
         CERTIFICATION: "Certification",
         LEARNING: "Learning",
-      };
-      return enumDisplayValueMap[r];
-    },
-    paymentOptions: (r) => {
-      const enumDisplayValueMap = {
-        FULL: "Full",
-        INSTALLMENTS: "Installments",
-        SUBSCRIPTION: "Subscription",
       };
       return enumDisplayValueMap[r];
     },
@@ -378,22 +408,29 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: [],
     courseURL: [],
     couseDetail: [],
+    cancelPolicy: [],
     isAvailableMoneyBack: [],
     moneyBackDetail: [],
     isAvailableSubsidy: [],
     subsidyMemo: [],
     onSale: [],
     saleMemo: [],
+    isMadeToOrder: [],
+    madeToOrderDetail: [],
+    isJobIntroductionAvailable: [],
+    jobIntroductionDetail: [],
+    isJobHuntingSupport: [],
+    jobHuntingSupportDetail: [],
     purposes: [],
     jobTypes: [],
     programmingLanguages: [],
     frameworks: [],
     developmentTools: [],
     paymentOptions: [],
+    creditCards: [],
     attendanceType: [],
     locationPref: [],
     locationCity: [],
-    isMadeToOrder: [],
     especiallyAudiences: [],
     isDeleted: [],
   };
@@ -427,22 +464,29 @@ export default function LearningCenterCourseUpdateForm(props) {
           courseName: courseName ?? null,
           courseURL: courseURL ?? null,
           couseDetail: couseDetail ?? null,
+          cancelPolicy: cancelPolicy ?? null,
           isAvailableMoneyBack: isAvailableMoneyBack ?? null,
           moneyBackDetail: moneyBackDetail ?? null,
           isAvailableSubsidy: isAvailableSubsidy ?? null,
           subsidyMemo: subsidyMemo ?? null,
           onSale: onSale ?? null,
           saleMemo: saleMemo ?? null,
+          isMadeToOrder: isMadeToOrder ?? null,
+          madeToOrderDetail: madeToOrderDetail ?? null,
+          isJobIntroductionAvailable: isJobIntroductionAvailable ?? null,
+          jobIntroductionDetail: jobIntroductionDetail ?? null,
+          isJobHuntingSupport: isJobHuntingSupport ?? null,
+          jobHuntingSupportDetail: jobHuntingSupportDetail ?? null,
           purposes: purposes ?? null,
           jobTypes: jobTypes ?? null,
           programmingLanguages: programmingLanguages ?? null,
           frameworks: frameworks ?? null,
           developmentTools: developmentTools ?? null,
           paymentOptions: paymentOptions ?? null,
+          creditCards: creditCards ?? null,
           attendanceType: attendanceType ?? null,
           locationPref: locationPref ?? null,
           locationCity: locationCity ?? null,
-          isMadeToOrder: isMadeToOrder ?? null,
           especiallyAudiences: especiallyAudiences ?? null,
           isDeleted: isDeleted ?? null,
         };
@@ -509,22 +553,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -554,22 +605,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName: value,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -599,22 +657,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL: value,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -644,22 +709,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail: value,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -676,6 +748,58 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.couseDetail?.hasError}
         {...getOverrideProps(overrides, "couseDetail")}
       ></TextField>
+      <TextField
+        label="Cancel policy"
+        isRequired={false}
+        isReadOnly={false}
+        value={cancelPolicy}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy: value,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.cancelPolicy ?? value;
+          }
+          if (errors.cancelPolicy?.hasError) {
+            runValidationTasks("cancelPolicy", value);
+          }
+          setCancelPolicy(value);
+        }}
+        onBlur={() => runValidationTasks("cancelPolicy", cancelPolicy)}
+        errorMessage={errors.cancelPolicy?.errorMessage}
+        hasError={errors.cancelPolicy?.hasError}
+        {...getOverrideProps(overrides, "cancelPolicy")}
+      ></TextField>
       <SwitchField
         label="Is available money back"
         defaultChecked={false}
@@ -689,22 +813,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack: value,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -736,22 +867,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail: value,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -781,22 +919,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy: value,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -828,22 +973,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo: value,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -873,22 +1025,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale: value,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -918,22 +1077,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo: value,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -950,6 +1116,331 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.saleMemo?.hasError}
         {...getOverrideProps(overrides, "saleMemo")}
       ></TextField>
+      <SwitchField
+        label="Is made to order"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isMadeToOrder}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder: value,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isMadeToOrder ?? value;
+          }
+          if (errors.isMadeToOrder?.hasError) {
+            runValidationTasks("isMadeToOrder", value);
+          }
+          setIsMadeToOrder(value);
+        }}
+        onBlur={() => runValidationTasks("isMadeToOrder", isMadeToOrder)}
+        errorMessage={errors.isMadeToOrder?.errorMessage}
+        hasError={errors.isMadeToOrder?.hasError}
+        {...getOverrideProps(overrides, "isMadeToOrder")}
+      ></SwitchField>
+      <TextField
+        label="Made to order detail"
+        isRequired={false}
+        isReadOnly={false}
+        value={madeToOrderDetail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail: value,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.madeToOrderDetail ?? value;
+          }
+          if (errors.madeToOrderDetail?.hasError) {
+            runValidationTasks("madeToOrderDetail", value);
+          }
+          setMadeToOrderDetail(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("madeToOrderDetail", madeToOrderDetail)
+        }
+        errorMessage={errors.madeToOrderDetail?.errorMessage}
+        hasError={errors.madeToOrderDetail?.hasError}
+        {...getOverrideProps(overrides, "madeToOrderDetail")}
+      ></TextField>
+      <SwitchField
+        label="Is job introduction available"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isJobIntroductionAvailable}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable: value,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isJobIntroductionAvailable ?? value;
+          }
+          if (errors.isJobIntroductionAvailable?.hasError) {
+            runValidationTasks("isJobIntroductionAvailable", value);
+          }
+          setIsJobIntroductionAvailable(value);
+        }}
+        onBlur={() =>
+          runValidationTasks(
+            "isJobIntroductionAvailable",
+            isJobIntroductionAvailable
+          )
+        }
+        errorMessage={errors.isJobIntroductionAvailable?.errorMessage}
+        hasError={errors.isJobIntroductionAvailable?.hasError}
+        {...getOverrideProps(overrides, "isJobIntroductionAvailable")}
+      ></SwitchField>
+      <TextField
+        label="Job introduction detail"
+        isRequired={false}
+        isReadOnly={false}
+        value={jobIntroductionDetail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail: value,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.jobIntroductionDetail ?? value;
+          }
+          if (errors.jobIntroductionDetail?.hasError) {
+            runValidationTasks("jobIntroductionDetail", value);
+          }
+          setJobIntroductionDetail(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("jobIntroductionDetail", jobIntroductionDetail)
+        }
+        errorMessage={errors.jobIntroductionDetail?.errorMessage}
+        hasError={errors.jobIntroductionDetail?.hasError}
+        {...getOverrideProps(overrides, "jobIntroductionDetail")}
+      ></TextField>
+      <SwitchField
+        label="Is job hunting support"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isJobHuntingSupport}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport: value,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.isJobHuntingSupport ?? value;
+          }
+          if (errors.isJobHuntingSupport?.hasError) {
+            runValidationTasks("isJobHuntingSupport", value);
+          }
+          setIsJobHuntingSupport(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("isJobHuntingSupport", isJobHuntingSupport)
+        }
+        errorMessage={errors.isJobHuntingSupport?.errorMessage}
+        hasError={errors.isJobHuntingSupport?.hasError}
+        {...getOverrideProps(overrides, "isJobHuntingSupport")}
+      ></SwitchField>
+      <TextField
+        label="Job hunting support detail"
+        isRequired={false}
+        isReadOnly={false}
+        value={jobHuntingSupportDetail}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail: value,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.jobHuntingSupportDetail ?? value;
+          }
+          if (errors.jobHuntingSupportDetail?.hasError) {
+            runValidationTasks("jobHuntingSupportDetail", value);
+          }
+          setJobHuntingSupportDetail(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("jobHuntingSupportDetail", jobHuntingSupportDetail)
+        }
+        errorMessage={errors.jobHuntingSupportDetail?.errorMessage}
+        hasError={errors.jobHuntingSupportDetail?.hasError}
+        {...getOverrideProps(overrides, "jobHuntingSupportDetail")}
+      ></TextField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -959,22 +1450,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes: values,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1057,22 +1555,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes: values,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1123,22 +1628,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages: values,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1197,22 +1709,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks: values,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1265,22 +1784,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools: values,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1336,22 +1862,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions: values,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1369,15 +1902,14 @@ export default function LearningCenterCourseUpdateForm(props) {
           await runValidationTasks("paymentOptions", currentPaymentOptionsValue)
         }
         errorMessage={errors?.paymentOptions?.errorMessage}
-        getBadgeText={getDisplayValue.paymentOptions}
         setFieldValue={setCurrentPaymentOptionsValue}
         inputFieldRef={paymentOptionsRef}
         defaultFieldValue={""}
       >
-        <SelectField
+        <TextField
           label="Payment options"
-          placeholder="Please select an option"
-          isDisabled={false}
+          isRequired={false}
+          isReadOnly={false}
           value={currentPaymentOptionsValue}
           onChange={(e) => {
             let { value } = e.target;
@@ -1394,23 +1926,82 @@ export default function LearningCenterCourseUpdateForm(props) {
           ref={paymentOptionsRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "paymentOptions")}
-        >
-          <option
-            children="Full"
-            value="FULL"
-            {...getOverrideProps(overrides, "paymentOptionsoption0")}
-          ></option>
-          <option
-            children="Installments"
-            value="INSTALLMENTS"
-            {...getOverrideProps(overrides, "paymentOptionsoption1")}
-          ></option>
-          <option
-            children="Subscription"
-            value="SUBSCRIPTION"
-            {...getOverrideProps(overrides, "paymentOptionsoption2")}
-          ></option>
-        </SelectField>
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              learningCenterId,
+              courseName,
+              courseURL,
+              couseDetail,
+              cancelPolicy,
+              isAvailableMoneyBack,
+              moneyBackDetail,
+              isAvailableSubsidy,
+              subsidyMemo,
+              onSale,
+              saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
+              purposes,
+              jobTypes,
+              programmingLanguages,
+              frameworks,
+              developmentTools,
+              paymentOptions,
+              creditCards: values,
+              attendanceType,
+              locationPref,
+              locationCity,
+              especiallyAudiences,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.creditCards ?? values;
+          }
+          setCreditCards(values);
+          setCurrentCreditCardsValue("");
+        }}
+        currentFieldValue={currentCreditCardsValue}
+        label={"Credit cards"}
+        items={creditCards}
+        hasError={errors?.creditCards?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("creditCards", currentCreditCardsValue)
+        }
+        errorMessage={errors?.creditCards?.errorMessage}
+        setFieldValue={setCurrentCreditCardsValue}
+        inputFieldRef={creditCardsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Credit cards"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentCreditCardsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.creditCards?.hasError) {
+              runValidationTasks("creditCards", value);
+            }
+            setCurrentCreditCardsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("creditCards", currentCreditCardsValue)
+          }
+          errorMessage={errors.creditCards?.errorMessage}
+          hasError={errors.creditCards?.hasError}
+          ref={creditCardsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "creditCards")}
+        ></TextField>
       </ArrayField>
       <SelectField
         label="Attendance type"
@@ -1425,22 +2016,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType: value,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1486,22 +2084,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref: value,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1531,22 +2136,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity: value,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted,
             };
@@ -1563,51 +2175,6 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.locationCity?.hasError}
         {...getOverrideProps(overrides, "locationCity")}
       ></TextField>
-      <SwitchField
-        label="Is made to order"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={isMadeToOrder}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions,
-              attendanceType,
-              locationPref,
-              locationCity,
-              isMadeToOrder: value,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.isMadeToOrder ?? value;
-          }
-          if (errors.isMadeToOrder?.hasError) {
-            runValidationTasks("isMadeToOrder", value);
-          }
-          setIsMadeToOrder(value);
-        }}
-        onBlur={() => runValidationTasks("isMadeToOrder", isMadeToOrder)}
-        errorMessage={errors.isMadeToOrder?.errorMessage}
-        hasError={errors.isMadeToOrder?.hasError}
-        {...getOverrideProps(overrides, "isMadeToOrder")}
-      ></SwitchField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -1617,22 +2184,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences: values,
               isDeleted,
             };
@@ -1732,22 +2306,29 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
+              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
               subsidyMemo,
               onSale,
               saleMemo,
+              isMadeToOrder,
+              madeToOrderDetail,
+              isJobIntroductionAvailable,
+              jobIntroductionDetail,
+              isJobHuntingSupport,
+              jobHuntingSupportDetail,
               purposes,
               jobTypes,
               programmingLanguages,
               frameworks,
               developmentTools,
               paymentOptions,
+              creditCards,
               attendanceType,
               locationPref,
               locationCity,
-              isMadeToOrder,
               especiallyAudiences,
               isDeleted: value,
             };
