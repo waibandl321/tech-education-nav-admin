@@ -52,12 +52,14 @@ import {
   TableRow,
   IconButton,
   Grid,
+  Autocomplete,
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { sortBy } from "lodash";
 
 const initPlan: CoursePlanInput = {
   // __typename: "CoursePlan",
@@ -380,7 +382,7 @@ export default function LearningCourseEditPane({
                       料金
                     </TableCell>
                     <TableCell sx={{ minWidth: 150 }} align="left">
-                      分割払いの金額（月額）
+                      24分割払い（月額）
                     </TableCell>
                     <TableCell sx={{ minWidth: 300 }} align="left">
                       プラン備考
@@ -460,7 +462,7 @@ export default function LearningCourseEditPane({
                           type="number"
                           name="splitPrice"
                           size="small"
-                          value={row?.splitPrice || ""}
+                          value={row?.price ? Math.floor(row.price / 24) : ""}
                           onChange={(e) => handlerPlansChange(e, row)}
                           InputProps={{
                             endAdornment: (
@@ -650,7 +652,7 @@ export default function LearningCourseEditPane({
                   }
                   multiple
                 >
-                  {languages.map((language) => (
+                  {sortBy(languages, ["name"]).map((language) => (
                     <MenuItem key={language.id} value={language.id}>
                       {language.name}
                     </MenuItem>
@@ -674,7 +676,7 @@ export default function LearningCourseEditPane({
                   }
                   multiple
                 >
-                  {frameworks.map((framework) => (
+                  {sortBy(frameworks, ["name"]).map((framework) => (
                     <MenuItem key={framework.id} value={framework.id}>
                       {framework.name}
                     </MenuItem>

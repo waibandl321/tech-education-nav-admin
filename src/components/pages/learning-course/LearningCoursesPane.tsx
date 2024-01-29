@@ -57,6 +57,8 @@ export default function LearningCoursesPane({
   // state
   const [selectedLearningCenter, setSelectedLearningCenter] =
     useState<LearningCenter | null>(null);
+  const [courseList, setCourseList] =
+    useState<Array<LearningCenterCourse>>(courses);
   // hooks
   const router = useRouter();
   const { setLoading } = useLoading();
@@ -76,10 +78,10 @@ export default function LearningCoursesPane({
 
   // 選択中のLearningCenterIdにマッチするコース一覧を返す
   const computedItems: Array<LearningCenterCourse> = useMemo(() => {
-    return courses.filter(
+    return courseList.filter(
       (v) => v.learningCenterId === selectedLearningCenter?.id
     );
-  }, [selectedLearningCenter, courses]);
+  }, [selectedLearningCenter, courseList]);
 
   // 削除
   const deleteLearningCourse = async (item: LearningCenterCourse) => {
@@ -93,7 +95,7 @@ export default function LearningCoursesPane({
         message: "データの削除に失敗しました。",
       });
     } finally {
-      router.reload();
+      setCourseList(() => courseList.filter((v) => v.id !== item.id));
       setLoading(false);
     }
   };
@@ -279,7 +281,10 @@ export default function LearningCoursesPane({
                     <ListItemSecondaryAction>
                       <Button
                         color="error"
-                        onClick={() => deleteLearningCourse(item)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteLearningCourse(item);
+                        }}
                       >
                         削除
                       </Button>
