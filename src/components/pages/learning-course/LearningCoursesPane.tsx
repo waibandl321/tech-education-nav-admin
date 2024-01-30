@@ -34,6 +34,7 @@ import { useMessageAlert } from "@/contexts/MessageAlertContext";
 import useCSV from "@/hooks/utils/useCSV";
 import useLearningCourse from "@/hooks/api/useLearningCourse";
 import { useRouter } from "next/router";
+import CreateLearningCenterCourse from "@/docs/LearningCenterCourse";
 
 export default function LearningCoursesPane({
   centers,
@@ -72,7 +73,9 @@ export default function LearningCoursesPane({
   } = useLearningCourse();
   const { headers } = useLearningCourseLogic();
   const [isOpenEdit, setIsOpenEdit] = useState(false);
-  const [editItem, setEditItem] = useState<LearningCenterCourse | null>(null);
+  const [editItem, setEditItem] = useState<
+    LearningCenterCourse | CreateLearningCenterCourseInput | null
+  >(null);
   // input fileのテンプレート参照
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -184,13 +187,10 @@ export default function LearningCoursesPane({
 
   // コース新規作成
   const handleAddCourse = () => {
-    setEditItem({
-      __typename: "LearningCenterCourse",
-      id: "",
+    const data = new CreateLearningCenterCourse({
       learningCenterId: selectedLearningCenter?.id ?? "",
-      createdAt: "",
-      updatedAt: "",
     });
+    setEditItem(data);
     setIsOpenEdit(true);
   };
 

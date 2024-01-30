@@ -19,7 +19,6 @@ import TextareaComponent from "@/components/common/parts/TextareaComponent";
 import {
   AttendanceTypeLabels,
   EspeciallyAudienceLabels,
-  PaymentOptionLabels,
   PurposeLabels,
 } from "@/const";
 import { useLoading } from "@/contexts/LoadingContext";
@@ -82,7 +81,7 @@ export default function LearningCourseEditPane({
   paymentMethods,
   creditCards,
 }: {
-  editItem: LearningCenterCourse | null;
+  editItem: LearningCenterCourse | CreateLearningCenterCourseInput | null;
   onClose: () => void;
   selectedLearningCenter: LearningCenter;
   languages: Array<ProgrammingLanguage>;
@@ -100,9 +99,9 @@ export default function LearningCourseEditPane({
     useLearningCourse();
   const { getUpdateRequest } = useAPIRequest();
   const { prefectures } = useFormOptions();
-  const [editItem, setEditItem] = useState<LearningCenterCourse | null>(
-    initialEditItem
-  );
+  const [editItem, setEditItem] = useState<
+    LearningCenterCourse | CreateLearningCenterCourseInput | null
+  >(initialEditItem);
   // plansは別にstateを定義して管理し、保存時にマージする
   const [plans, setPlans] = useState<(CoursePlanInput | null)[]>([]);
   const [municipalityList, setMunicipalityList] = useState<
@@ -183,6 +182,7 @@ export default function LearningCourseEditPane({
         return;
       }
       setPlans([]);
+      onClose();
       setAlertMessage({
         type: "success",
         message: "データを保存しました。",
@@ -222,6 +222,7 @@ export default function LearningCourseEditPane({
         return;
       }
       setPlans([]);
+      onClose();
       setAlertMessage({
         type: "success",
         message: "データを更新しました。",
@@ -241,9 +242,8 @@ export default function LearningCourseEditPane({
   // 保存
   const handleSaveItem = async () => {
     if (!editItem || !selectedLearningCenter) return;
-    onClose();
     if (editItem?.id) {
-      await updateLearningCourse(editItem);
+      await updateLearningCourse(editItem as LearningCenterCourse);
       return;
     }
     // 新規作成
@@ -698,7 +698,7 @@ export default function LearningCourseEditPane({
                   input={<OutlinedInput fullWidth label="開発ツール" />}
                   multiple
                 >
-                  {developmentTools.map((framework) => (
+                  {sortBy(developmentTools, ["name"]).map((framework) => (
                     <MenuItem key={framework.id} value={framework.id}>
                       {framework.name}
                     </MenuItem>

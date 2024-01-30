@@ -4,18 +4,11 @@
  * amplify/backend/api/techeducationnav/schema.graphql
  */
 
-// 支払い方法 オプション
-export const PaymentOptionLabels = {
-  full: { value: "FULL", label: "一括支払い" },
-  installments: { value: "INSTALLMENTS", label: "分割払い" },
-  subscription: { value: "SUBSCRIPTION", label: "月額サブスク" },
-};
-
 // 受講スタイル
 export const AttendanceTypeLabels = {
   online: { value: "ONLINE", label: "オンライン" },
   offline: { value: "OFFLINE", label: "オフライン" },
-  hybrid: { value: "HYBRID", label: "どちらでもOK" },
+  hybrid: { value: "HYBRID", label: "どちらでも可" },
 };
 
 // 受講目的 オプション
