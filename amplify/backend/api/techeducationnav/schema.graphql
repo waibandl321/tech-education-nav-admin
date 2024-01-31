@@ -97,14 +97,10 @@ type LearningCenter
   logoImageURL: String
   establishmentYear: Int
   representative: String
+  cancelPolicy: String # キャンセルポリシー詳細
+  paymentOptions: [String] # 支払い方法（PaymentMethodマスタのIDを格納する）
+  creditCards: [String] # 対応しているクレジットカード（CreditCardマスタのIDを格納する）
   isDeleted: Boolean
-}
-
-# 支払い方法のenum
-enum PaymentOption {
-  FULL # 一括
-  INSTALLMENTS # 分割
-  SUBSCRIPTION # サブスク
 }
 
 # 受講スタイルのenum
@@ -160,7 +156,6 @@ type LearningCenterCourse
   courseURL: String # 公式サイトURL
   couseDetail: String # コース詳細
   plans: [CoursePlan] # プラン一覧
-  cancelPolicy: String # キャンセルポリシー詳細
   isAvailableMoneyBack: Boolean # 返金保証の有無
   moneyBackDetail: String # 返金保証の有無 詳細
   isAvailableSubsidy: Boolean # 補助金の有無
@@ -178,8 +173,6 @@ type LearningCenterCourse
   programmingLanguages: [String] # 学べるプログラミング言語（ProgrammingLanguageマスタのIDを格納する）
   frameworks: [String] # 学べるフレームワーク（FrameworkマスタのIDを格納する）
   developmentTools: [String] # 開発用の各種ツール（DevelopmentToolマスタのIDを格納する）
-  paymentOptions: [String] # 支払い方法（PaymentMethodマスタのIDを格納する）
-  creditCards: [String] # 対応しているクレジットカード（CreditCardマスタのIDを格納する）
   attendanceType: AttendanceType # 受講スタイル（選択形式）
   locationPref: String # オフラインの場合の場所（県、エリア検索用）
   locationCity: String # オフラインの場合の場所（市区町村、エリア検索用）

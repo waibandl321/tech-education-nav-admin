@@ -26,7 +26,6 @@ export declare type LearningCenterCourseCreateFormInputValues = {
     courseName?: string;
     courseURL?: string;
     couseDetail?: string;
-    cancelPolicy?: string;
     isAvailableMoneyBack?: boolean;
     moneyBackDetail?: string;
     isAvailableSubsidy?: boolean;
@@ -44,8 +43,6 @@ export declare type LearningCenterCourseCreateFormInputValues = {
     programmingLanguages?: string[];
     frameworks?: string[];
     developmentTools?: string[];
-    paymentOptions?: string[];
-    creditCards?: string[];
     attendanceType?: string;
     locationPref?: string;
     locationCity?: string;
@@ -57,7 +54,6 @@ export declare type LearningCenterCourseCreateFormValidationValues = {
     courseName?: ValidationFunction<string>;
     courseURL?: ValidationFunction<string>;
     couseDetail?: ValidationFunction<string>;
-    cancelPolicy?: ValidationFunction<string>;
     isAvailableMoneyBack?: ValidationFunction<boolean>;
     moneyBackDetail?: ValidationFunction<string>;
     isAvailableSubsidy?: ValidationFunction<boolean>;
@@ -75,8 +71,6 @@ export declare type LearningCenterCourseCreateFormValidationValues = {
     programmingLanguages?: ValidationFunction<string>;
     frameworks?: ValidationFunction<string>;
     developmentTools?: ValidationFunction<string>;
-    paymentOptions?: ValidationFunction<string>;
-    creditCards?: ValidationFunction<string>;
     attendanceType?: ValidationFunction<string>;
     locationPref?: ValidationFunction<string>;
     locationCity?: ValidationFunction<string>;
@@ -90,7 +84,6 @@ export declare type LearningCenterCourseCreateFormOverridesProps = {
     courseName?: PrimitiveOverrideProps<TextFieldProps>;
     courseURL?: PrimitiveOverrideProps<TextFieldProps>;
     couseDetail?: PrimitiveOverrideProps<TextFieldProps>;
-    cancelPolicy?: PrimitiveOverrideProps<TextFieldProps>;
     isAvailableMoneyBack?: PrimitiveOverrideProps<SwitchFieldProps>;
     moneyBackDetail?: PrimitiveOverrideProps<TextFieldProps>;
     isAvailableSubsidy?: PrimitiveOverrideProps<SwitchFieldProps>;
@@ -108,8 +101,6 @@ export declare type LearningCenterCourseCreateFormOverridesProps = {
     programmingLanguages?: PrimitiveOverrideProps<TextFieldProps>;
     frameworks?: PrimitiveOverrideProps<TextFieldProps>;
     developmentTools?: PrimitiveOverrideProps<TextFieldProps>;
-    paymentOptions?: PrimitiveOverrideProps<TextFieldProps>;
-    creditCards?: PrimitiveOverrideProps<TextFieldProps>;
     attendanceType?: PrimitiveOverrideProps<SelectFieldProps>;
     locationPref?: PrimitiveOverrideProps<TextFieldProps>;
     locationCity?: PrimitiveOverrideProps<TextFieldProps>;

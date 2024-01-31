@@ -197,7 +197,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: "",
     courseURL: "",
     couseDetail: "",
-    cancelPolicy: "",
     isAvailableMoneyBack: false,
     moneyBackDetail: "",
     isAvailableSubsidy: false,
@@ -215,8 +214,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     programmingLanguages: [],
     frameworks: [],
     developmentTools: [],
-    paymentOptions: [],
-    creditCards: [],
     attendanceType: "",
     locationPref: "",
     locationCity: "",
@@ -230,9 +227,6 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [courseURL, setCourseURL] = React.useState(initialValues.courseURL);
   const [couseDetail, setCouseDetail] = React.useState(
     initialValues.couseDetail
-  );
-  const [cancelPolicy, setCancelPolicy] = React.useState(
-    initialValues.cancelPolicy
   );
   const [isAvailableMoneyBack, setIsAvailableMoneyBack] = React.useState(
     initialValues.isAvailableMoneyBack
@@ -274,12 +268,6 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [developmentTools, setDevelopmentTools] = React.useState(
     initialValues.developmentTools
   );
-  const [paymentOptions, setPaymentOptions] = React.useState(
-    initialValues.paymentOptions
-  );
-  const [creditCards, setCreditCards] = React.useState(
-    initialValues.creditCards
-  );
   const [attendanceType, setAttendanceType] = React.useState(
     initialValues.attendanceType
   );
@@ -302,7 +290,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCourseName(cleanValues.courseName);
     setCourseURL(cleanValues.courseURL);
     setCouseDetail(cleanValues.couseDetail);
-    setCancelPolicy(cleanValues.cancelPolicy);
     setIsAvailableMoneyBack(cleanValues.isAvailableMoneyBack);
     setMoneyBackDetail(cleanValues.moneyBackDetail);
     setIsAvailableSubsidy(cleanValues.isAvailableSubsidy);
@@ -325,10 +312,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     setCurrentFrameworksValue("");
     setDevelopmentTools(cleanValues.developmentTools ?? []);
     setCurrentDevelopmentToolsValue("");
-    setPaymentOptions(cleanValues.paymentOptions ?? []);
-    setCurrentPaymentOptionsValue("");
-    setCreditCards(cleanValues.creditCards ?? []);
-    setCurrentCreditCardsValue("");
     setAttendanceType(cleanValues.attendanceType);
     setLocationPref(cleanValues.locationPref);
     setLocationCity(cleanValues.locationCity);
@@ -369,12 +352,6 @@ export default function LearningCenterCourseUpdateForm(props) {
   const [currentDevelopmentToolsValue, setCurrentDevelopmentToolsValue] =
     React.useState("");
   const developmentToolsRef = React.createRef();
-  const [currentPaymentOptionsValue, setCurrentPaymentOptionsValue] =
-    React.useState("");
-  const paymentOptionsRef = React.createRef();
-  const [currentCreditCardsValue, setCurrentCreditCardsValue] =
-    React.useState("");
-  const creditCardsRef = React.createRef();
   const [currentEspeciallyAudiencesValue, setCurrentEspeciallyAudiencesValue] =
     React.useState("");
   const especiallyAudiencesRef = React.createRef();
@@ -408,7 +385,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     courseName: [],
     courseURL: [],
     couseDetail: [],
-    cancelPolicy: [],
     isAvailableMoneyBack: [],
     moneyBackDetail: [],
     isAvailableSubsidy: [],
@@ -426,8 +402,6 @@ export default function LearningCenterCourseUpdateForm(props) {
     programmingLanguages: [],
     frameworks: [],
     developmentTools: [],
-    paymentOptions: [],
-    creditCards: [],
     attendanceType: [],
     locationPref: [],
     locationCity: [],
@@ -464,7 +438,6 @@ export default function LearningCenterCourseUpdateForm(props) {
           courseName: courseName ?? null,
           courseURL: courseURL ?? null,
           couseDetail: couseDetail ?? null,
-          cancelPolicy: cancelPolicy ?? null,
           isAvailableMoneyBack: isAvailableMoneyBack ?? null,
           moneyBackDetail: moneyBackDetail ?? null,
           isAvailableSubsidy: isAvailableSubsidy ?? null,
@@ -482,8 +455,6 @@ export default function LearningCenterCourseUpdateForm(props) {
           programmingLanguages: programmingLanguages ?? null,
           frameworks: frameworks ?? null,
           developmentTools: developmentTools ?? null,
-          paymentOptions: paymentOptions ?? null,
-          creditCards: creditCards ?? null,
           attendanceType: attendanceType ?? null,
           locationPref: locationPref ?? null,
           locationCity: locationCity ?? null,
@@ -553,7 +524,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -571,8 +541,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -605,7 +573,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName: value,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -623,8 +590,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -657,7 +622,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL: value,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -675,8 +639,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -709,7 +671,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail: value,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -727,8 +688,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -748,58 +707,6 @@ export default function LearningCenterCourseUpdateForm(props) {
         hasError={errors.couseDetail?.hasError}
         {...getOverrideProps(overrides, "couseDetail")}
       ></TextField>
-      <TextField
-        label="Cancel policy"
-        isRequired={false}
-        isReadOnly={false}
-        value={cancelPolicy}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              cancelPolicy: value,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              isMadeToOrder,
-              madeToOrderDetail,
-              isJobIntroductionAvailable,
-              jobIntroductionDetail,
-              isJobHuntingSupport,
-              jobHuntingSupportDetail,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions,
-              creditCards,
-              attendanceType,
-              locationPref,
-              locationCity,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            value = result?.cancelPolicy ?? value;
-          }
-          if (errors.cancelPolicy?.hasError) {
-            runValidationTasks("cancelPolicy", value);
-          }
-          setCancelPolicy(value);
-        }}
-        onBlur={() => runValidationTasks("cancelPolicy", cancelPolicy)}
-        errorMessage={errors.cancelPolicy?.errorMessage}
-        hasError={errors.cancelPolicy?.hasError}
-        {...getOverrideProps(overrides, "cancelPolicy")}
-      ></TextField>
       <SwitchField
         label="Is available money back"
         defaultChecked={false}
@@ -813,7 +720,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack: value,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -831,8 +737,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -867,7 +771,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail: value,
               isAvailableSubsidy,
@@ -885,8 +788,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -919,7 +820,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy: value,
@@ -937,8 +837,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -973,7 +871,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -991,8 +888,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1025,7 +920,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1043,8 +937,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1077,7 +969,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1095,8 +986,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1129,7 +1018,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1147,8 +1035,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1181,7 +1067,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1199,8 +1084,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1235,7 +1118,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1253,8 +1135,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1292,7 +1172,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1310,8 +1189,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1346,7 +1223,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1364,8 +1240,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1400,7 +1274,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1418,8 +1291,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1450,7 +1321,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1468,8 +1338,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1555,7 +1423,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1573,8 +1440,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1628,7 +1493,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1646,8 +1510,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages: values,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1709,7 +1571,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1727,8 +1588,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks: values,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1784,7 +1643,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -1802,8 +1660,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools: values,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -1853,156 +1709,6 @@ export default function LearningCenterCourseUpdateForm(props) {
           {...getOverrideProps(overrides, "developmentTools")}
         ></TextField>
       </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              cancelPolicy,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              isMadeToOrder,
-              madeToOrderDetail,
-              isJobIntroductionAvailable,
-              jobIntroductionDetail,
-              isJobHuntingSupport,
-              jobHuntingSupportDetail,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions: values,
-              creditCards,
-              attendanceType,
-              locationPref,
-              locationCity,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            values = result?.paymentOptions ?? values;
-          }
-          setPaymentOptions(values);
-          setCurrentPaymentOptionsValue("");
-        }}
-        currentFieldValue={currentPaymentOptionsValue}
-        label={"Payment options"}
-        items={paymentOptions}
-        hasError={errors?.paymentOptions?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("paymentOptions", currentPaymentOptionsValue)
-        }
-        errorMessage={errors?.paymentOptions?.errorMessage}
-        setFieldValue={setCurrentPaymentOptionsValue}
-        inputFieldRef={paymentOptionsRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Payment options"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentPaymentOptionsValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.paymentOptions?.hasError) {
-              runValidationTasks("paymentOptions", value);
-            }
-            setCurrentPaymentOptionsValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("paymentOptions", currentPaymentOptionsValue)
-          }
-          errorMessage={errors.paymentOptions?.errorMessage}
-          hasError={errors.paymentOptions?.hasError}
-          ref={paymentOptionsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "paymentOptions")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              learningCenterId,
-              courseName,
-              courseURL,
-              couseDetail,
-              cancelPolicy,
-              isAvailableMoneyBack,
-              moneyBackDetail,
-              isAvailableSubsidy,
-              subsidyMemo,
-              onSale,
-              saleMemo,
-              isMadeToOrder,
-              madeToOrderDetail,
-              isJobIntroductionAvailable,
-              jobIntroductionDetail,
-              isJobHuntingSupport,
-              jobHuntingSupportDetail,
-              purposes,
-              jobTypes,
-              programmingLanguages,
-              frameworks,
-              developmentTools,
-              paymentOptions,
-              creditCards: values,
-              attendanceType,
-              locationPref,
-              locationCity,
-              especiallyAudiences,
-              isDeleted,
-            };
-            const result = onChange(modelFields);
-            values = result?.creditCards ?? values;
-          }
-          setCreditCards(values);
-          setCurrentCreditCardsValue("");
-        }}
-        currentFieldValue={currentCreditCardsValue}
-        label={"Credit cards"}
-        items={creditCards}
-        hasError={errors?.creditCards?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("creditCards", currentCreditCardsValue)
-        }
-        errorMessage={errors?.creditCards?.errorMessage}
-        setFieldValue={setCurrentCreditCardsValue}
-        inputFieldRef={creditCardsRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Credit cards"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentCreditCardsValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.creditCards?.hasError) {
-              runValidationTasks("creditCards", value);
-            }
-            setCurrentCreditCardsValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("creditCards", currentCreditCardsValue)
-          }
-          errorMessage={errors.creditCards?.errorMessage}
-          hasError={errors.creditCards?.hasError}
-          ref={creditCardsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "creditCards")}
-        ></TextField>
-      </ArrayField>
       <SelectField
         label="Attendance type"
         placeholder="Please select an option"
@@ -2016,7 +1722,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -2034,8 +1739,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType: value,
               locationPref,
               locationCity,
@@ -2084,7 +1787,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -2102,8 +1804,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref: value,
               locationCity,
@@ -2136,7 +1836,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -2154,8 +1853,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity: value,
@@ -2184,7 +1881,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -2202,8 +1898,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,
@@ -2306,7 +2000,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               courseName,
               courseURL,
               couseDetail,
-              cancelPolicy,
               isAvailableMoneyBack,
               moneyBackDetail,
               isAvailableSubsidy,
@@ -2324,8 +2017,6 @@ export default function LearningCenterCourseUpdateForm(props) {
               programmingLanguages,
               frameworks,
               developmentTools,
-              paymentOptions,
-              creditCards,
               attendanceType,
               locationPref,
               locationCity,

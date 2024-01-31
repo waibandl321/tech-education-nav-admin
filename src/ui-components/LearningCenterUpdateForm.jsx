@@ -7,17 +7,178 @@
 /* eslint-disable */
 import * as React from "react";
 import {
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
   SwitchField,
+  Text,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
 import { getLearningCenter } from "../graphql/queries";
 import { updateLearningCenter } from "../graphql/mutations";
 const client = generateClient();
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  runValidationTasks,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    const { hasError } = runValidationTasks();
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button size="small" variation="link" onClick={addItem}>
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function LearningCenterUpdateForm(props) {
   const {
     id: idProp,
@@ -39,6 +200,9 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: "",
     establishmentYear: "",
     representative: "",
+    cancelPolicy: "",
+    paymentOptions: [],
+    creditCards: [],
     isDeleted: false,
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -59,6 +223,15 @@ export default function LearningCenterUpdateForm(props) {
   const [representative, setRepresentative] = React.useState(
     initialValues.representative
   );
+  const [cancelPolicy, setCancelPolicy] = React.useState(
+    initialValues.cancelPolicy
+  );
+  const [paymentOptions, setPaymentOptions] = React.useState(
+    initialValues.paymentOptions
+  );
+  const [creditCards, setCreditCards] = React.useState(
+    initialValues.creditCards
+  );
   const [isDeleted, setIsDeleted] = React.useState(initialValues.isDeleted);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -73,6 +246,11 @@ export default function LearningCenterUpdateForm(props) {
     setLogoImageURL(cleanValues.logoImageURL);
     setEstablishmentYear(cleanValues.establishmentYear);
     setRepresentative(cleanValues.representative);
+    setCancelPolicy(cleanValues.cancelPolicy);
+    setPaymentOptions(cleanValues.paymentOptions ?? []);
+    setCurrentPaymentOptionsValue("");
+    setCreditCards(cleanValues.creditCards ?? []);
+    setCurrentCreditCardsValue("");
     setIsDeleted(cleanValues.isDeleted);
     setErrors({});
   };
@@ -94,6 +272,12 @@ export default function LearningCenterUpdateForm(props) {
     queryData();
   }, [idProp, learningCenterModelProp]);
   React.useEffect(resetStateValues, [learningCenterRecord]);
+  const [currentPaymentOptionsValue, setCurrentPaymentOptionsValue] =
+    React.useState("");
+  const paymentOptionsRef = React.createRef();
+  const [currentCreditCardsValue, setCurrentCreditCardsValue] =
+    React.useState("");
+  const creditCardsRef = React.createRef();
   const validations = {
     name: [],
     memo: [],
@@ -103,6 +287,9 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: [],
     establishmentYear: [],
     representative: [],
+    cancelPolicy: [],
+    paymentOptions: [],
+    creditCards: [],
     isDeleted: [],
   };
   const runValidationTasks = async (
@@ -139,6 +326,9 @@ export default function LearningCenterUpdateForm(props) {
           logoImageURL: logoImageURL ?? null,
           establishmentYear: establishmentYear ?? null,
           representative: representative ?? null,
+          cancelPolicy: cancelPolicy ?? null,
+          paymentOptions: paymentOptions ?? null,
+          creditCards: creditCards ?? null,
           isDeleted: isDeleted ?? null,
         };
         const validationResponses = await Promise.all(
@@ -208,6 +398,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -240,6 +433,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -272,6 +468,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -304,6 +503,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -338,6 +540,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -370,6 +575,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL: value,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -406,6 +614,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear: value,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -440,6 +651,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative: value,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted,
             };
             const result = onChange(modelFields);
@@ -455,6 +669,157 @@ export default function LearningCenterUpdateForm(props) {
         hasError={errors.representative?.hasError}
         {...getOverrideProps(overrides, "representative")}
       ></TextField>
+      <TextField
+        label="Cancel policy"
+        isRequired={false}
+        isReadOnly={false}
+        value={cancelPolicy}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              cancelPolicy: value,
+              paymentOptions,
+              creditCards,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.cancelPolicy ?? value;
+          }
+          if (errors.cancelPolicy?.hasError) {
+            runValidationTasks("cancelPolicy", value);
+          }
+          setCancelPolicy(value);
+        }}
+        onBlur={() => runValidationTasks("cancelPolicy", cancelPolicy)}
+        errorMessage={errors.cancelPolicy?.errorMessage}
+        hasError={errors.cancelPolicy?.hasError}
+        {...getOverrideProps(overrides, "cancelPolicy")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              cancelPolicy,
+              paymentOptions: values,
+              creditCards,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.paymentOptions ?? values;
+          }
+          setPaymentOptions(values);
+          setCurrentPaymentOptionsValue("");
+        }}
+        currentFieldValue={currentPaymentOptionsValue}
+        label={"Payment options"}
+        items={paymentOptions}
+        hasError={errors?.paymentOptions?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("paymentOptions", currentPaymentOptionsValue)
+        }
+        errorMessage={errors?.paymentOptions?.errorMessage}
+        setFieldValue={setCurrentPaymentOptionsValue}
+        inputFieldRef={paymentOptionsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Payment options"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentPaymentOptionsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.paymentOptions?.hasError) {
+              runValidationTasks("paymentOptions", value);
+            }
+            setCurrentPaymentOptionsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("paymentOptions", currentPaymentOptionsValue)
+          }
+          errorMessage={errors.paymentOptions?.errorMessage}
+          hasError={errors.paymentOptions?.hasError}
+          ref={paymentOptionsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "paymentOptions")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards: values,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            values = result?.creditCards ?? values;
+          }
+          setCreditCards(values);
+          setCurrentCreditCardsValue("");
+        }}
+        currentFieldValue={currentCreditCardsValue}
+        label={"Credit cards"}
+        items={creditCards}
+        hasError={errors?.creditCards?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("creditCards", currentCreditCardsValue)
+        }
+        errorMessage={errors?.creditCards?.errorMessage}
+        setFieldValue={setCurrentCreditCardsValue}
+        inputFieldRef={creditCardsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Credit cards"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentCreditCardsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.creditCards?.hasError) {
+              runValidationTasks("creditCards", value);
+            }
+            setCurrentCreditCardsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("creditCards", currentCreditCardsValue)
+          }
+          errorMessage={errors.creditCards?.errorMessage}
+          hasError={errors.creditCards?.hasError}
+          ref={creditCardsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "creditCards")}
+        ></TextField>
+      </ArrayField>
       <SwitchField
         label="Is deleted"
         defaultChecked={false}
@@ -472,6 +837,9 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
               isDeleted: value,
             };
             const result = onChange(modelFields);

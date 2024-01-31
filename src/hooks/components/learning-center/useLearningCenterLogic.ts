@@ -22,6 +22,9 @@ const initCreateLearningCenter: CreateLearningCenterInput = {
   logoImageURL: undefined,
   establishmentYear: 2000,
   representative: "",
+  paymentOptions: null,
+  creditCards: null,
+  cancelPolicy: "",
   isDeleted: false,
 };
 
@@ -51,7 +54,6 @@ export default function useLearningCenterLogic() {
     apiGetLearningCenterById,
     apiGetLearningCenters,
     apiCreateLearningCenter,
-    apiDeleteLearningCenter,
   } = useLearningCenter();
   const { apiGetFileUrl, apiUploadFile, apiRemoveFile } = useStorage();
 
@@ -188,25 +190,6 @@ export default function useLearningCenterLogic() {
     }
   };
 
-  // データ削除
-  const deleteLearningCenter = async (item: LearningCenter) => {
-    setLoading(true);
-    try {
-      const result = await apiDeleteLearningCenter(item);
-      if (result.isSuccess) {
-        await fetchLearningCenters();
-        setAlertMessage({
-          type: "success",
-          message: `${item.name}を削除しました。`,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // インポート登録
   const importLearningCenterCSV = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -327,59 +310,11 @@ export default function useLearningCenterLogic() {
     }
   };
 
-  // 更新
-  const updateLearningCenter = async (
-    data: UpdateLearningCenterInput,
-    file?: File | null
-  ) => {
-    setLoading(true);
-    try {
-      const uploadImageURL = await uploadImageAndGetURL(file);
-      data.logoImageURL = uploadImageURL;
-
-      const request: UpdateLearningCenterInput = {
-        id: data.id,
-        name: data.name,
-        memo: data.memo,
-        operatingCompany: data.operatingCompany,
-        headquartersLocation: data.headquartersLocation,
-        websiteURL: data.websiteURL,
-        logoImageURL: data.logoImageURL,
-        establishmentYear: data.establishmentYear,
-        representative: data.representative,
-      };
-
-      const result = await apiUpdateLearningCenter(request);
-      if (!result.isSuccess || !result.data) {
-        setAlertMessage({
-          type: "error",
-          message: "データの更新に失敗しました。",
-        });
-        return;
-      }
-      initEditState();
-      router.push("/learning-center");
-      setAlertMessage({
-        type: "success",
-        message: "データを更新しました。",
-      });
-    } catch (error) {
-      console.error(error);
-      setAlertMessage({
-        type: "error",
-        message: "データの更新に失敗しました。",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return {
     initCreateLearningCenter,
     headers,
     learningCenters,
     fetchLearningCenters,
-    deleteLearningCenter,
     createLearningCenter,
     changeFile,
     inputFile,
@@ -392,7 +327,7 @@ export default function useLearningCenterLogic() {
     editLearningCenter,
     setEditLearningCenter,
     getEditData,
-    updateLearningCenter,
+    uploadImageAndGetURL,
     importLearningCenterCSV,
     exportCSV,
   };

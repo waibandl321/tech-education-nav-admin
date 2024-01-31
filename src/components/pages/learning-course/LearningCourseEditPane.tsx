@@ -355,15 +355,6 @@ export default function LearningCourseEditPane({
             />
           </Box>
           <Box sx={{ my: 2 }}>
-            <Typography>キャンセルポリシー</Typography>
-            <TextareaComponent
-              onInputChange={(event) => handlerFormChange(event)}
-              inputValue={editItem?.cancelPolicy ?? ""}
-              name="cancelPolicy"
-              placeholder="キャンセルポリシー"
-            />
-          </Box>
-          <Box sx={{ my: 2 }}>
             <Typography>料金プラン</Typography>
             <TableContainer component={Paper} variant="outlined">
               <Table size="small" stickyHeader sx={{ overflow: "auto" }}>
@@ -701,55 +692,6 @@ export default function LearningCourseEditPane({
                   {sortBy(developmentTools, ["name"]).map((framework) => (
                     <MenuItem key={framework.id} value={framework.id}>
                       {framework.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ my: 2 }} spacing={2}>
-            <Grid item md={6}>
-              <FormControl fullWidth>
-                <InputLabel id="select-payment-options">支払い方法</InputLabel>
-                <Select
-                  labelId="select-payment-options"
-                  id="select-payment-options"
-                  name="paymentOptions"
-                  value={editItem?.paymentOptions ?? []}
-                  onChange={(event) => handlerFormChange(event)}
-                  input={<OutlinedInput fullWidth label="支払い方法" />}
-                  multiple
-                >
-                  {paymentMethods.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item md={6}>
-              <FormControl fullWidth>
-                <InputLabel id="select-credit-cards">
-                  対応しているクレジットカード
-                </InputLabel>
-                <Select
-                  labelId="select-credit-cards"
-                  id="select-credit-cards"
-                  name="creditCards"
-                  value={editItem?.creditCards ?? []}
-                  onChange={(event) => handlerFormChange(event)}
-                  input={
-                    <OutlinedInput
-                      fullWidth
-                      label="対応しているクレジットカード"
-                    />
-                  }
-                  multiple
-                >
-                  {creditCards.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
                     </MenuItem>
                   ))}
                 </Select>

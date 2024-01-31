@@ -30,6 +30,9 @@ export declare type LearningCenterCreateFormInputValues = {
     logoImageURL?: string;
     establishmentYear?: number;
     representative?: string;
+    cancelPolicy?: string;
+    paymentOptions?: string[];
+    creditCards?: string[];
     isDeleted?: boolean;
 };
 export declare type LearningCenterCreateFormValidationValues = {
@@ -41,6 +44,9 @@ export declare type LearningCenterCreateFormValidationValues = {
     logoImageURL?: ValidationFunction<string>;
     establishmentYear?: ValidationFunction<number>;
     representative?: ValidationFunction<string>;
+    cancelPolicy?: ValidationFunction<string>;
+    paymentOptions?: ValidationFunction<string>;
+    creditCards?: ValidationFunction<string>;
     isDeleted?: ValidationFunction<boolean>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -54,6 +60,9 @@ export declare type LearningCenterCreateFormOverridesProps = {
     logoImageURL?: PrimitiveOverrideProps<TextFieldProps>;
     establishmentYear?: PrimitiveOverrideProps<TextFieldProps>;
     representative?: PrimitiveOverrideProps<TextFieldProps>;
+    cancelPolicy?: PrimitiveOverrideProps<TextFieldProps>;
+    paymentOptions?: PrimitiveOverrideProps<TextFieldProps>;
+    creditCards?: PrimitiveOverrideProps<TextFieldProps>;
     isDeleted?: PrimitiveOverrideProps<SwitchFieldProps>;
 } & EscapeHatchProps;
 export declare type LearningCenterCreateFormProps = React.PropsWithChildren<{

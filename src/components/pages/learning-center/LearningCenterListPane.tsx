@@ -1,36 +1,79 @@
 import {
-  Paper,
   Box,
   Button,
   Container,
   TextField,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  ListItemButton,
+  Divider,
 } from "@mui/material";
 import GetAppIcon from "@mui/icons-material/GetApp";
 import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/router";
-import { LearningCenter } from "@/API";
-import Image from "next/image";
+import {
+  CreateLearningCenterInput,
+  CreditCard,
+  LearningCenter,
+  PaymentMethod,
+} from "@/API";
 import useLearningCenterLogic from "@/hooks/components/learning-center/useLearningCenterLogic";
+import { useLoading } from "@/contexts/LoadingContext";
+import { useMessageAlert } from "@/contexts/MessageAlertContext";
+import useLearningCenter from "@/hooks/api/useLearningCenter";
+import LearningCenterEditPane from "./LearningCenterEditPane";
 
-export default function LearningCenterList() {
+// LearningCenter 初期値
+const initCreateLearningCenter: CreateLearningCenterInput = {
+  name: "",
+  memo: "",
+  operatingCompany: "",
+  headquartersLocation: "",
+  websiteURL: "",
+  logoImageURL: undefined,
+  establishmentYear: 2000,
+  representative: "",
+  paymentOptions: null,
+  creditCards: null,
+  cancelPolicy: "",
+  isDeleted: false,
+};
+
+export default function LearningCenterList({
+  centers,
+  paymentMethods,
+  creditCards,
+}: {
+  centers: Array<LearningCenter>;
+  paymentMethods: Array<PaymentMethod>;
+  creditCards: Array<CreditCard>;
+}) {
   const [searchText, setSearchText] = useState("");
+  const [editItem, setEditItem] = useState<
+    LearningCenter | CreateLearningCenterInput | null
+  >(null);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  // 一覧
+  const [learningCenters, setLearningCenters] =
+    useState<Array<LearningCenter>>(centers);
   // hooks
+  const { setLoading } = useLoading();
+  const { setAlertMessage } = useMessageAlert();
+  const {
+    apiUpdateLearningCenter,
+    apiGetLearningCenterById,
+    apiGetLearningCenters,
+    apiCreateLearningCenter,
+    apiDeleteLearningCenter,
+  } = useLearningCenter();
   const {
     fetchLearningCenters,
-    learningCenters,
-    deleteLearningCenter,
+    // learningCenters,
     importLearningCenterCSV,
     exportCSV,
-    headers,
   } = useLearningCenterLogic();
-  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // テキスト検索結果
@@ -43,9 +86,48 @@ export default function LearningCenterList() {
     );
   }, [learningCenters, searchText]);
 
+  // 一覧取得
+  const getLearningCenters = async () => {
+    setLoading(true);
+    try {
+      const result = await apiGetLearningCenters();
+      setLearningCenters(result.data ?? []);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // 編集画面遷移
   const onClickEdit = (item: LearningCenter) => {
-    router.push(`/learning-center/edit?id=${item.id}`);
+    setEditItem(null);
+    setEditItem(item);
+    setIsOpenEdit(true);
+  };
+  const onClickCreate = () => {
+    setEditItem(null);
+    setEditItem(initCreateLearningCenter);
+    setIsOpenEdit(true);
+  };
+
+  // データ削除
+  const deleteLearningCenter = async (item: LearningCenter) => {
+    setLoading(true);
+    try {
+      const result = await apiDeleteLearningCenter(item);
+      if (result.isSuccess) {
+        await getLearningCenters();
+        setAlertMessage({
+          type: "success",
+          message: `${item.name}を削除しました。`,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // インポート登録
@@ -67,10 +149,12 @@ export default function LearningCenterList() {
     setSearchText(value);
   };
 
-  useEffect(() => {
-    // 一覧取得
-    fetchLearningCenters();
-  }, []);
+  // 編集閉じる
+  const handlerClose = async () => {
+    setIsOpenEdit(false);
+    setEditItem(null);
+    await getLearningCenters();
+  };
 
   return (
     <Container maxWidth="xl" sx={{ py: 2 }}>
@@ -93,79 +177,43 @@ export default function LearningCenterList() {
             <GetAppIcon></GetAppIcon>
             <span>エクスポート</span>
           </Button>
-          <Button onClick={() => router.push("/learning-center/create")}>
-            新規作成
-          </Button>
+          <Button onClick={onClickCreate}>新規作成</Button>
         </Box>
       </Box>
 
-      <TableContainer
-        component={Paper}
-        sx={{ overflowX: "auto", mt: 1 }}
-        variant="outlined"
-      >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
-          <TableHead sx={{ backgroundColor: "#eee" }}>
-            <TableRow>
-              {headers.map((item) => (
-                <TableCell
-                  key={item.key}
-                  sx={{ minWidth: 120, whiteSpace: "nowrap" }}
-                >
-                  {item.name}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {computedLearningCenters.map((item) => (
-              <TableRow
-                key={item.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell>
-                  <Box display="flex" alignItems="center">
-                    <Button
-                      aria-label="save button"
-                      color="primary"
-                      onClick={() => onClickEdit(item)}
-                    >
-                      編集
-                    </Button>
-                    <Button
-                      aria-label="delete button"
-                      color="error"
-                      onClick={() => deleteLearningCenter(item)}
-                    >
-                      削除
-                    </Button>
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  {item.logoImageURL ? (
-                    <Image
-                      src={item.logoImageURL ?? ""}
-                      width={100}
-                      height={100}
-                      alt={`${item.name}ロゴ`}
-                      style={{ objectFit: "contain" }}
-                    ></Image>
-                  ) : (
-                    "ロゴ画像がありません"
-                  )}
-                </TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell sx={{ minWidth: 250 }}>{item.memo}</TableCell>
-                <TableCell>{item.operatingCompany}</TableCell>
-                <TableCell>{item.headquartersLocation}</TableCell>
-                <TableCell>{item.websiteURL}</TableCell>
-                <TableCell>{item.establishmentYear}</TableCell>
-                <TableCell>{item.representative}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <List>
+        <Divider />
+        {computedLearningCenters.map((item) => (
+          <div key={item.id}>
+            <ListItem dense sx={{ p: 0 }}>
+              <ListItemButton onClick={() => onClickEdit(item)}>
+                <ListItemText primary={`${item.name}: `} />
+                <ListItemSecondaryAction>
+                  <Button
+                    color="error"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteLearningCenter(item);
+                    }}
+                  >
+                    削除
+                  </Button>
+                </ListItemSecondaryAction>
+              </ListItemButton>
+            </ListItem>
+            <Divider />
+          </div>
+        ))}
+      </List>
+      {editItem && isOpenEdit && (
+        <LearningCenterEditPane
+          paymentMethods={paymentMethods}
+          creditCards={creditCards}
+          editItem={editItem}
+          onClose={handlerClose}
+          key={editItem.id}
+        />
+      )}
     </Container>
   );
 }

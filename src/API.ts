@@ -245,6 +245,9 @@ export type CreateLearningCenterInput = {
   logoImageURL?: string | null;
   establishmentYear?: number | null;
   representative?: string | null;
+  cancelPolicy?: string | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   isDeleted?: boolean | null;
 };
 
@@ -257,6 +260,9 @@ export type ModelLearningCenterConditionInput = {
   logoImageURL?: ModelStringInput | null;
   establishmentYear?: ModelIntInput | null;
   representative?: ModelStringInput | null;
+  cancelPolicy?: ModelStringInput | null;
+  paymentOptions?: ModelStringInput | null;
+  creditCards?: ModelStringInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterConditionInput | null> | null;
   or?: Array<ModelLearningCenterConditionInput | null> | null;
@@ -293,6 +299,9 @@ export type LearningCenter = {
   logoImageURL?: string | null;
   establishmentYear?: number | null;
   representative?: string | null;
+  cancelPolicy?: string | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   isDeleted?: boolean | null;
   createdAt: string;
   updatedAt: string;
@@ -308,6 +317,9 @@ export type UpdateLearningCenterInput = {
   logoImageURL?: string | null;
   establishmentYear?: number | null;
   representative?: string | null;
+  cancelPolicy?: string | null;
+  paymentOptions?: Array<string | null> | null;
+  creditCards?: Array<string | null> | null;
   isDeleted?: boolean | null;
 };
 
@@ -322,7 +334,6 @@ export type CreateLearningCenterCourseInput = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlanInput | null> | null;
-  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -340,8 +351,6 @@ export type CreateLearningCenterCourseInput = {
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<string | null> | null;
-  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
@@ -388,7 +397,6 @@ export type ModelLearningCenterCourseConditionInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
-  cancelPolicy?: ModelStringInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
@@ -406,8 +414,6 @@ export type ModelLearningCenterCourseConditionInput = {
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
   developmentTools?: ModelStringInput | null;
-  paymentOptions?: ModelStringInput | null;
-  creditCards?: ModelStringInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
@@ -445,7 +451,6 @@ export type LearningCenterCourse = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlan | null> | null;
-  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -463,8 +468,6 @@ export type LearningCenterCourse = {
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<string | null> | null;
-  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
@@ -491,7 +494,6 @@ export type UpdateLearningCenterCourseInput = {
   courseURL?: string | null;
   couseDetail?: string | null;
   plans?: Array<CoursePlanInput | null> | null;
-  cancelPolicy?: string | null;
   isAvailableMoneyBack?: boolean | null;
   moneyBackDetail?: string | null;
   isAvailableSubsidy?: boolean | null;
@@ -509,8 +511,6 @@ export type UpdateLearningCenterCourseInput = {
   programmingLanguages?: Array<string | null> | null;
   frameworks?: Array<string | null> | null;
   developmentTools?: Array<string | null> | null;
-  paymentOptions?: Array<string | null> | null;
-  creditCards?: Array<string | null> | null;
   attendanceType?: AttendanceType | null;
   locationPref?: string | null;
   locationCity?: string | null;
@@ -727,6 +727,9 @@ export type ModelLearningCenterFilterInput = {
   logoImageURL?: ModelStringInput | null;
   establishmentYear?: ModelIntInput | null;
   representative?: ModelStringInput | null;
+  cancelPolicy?: ModelStringInput | null;
+  paymentOptions?: ModelStringInput | null;
+  creditCards?: ModelStringInput | null;
   isDeleted?: ModelBooleanInput | null;
   and?: Array<ModelLearningCenterFilterInput | null> | null;
   or?: Array<ModelLearningCenterFilterInput | null> | null;
@@ -745,7 +748,6 @@ export type ModelLearningCenterCourseFilterInput = {
   courseName?: ModelStringInput | null;
   courseURL?: ModelStringInput | null;
   couseDetail?: ModelStringInput | null;
-  cancelPolicy?: ModelStringInput | null;
   isAvailableMoneyBack?: ModelBooleanInput | null;
   moneyBackDetail?: ModelStringInput | null;
   isAvailableSubsidy?: ModelBooleanInput | null;
@@ -763,8 +765,6 @@ export type ModelLearningCenterCourseFilterInput = {
   programmingLanguages?: ModelStringInput | null;
   frameworks?: ModelStringInput | null;
   developmentTools?: ModelStringInput | null;
-  paymentOptions?: ModelStringInput | null;
-  creditCards?: ModelStringInput | null;
   attendanceType?: ModelAttendanceTypeInput | null;
   locationPref?: ModelStringInput | null;
   locationCity?: ModelStringInput | null;
@@ -905,6 +905,9 @@ export type ModelSubscriptionLearningCenterFilterInput = {
   logoImageURL?: ModelSubscriptionStringInput | null;
   establishmentYear?: ModelSubscriptionIntInput | null;
   representative?: ModelSubscriptionStringInput | null;
+  cancelPolicy?: ModelSubscriptionStringInput | null;
+  paymentOptions?: ModelSubscriptionStringInput | null;
+  creditCards?: ModelSubscriptionStringInput | null;
   isDeleted?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
   or?: Array<ModelSubscriptionLearningCenterFilterInput | null> | null;
@@ -933,7 +936,6 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   courseName?: ModelSubscriptionStringInput | null;
   courseURL?: ModelSubscriptionStringInput | null;
   couseDetail?: ModelSubscriptionStringInput | null;
-  cancelPolicy?: ModelSubscriptionStringInput | null;
   isAvailableMoneyBack?: ModelSubscriptionBooleanInput | null;
   moneyBackDetail?: ModelSubscriptionStringInput | null;
   isAvailableSubsidy?: ModelSubscriptionBooleanInput | null;
@@ -951,8 +953,6 @@ export type ModelSubscriptionLearningCenterCourseFilterInput = {
   programmingLanguages?: ModelSubscriptionStringInput | null;
   frameworks?: ModelSubscriptionStringInput | null;
   developmentTools?: ModelSubscriptionStringInput | null;
-  paymentOptions?: ModelSubscriptionStringInput | null;
-  creditCards?: ModelSubscriptionStringInput | null;
   attendanceType?: ModelSubscriptionStringInput | null;
   locationPref?: ModelSubscriptionStringInput | null;
   locationCity?: ModelSubscriptionStringInput | null;
@@ -1279,6 +1279,9 @@ export type CreateLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1302,6 +1305,9 @@ export type UpdateLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1325,6 +1331,9 @@ export type DeleteLearningCenterMutation = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1353,7 +1362,6 @@ export type CreateLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1371,8 +1379,6 @@ export type CreateLearningCenterCourseMutation = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -1405,7 +1411,6 @@ export type UpdateLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1423,8 +1428,6 @@ export type UpdateLearningCenterCourseMutation = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -1457,7 +1460,6 @@ export type DeleteLearningCenterCourseMutation = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1475,8 +1477,6 @@ export type DeleteLearningCenterCourseMutation = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -1838,6 +1838,9 @@ export type GetLearningCenterQuery = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -1864,6 +1867,9 @@ export type ListLearningCentersQuery = {
       logoImageURL?: string | null;
       establishmentYear?: number | null;
       representative?: string | null;
+      cancelPolicy?: string | null;
+      paymentOptions?: Array<string | null> | null;
+      creditCards?: Array<string | null> | null;
       isDeleted?: boolean | null;
       createdAt: string;
       updatedAt: string;
@@ -1893,7 +1899,6 @@ export type GetLearningCenterCourseQuery = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -1911,8 +1916,6 @@ export type GetLearningCenterCourseQuery = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -1939,7 +1942,6 @@ export type ListLearningCenterCoursesQuery = {
       courseName?: string | null;
       courseURL?: string | null;
       couseDetail?: string | null;
-      cancelPolicy?: string | null;
       isAvailableMoneyBack?: boolean | null;
       moneyBackDetail?: string | null;
       isAvailableSubsidy?: boolean | null;
@@ -1957,8 +1959,6 @@ export type ListLearningCenterCoursesQuery = {
       programmingLanguages?: Array<string | null> | null;
       frameworks?: Array<string | null> | null;
       developmentTools?: Array<string | null> | null;
-      paymentOptions?: Array<string | null> | null;
-      creditCards?: Array<string | null> | null;
       attendanceType?: AttendanceType | null;
       locationPref?: string | null;
       locationCity?: string | null;
@@ -2336,6 +2336,9 @@ export type OnCreateLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -2358,6 +2361,9 @@ export type OnUpdateLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -2380,6 +2386,9 @@ export type OnDeleteLearningCenterSubscription = {
     logoImageURL?: string | null;
     establishmentYear?: number | null;
     representative?: string | null;
+    cancelPolicy?: string | null;
+    paymentOptions?: Array<string | null> | null;
+    creditCards?: Array<string | null> | null;
     isDeleted?: boolean | null;
     createdAt: string;
     updatedAt: string;
@@ -2407,7 +2416,6 @@ export type OnCreateLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -2425,8 +2433,6 @@ export type OnCreateLearningCenterCourseSubscription = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -2458,7 +2464,6 @@ export type OnUpdateLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -2476,8 +2481,6 @@ export type OnUpdateLearningCenterCourseSubscription = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;
@@ -2509,7 +2512,6 @@ export type OnDeleteLearningCenterCourseSubscription = {
       price?: number | null;
       splitPrice?: number | null;
     } | null> | null;
-    cancelPolicy?: string | null;
     isAvailableMoneyBack?: boolean | null;
     moneyBackDetail?: string | null;
     isAvailableSubsidy?: boolean | null;
@@ -2527,8 +2529,6 @@ export type OnDeleteLearningCenterCourseSubscription = {
     programmingLanguages?: Array<string | null> | null;
     frameworks?: Array<string | null> | null;
     developmentTools?: Array<string | null> | null;
-    paymentOptions?: Array<string | null> | null;
-    creditCards?: Array<string | null> | null;
     attendanceType?: AttendanceType | null;
     locationPref?: string | null;
     locationCity?: string | null;

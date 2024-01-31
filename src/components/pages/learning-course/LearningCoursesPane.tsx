@@ -60,6 +60,10 @@ export default function LearningCoursesPane({
     useState<LearningCenter | null>(null);
   const [courseList, setCourseList] =
     useState<Array<LearningCenterCourse>>(courses);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const [editItem, setEditItem] = useState<
+    LearningCenterCourse | CreateLearningCenterCourseInput | null
+  >(null);
   // hooks
   const router = useRouter();
   const { setLoading } = useLoading();
@@ -72,10 +76,7 @@ export default function LearningCoursesPane({
     apiDeleteLearningCourse,
   } = useLearningCourse();
   const { headers } = useLearningCourseLogic();
-  const [isOpenEdit, setIsOpenEdit] = useState(false);
-  const [editItem, setEditItem] = useState<
-    LearningCenterCourse | CreateLearningCenterCourseInput | null
-  >(null);
+
   // input fileのテンプレート参照
   const fileInputRef = useRef<HTMLInputElement>(null);
 

@@ -35,8 +35,6 @@ class CreateLearningCenterCourse {
   programmingLanguages?: Array<string | null> | null = null;
   frameworks?: Array<string | null> | null = null;
   developmentTools?: Array<string | null> | null = null;
-  paymentOptions?: Array<string | null> | null = null;
-  creditCards?: Array<string | null> | null = null;
   attendanceType?: AttendanceType | null = null;
   locationPref?: string | null = null;
   locationCity?: string | null = null;
