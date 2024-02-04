@@ -20,6 +20,7 @@ import {
   OutlinedInput,
   Card,
   CardContent,
+  InputAdornment,
 } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useRef } from "react";
@@ -296,6 +297,22 @@ export default function LearningCenterForm({
               error={!!errors.representative}
               helperText={errors.representative?.message}
               fullWidth
+            />
+          </Box>
+          <Box sx={{ mt: 3 }}>
+            <TextField
+              label="入学金"
+              size="small"
+              type="number"
+              value={formData.admissionFee || ""}
+              {...register("admissionFee", {
+                onChange: (event) => handlerFormChange(event),
+              })}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">円</InputAdornment>
+                ),
+              }}
             />
           </Box>
           <Box sx={{ mt: 3 }}>

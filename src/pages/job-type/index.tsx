@@ -3,20 +3,36 @@ import Head from "next/head";
 import IndexPane from "@/components/pages/job-type/IndexPane";
 import { fetchJobTypes } from "@/hooks/server/fetchData";
 import { GetServerSideProps } from "next";
-import { JobType } from "@/API";
+import {
+  DevelopmentCategory,
+  DevelopmentProduct,
+  JobType,
+  Qualification,
+} from "@/API";
 
 export default function JobTypePage({
   jobTypes,
+  qualifications,
+  developmentCategories,
+  developmentProducts,
 }: {
   jobTypes: Array<JobType>;
+  qualifications: Array<Qualification>;
+  developmentCategories: Array<DevelopmentCategory>;
+  developmentProducts: Array<DevelopmentProduct>;
 }) {
   return (
     <>
       <Head>
-        <title>【管理】言語・フレームワーク</title>
+        <title>【管理】目的/職種/資格</title>
       </Head>
       <Layout>
-        <IndexPane jobTypes={jobTypes} />
+        <IndexPane
+          jobTypes={jobTypes}
+          qualifications={qualifications}
+          developmentCategories={developmentCategories}
+          developmentProducts={developmentProducts}
+        />
       </Layout>
     </>
   );
@@ -27,6 +43,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       jobTypes: result.jobTypes,
+      qualifications: result.qualifications,
+      developmentCategories: result.developmentCategories,
+      developmentProducts: result.developmentProducts,
     },
   };
 };

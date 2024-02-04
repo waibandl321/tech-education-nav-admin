@@ -34,8 +34,6 @@ export default function LearningCenterEditPane({
     useLearningCenterLogic();
 
   const isEdit = useMemo(() => !!editItem.id, [editItem]);
-  console.log(isEdit, editItem);
-
   const [editLearningCenter, setEditLearningCenter] = useState<
     LearningCenter | CreateLearningCenterInput
   >(editItem);

@@ -9,24 +9,29 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
-import useJobType from "@/hooks/api/useJobType";
-import { CreateJobTypeInput, JobType } from "@/API";
+import useQualification from "@/hooks/api/useQualification";
+import { CreateQualificationInput, Qualification } from "@/API";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 
-export default function JobTypePane({
-  jobTypes,
+export default function QualificationPane({
+  qualifications,
 }: {
-  jobTypes: Array<JobType>;
+  qualifications: Array<Qualification>;
 }) {
   // hook
-  const { apiCreateJobType, apiGetJobTypes, apiDeleteJobType } = useJobType();
+  const {
+    apiCreateQualification,
+    apiGetQualifications,
+    apiDeleteQualification,
+  } = useQualification();
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
 
   // state
   const [inputValue, setInputValue] = useState("");
-  const [jobTypeList, setJobTypeList] = useState<Array<JobType>>(jobTypes);
+  const [qualificationList, setQualificationList] =
+    useState<Array<Qualification>>(qualifications);
 
   // form変更
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,31 +39,31 @@ export default function JobTypePane({
   };
 
   // 取得
-  const getJobTypeList = async () => {
-    const getResult = await apiGetJobTypes();
-    setJobTypeList(getResult.data ?? []);
+  const getQualificationList = async () => {
+    const getResult = await apiGetQualifications();
+    setQualificationList(getResult.data ?? []);
   };
 
   // 作成
-  const handleCreateLanguage = async () => {
+  const handleCreateQualification = async () => {
     // 同じ職種が登録されている場合はエラーにする
-    const isExist = jobTypeList.some(
+    const isExist = qualificationList.some(
       (v) => v.name.toLowerCase() === inputValue.toLowerCase()
     );
     if (isExist) {
       setAlertMessage({
         type: "error",
-        message: "同じ職種が登録されています。",
+        message: "同じ資格が登録されています。",
       });
       return;
     }
     setLoading(true);
     try {
-      const request: CreateJobTypeInput = {
+      const request: CreateQualificationInput = {
         name: inputValue,
       };
-      await apiCreateJobType(request);
-      await getJobTypeList();
+      await apiCreateQualification(request);
+      await getQualificationList();
       setInputValue("");
     } catch (error) {
       setAlertMessage({
@@ -71,11 +76,11 @@ export default function JobTypePane({
   };
 
   // 削除
-  const handleDelete = async (e: Event, item: JobType) => {
+  const handleDelete = async (e: Event, item: Qualification) => {
     setLoading(true);
     try {
-      await apiDeleteJobType(item);
-      await getJobTypeList();
+      await apiDeleteQualification(item);
+      await getQualificationList();
     } catch (error) {
       setAlertMessage({
         type: "error",
@@ -88,7 +93,7 @@ export default function JobTypePane({
 
   return (
     <Box>
-      <Typography>◾️ 職種マスタ</Typography>
+      <Typography>◾️ 資格マスタ</Typography>
       <OutlinedInput
         type="text"
         size="small"
@@ -99,7 +104,7 @@ export default function JobTypePane({
               color="primary"
               size="small"
               disabled={!inputValue}
-              onClick={handleCreateLanguage}
+              onClick={handleCreateQualification}
             >
               <SendIcon></SendIcon>
             </IconButton>
@@ -110,7 +115,7 @@ export default function JobTypePane({
         onChange={handleInputChange}
       />
       <Stack direction="row" flexWrap="wrap" spacing={1} sx={{ mt: 4 }}>
-        {jobTypeList.map((item) => (
+        {qualificationList.map((item) => (
           <Chip
             key={item.id}
             label={item.name}

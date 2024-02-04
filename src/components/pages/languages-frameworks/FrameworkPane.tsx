@@ -180,7 +180,6 @@ export default function FrameworkPane({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      name="onSale"
                       checked={language.id === inputValue.programmingLanguageId}
                     />
                   }

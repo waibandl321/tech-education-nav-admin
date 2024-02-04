@@ -31,6 +31,7 @@ export declare type LearningCenterUpdateFormInputValues = {
     logoImageURL?: string;
     establishmentYear?: number;
     representative?: string;
+    admissionFee?: number;
     cancelPolicy?: string;
     paymentOptions?: string[];
     creditCards?: string[];
@@ -45,6 +46,7 @@ export declare type LearningCenterUpdateFormValidationValues = {
     logoImageURL?: ValidationFunction<string>;
     establishmentYear?: ValidationFunction<number>;
     representative?: ValidationFunction<string>;
+    admissionFee?: ValidationFunction<number>;
     cancelPolicy?: ValidationFunction<string>;
     paymentOptions?: ValidationFunction<string>;
     creditCards?: ValidationFunction<string>;
@@ -61,6 +63,7 @@ export declare type LearningCenterUpdateFormOverridesProps = {
     logoImageURL?: PrimitiveOverrideProps<TextFieldProps>;
     establishmentYear?: PrimitiveOverrideProps<TextFieldProps>;
     representative?: PrimitiveOverrideProps<TextFieldProps>;
+    admissionFee?: PrimitiveOverrideProps<TextFieldProps>;
     cancelPolicy?: PrimitiveOverrideProps<TextFieldProps>;
     paymentOptions?: PrimitiveOverrideProps<TextFieldProps>;
     creditCards?: PrimitiveOverrideProps<TextFieldProps>;

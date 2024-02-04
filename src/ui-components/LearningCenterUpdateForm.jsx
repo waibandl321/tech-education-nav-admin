@@ -200,6 +200,7 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: "",
     establishmentYear: "",
     representative: "",
+    admissionFee: "",
     cancelPolicy: "",
     paymentOptions: [],
     creditCards: [],
@@ -222,6 +223,9 @@ export default function LearningCenterUpdateForm(props) {
   );
   const [representative, setRepresentative] = React.useState(
     initialValues.representative
+  );
+  const [admissionFee, setAdmissionFee] = React.useState(
+    initialValues.admissionFee
   );
   const [cancelPolicy, setCancelPolicy] = React.useState(
     initialValues.cancelPolicy
@@ -246,6 +250,7 @@ export default function LearningCenterUpdateForm(props) {
     setLogoImageURL(cleanValues.logoImageURL);
     setEstablishmentYear(cleanValues.establishmentYear);
     setRepresentative(cleanValues.representative);
+    setAdmissionFee(cleanValues.admissionFee);
     setCancelPolicy(cleanValues.cancelPolicy);
     setPaymentOptions(cleanValues.paymentOptions ?? []);
     setCurrentPaymentOptionsValue("");
@@ -287,6 +292,7 @@ export default function LearningCenterUpdateForm(props) {
     logoImageURL: [],
     establishmentYear: [],
     representative: [],
+    admissionFee: [],
     cancelPolicy: [],
     paymentOptions: [],
     creditCards: [],
@@ -326,6 +332,7 @@ export default function LearningCenterUpdateForm(props) {
           logoImageURL: logoImageURL ?? null,
           establishmentYear: establishmentYear ?? null,
           representative: representative ?? null,
+          admissionFee: admissionFee ?? null,
           cancelPolicy: cancelPolicy ?? null,
           paymentOptions: paymentOptions ?? null,
           creditCards: creditCards ?? null,
@@ -398,6 +405,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -433,6 +441,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -468,6 +477,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -503,6 +513,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -540,6 +551,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -575,6 +587,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL: value,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -614,6 +627,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear: value,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -651,6 +665,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative: value,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,
@@ -670,6 +685,46 @@ export default function LearningCenterUpdateForm(props) {
         {...getOverrideProps(overrides, "representative")}
       ></TextField>
       <TextField
+        label="Admission fee"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={admissionFee}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              name,
+              memo,
+              operatingCompany,
+              headquartersLocation,
+              websiteURL,
+              logoImageURL,
+              establishmentYear,
+              representative,
+              admissionFee: value,
+              cancelPolicy,
+              paymentOptions,
+              creditCards,
+              isDeleted,
+            };
+            const result = onChange(modelFields);
+            value = result?.admissionFee ?? value;
+          }
+          if (errors.admissionFee?.hasError) {
+            runValidationTasks("admissionFee", value);
+          }
+          setAdmissionFee(value);
+        }}
+        onBlur={() => runValidationTasks("admissionFee", admissionFee)}
+        errorMessage={errors.admissionFee?.errorMessage}
+        hasError={errors.admissionFee?.hasError}
+        {...getOverrideProps(overrides, "admissionFee")}
+      ></TextField>
+      <TextField
         label="Cancel policy"
         isRequired={false}
         isReadOnly={false}
@@ -686,6 +741,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy: value,
               paymentOptions,
               creditCards,
@@ -717,6 +773,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions: values,
               creditCards,
@@ -775,6 +832,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards: values,
@@ -837,6 +895,7 @@ export default function LearningCenterUpdateForm(props) {
               logoImageURL,
               establishmentYear,
               representative,
+              admissionFee,
               cancelPolicy,
               paymentOptions,
               creditCards,

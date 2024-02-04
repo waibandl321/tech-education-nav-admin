@@ -10,9 +10,8 @@ import {
   JobType,
   AttendanceType,
   CoursePlanInput,
-  PaymentMethod,
-  CreditCard,
   CoursePlan,
+  Qualification,
 } from "@/API";
 import { v4 as uuidv4 } from "uuid";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
@@ -51,11 +50,9 @@ import {
   TableRow,
   IconButton,
   Grid,
-  Autocomplete,
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteOutline from "@mui/icons-material/DeleteOutline";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { sortBy } from "lodash";
@@ -78,8 +75,7 @@ export default function LearningCourseEditPane({
   frameworks,
   developmentTools,
   jobTypes,
-  paymentMethods,
-  creditCards,
+  qualifications,
 }: {
   editItem: LearningCenterCourse | CreateLearningCenterCourseInput | null;
   onClose: () => void;
@@ -88,11 +84,9 @@ export default function LearningCourseEditPane({
   frameworks: Array<Framework>;
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
-  paymentMethods: Array<PaymentMethod>;
-  creditCards: Array<CreditCard>;
+  qualifications: Array<Qualification>;
 }) {
   // hooks
-  const router = useRouter();
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
   const { apiCreateLearningCourse, apiUpdateLearningCourse } =
@@ -296,6 +290,10 @@ export default function LearningCourseEditPane({
     setEditItem(null); // 編集中のアイテムをクリア
   };
 
+  const getSplitPrice = (price: number | undefined | null) => {
+    return price ? Math.floor(price / 24) : 0;
+  };
+
   return (
     <Paper
       sx={{
@@ -453,7 +451,8 @@ export default function LearningCourseEditPane({
                           type="number"
                           name="splitPrice"
                           size="small"
-                          value={row?.price ? Math.floor(row.price / 24) : ""}
+                          value={row?.splitPrice}
+                          helperText={getSplitPrice(row?.price)}
                           onChange={(e) => handlerPlansChange(e, row)}
                           InputProps={{
                             endAdornment: (
@@ -516,24 +515,6 @@ export default function LearningCourseEditPane({
             <FormControlLabel
               control={
                 <Checkbox
-                  name="onSale"
-                  checked={editItem?.onSale ?? false}
-                  onChange={handlerFormChange}
-                />
-              }
-              label="キャンペーン実施中（クーポン/セールなど）"
-            />
-            <TextareaComponent
-              onInputChange={(event) => handlerFormChange(event)}
-              inputValue={editItem?.saleMemo ?? ""}
-              name="saleMemo"
-              placeholder="キャンペーン詳細"
-            />
-          </Box>
-          <Box sx={{ my: 2 }}>
-            <FormControlLabel
-              control={
-                <Checkbox
                   name="isMadeToOrder"
                   checked={editItem?.isMadeToOrder ?? false}
                   onChange={handlerFormChange}
@@ -582,6 +563,24 @@ export default function LearningCourseEditPane({
               inputValue={editItem?.jobHuntingSupportDetail ?? ""}
               name="jobHuntingSupportDetail"
               placeholder="転職サポートの詳細"
+            />
+          </Box>
+          <Box sx={{ my: 2 }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="isJobHuntingGuarantee"
+                  checked={editItem?.isJobHuntingGuarantee ?? false}
+                  onChange={handlerFormChange}
+                />
+              }
+              label="転職保証の有無"
+            />
+            <TextareaComponent
+              onInputChange={(event) => handlerFormChange(event)}
+              inputValue={editItem?.jobHuntingGuaranteeDetail ?? ""}
+              name="JobHuntingGuaranteeDetail"
+              placeholder="転職保証の詳細"
             />
           </Box>
           <Grid container sx={{ my: 2 }} spacing={2}>
@@ -697,6 +696,26 @@ export default function LearningCourseEditPane({
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-qualifications">資格</InputLabel>
+                <Select
+                  labelId="select-qualifications"
+                  id="select-qualifications"
+                  name="qualifications"
+                  value={editItem?.qualifications ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="資格" />}
+                  multiple
+                >
+                  {sortBy(qualifications, ["name"]).map((q) => (
+                    <MenuItem key={q.id} value={q.id}>
+                      {q.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
 
           <Grid container sx={{ my: 2 }} spacing={2}>
@@ -782,8 +801,8 @@ export default function LearningCourseEditPane({
                 <Select
                   labelId="select-especially-audiences"
                   id="select-especially-audiences"
-                  name="especiallyAudiences"
-                  value={editItem?.especiallyAudiences ?? []}
+                  name="benefitUsers"
+                  value={editItem?.benefitUsers ?? []}
                   onChange={(event) => handlerFormChange(event)}
                   input={<OutlinedInput fullWidth label="特別な受講対象者" />}
                 >

@@ -24,9 +24,6 @@ export default function LanguagesFrameworksPane({
       <Box sx={{ mb: 4 }}>
         <DevelopmentToolPane developmentTools={developmentTools} />
       </Box>
-      <Box sx={{ mb: 4 }}>
-        <DevelopmentToolPane developmentTools={developmentTools} />
-      </Box>
     </Container>
   );
 }

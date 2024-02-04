@@ -19,16 +19,20 @@ export default function Header() {
     { name: "コース情報", path: "/learning-courses" },
     { name: "レビュー情報", path: "/reviews" },
     {
-      name: "言語/フレームワーク/ツール",
+      name: "開発ツール",
       path: "/languages-frameworks",
     },
     {
-      name: "職種",
+      name: "目的/職種/資格",
       path: "/job-type",
     },
     {
       name: "支払い方法",
       path: "/payment",
+    },
+    {
+      name: "ユーザー種別",
+      path: "/user-category",
     },
   ];
 

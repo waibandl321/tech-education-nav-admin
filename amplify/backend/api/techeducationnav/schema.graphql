@@ -1,6 +1,47 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 
+# 開発領域（関わりたい開発領域で絞り込む際に使用する）
+type DevelopmentCategory
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  memo: String!
+}
+
+# 開発できるプロダクト（作りたいサービスで絞り込むために使用する）
+type DevelopmentProduct
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  memo: String!
+}
+
+# 資格マスタ
+type Qualification
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
 # 開発ツールマスタ
 type DevelopmentTool
   @model
@@ -39,6 +80,7 @@ type PaymentMethod
   id: ID!
   name: String!
 }
+
 # クレジットカードマスタ
 type CreditCard
   @model
@@ -79,6 +121,19 @@ type JobType
   name: String!
 }
 
+# 優待ユーザー種別 マスタ
+type BenefitUserCategory
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: groups, groups: ["Admin"], operations: [create, update, delete] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+}
+
 # プログラミングスクール情報
 type LearningCenter
   @model
@@ -97,6 +152,7 @@ type LearningCenter
   logoImageURL: String
   establishmentYear: Int
   representative: String
+  admissionFee: Float # 入学金
   cancelPolicy: String # キャンセルポリシー詳細
   paymentOptions: [String] # 支払い方法（PaymentMethodマスタのIDを格納する）
   creditCards: [String] # 対応しているクレジットカード（CreditCardマスタのIDを格納する）
@@ -118,17 +174,6 @@ enum Purpose {
   SIDE_JOB # 副業
   CERTIFICATION # 資格取得
   LEARNING # 学習/スキルアップ
-}
-
-# 特別な受講対象者（小学生、中学生、高校生、大学・専門学生、主婦、高齢者、障害者）
-enum EspeciallyAudience {
-  FOR_ELEMENTARY_STUDENTS # 小学生
-  FOR_JUNIOR_HIGH_STUDENTS # 中学生
-  FOR_HIGH_SCHOOL_STUDENTS # 高校生
-  FOR_UNIVERSITY_STUDENTS # 大学・専門学生
-  FOR_HOUSEWIVES # 主婦
-  FOR_SENIORS # 高齢者
-  FOR_PEOPLE_WITH_DISABILITIES # 障害者
 }
 
 # コースに紐づく料金プラン
@@ -160,23 +205,26 @@ type LearningCenterCourse
   moneyBackDetail: String # 返金保証の有無 詳細
   isAvailableSubsidy: Boolean # 補助金の有無
   subsidyMemo: String # 補助金の有無 詳細
-  onSale: Boolean # キャンペーン実施中（クーポン/セールなど）
-  saleMemo: String # キャンペーン詳細
   isMadeToOrder: Boolean # オーダーメイドカリキュラムの有無
   madeToOrderDetail: String # オーダーメイドカリキュラムの詳細
   isJobIntroductionAvailable: Boolean # 案件紹介の有無
   jobIntroductionDetail: String # 案件紹介の詳細
   isJobHuntingSupport: Boolean # 転職サポートの有無
   jobHuntingSupportDetail: String # 転職サポートの詳細
+  isJobHuntingGuarantee: Boolean # 転職保証の有無
+  jobHuntingGuaranteeDetail: String # 転職保証の詳細
   purposes: [Purpose] # 受講目的（選択形式）
   jobTypes: [String] # 目指す職種（jobTypeのマスタデータのIDを格納する)
+  developmentCategories: [String] # 開発領域（ホームページ制作、WEBサービス開発、スマホアプリ開発、、、など DevelopmentCategoryマスタのIDを格納する）
+  developmentProducts: [String] # 開発できる商品（マッチングアプリ、掲示板アプリ、、、など DevelopmentProductマスタのIDを格納する）
   programmingLanguages: [String] # 学べるプログラミング言語（ProgrammingLanguageマスタのIDを格納する）
   frameworks: [String] # 学べるフレームワーク（FrameworkマスタのIDを格納する）
   developmentTools: [String] # 開発用の各種ツール（DevelopmentToolマスタのIDを格納する）
+  qualifications: [String] # 取得できる資格（QualificationマスタのIDを格納）
   attendanceType: AttendanceType # 受講スタイル（選択形式）
   locationPref: String # オフラインの場合の場所（県、エリア検索用）
   locationCity: String # オフラインの場合の場所（市区町村、エリア検索用）
-  especiallyAudiences: [EspeciallyAudience] # 特別な受講対象者（学生、子供、主婦、高齢者、障害者など）
+  benefitUsers: [String] # 優待対象のユーザー（例: 女性向け、50歳以上など） BenefitUserマスタのIDが格納される
   isDeleted: Boolean
 }
 

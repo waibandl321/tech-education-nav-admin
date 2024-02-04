@@ -1,7 +1,10 @@
 import { generateClient } from "aws-amplify/api";
 import {
+  listBenefitUserCategories,
   listCourseReviews,
   listCreditCards,
+  listDevelopmentCategories,
+  listDevelopmentProducts,
   listDevelopmentTools,
   listFrameworks,
   listJobTypes,
@@ -9,6 +12,7 @@ import {
   listLearningCenters,
   listPaymentMethods,
   listProgrammingLanguages,
+  listQualifications,
 } from "@/graphql/queries";
 
 const client = generateClient();
@@ -92,8 +96,7 @@ export const fetchCoursePageData = async () => {
       frameworksResult,
       developmentToolResult,
       getJobTypesResult,
-      getPaymentMethodsResult,
-      getCreditCardsResult,
+      getQualificationsResult,
     ] = await Promise.all([
       client.graphql({
         query: listLearningCenters,
@@ -120,11 +123,7 @@ export const fetchCoursePageData = async () => {
         authMode: "apiKey",
       }),
       client.graphql({
-        query: listPaymentMethods,
-        authMode: "apiKey",
-      }),
-      client.graphql({
-        query: listCreditCards,
+        query: listQualifications,
         authMode: "apiKey",
       }),
     ]);
@@ -135,8 +134,7 @@ export const fetchCoursePageData = async () => {
       frameworks: frameworksResult.data.listFrameworks.items,
       developmentTools: developmentToolResult.data.listDevelopmentTools.items,
       jobTypes: getJobTypesResult.data.listJobTypes.items,
-      paymentMethods: getPaymentMethodsResult.data.listPaymentMethods.items,
-      creditCards: getCreditCardsResult.data.listCreditCards.items,
+      qualifications: getQualificationsResult.data.listQualifications.items,
     };
   } catch (error) {
     console.error("Error fetching listLearningCenters:", error);
@@ -147,8 +145,7 @@ export const fetchCoursePageData = async () => {
       frameworks: [],
       developmentTools: [],
       jobTypes: [],
-      paymentMethods: [],
-      creditCards: [],
+      qualifications: [],
     };
   }
 };
@@ -203,20 +200,48 @@ export const fetchLanguagesAndFrameworks = async () => {
   }
 };
 
-// マスタデータの取得: 職種
+// マスタデータの取得: 職種/資格
 export const fetchJobTypes = async () => {
   try {
-    const getJobTypesResult = await client.graphql({
-      query: listJobTypes,
-      authMode: "apiKey",
-    });
+    const [
+      getJobTypesResult,
+      getQualificationsResult,
+      getDevelopmentCategoriesResult,
+      getDevelopmentProductsResult,
+    ] = await Promise.all([
+      client.graphql({
+        query: listJobTypes,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listQualifications,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listDevelopmentCategories,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listDevelopmentProducts,
+        authMode: "apiKey",
+      }),
+    ]);
+
     return {
       jobTypes: getJobTypesResult.data.listJobTypes.items,
+      qualifications: getQualificationsResult.data.listQualifications.items,
+      developmentCategories:
+        getDevelopmentCategoriesResult.data.listDevelopmentCategories.items,
+      developmentProducts:
+        getDevelopmentProductsResult.data.listDevelopmentProducts.items,
     };
   } catch (error) {
     console.error("Error fetchJobTypes:", error);
     return {
       jobTypes: [],
+      qualifications: [],
+      developmentCategories: [],
+      developmentProducts: [],
     };
   }
 };
@@ -246,6 +271,27 @@ export const fetchPaymentPageData = async () => {
     return {
       paymentMethods: [],
       creditCards: [],
+    };
+  }
+};
+
+/**
+ * ユーザー種別
+ */
+export const fetchUserCategoryPageData = async () => {
+  try {
+    const getUserCategoriesResult = await client.graphql({
+      query: listBenefitUserCategories,
+      authMode: "apiKey",
+    });
+    return {
+      benefitUserCategories:
+        getUserCategoriesResult.data.listBenefitUserCategories.items,
+    };
+  } catch (error) {
+    console.error("Error fetching benefitUserCategories:", error);
+    return {
+      benefitUserCategories: [],
     };
   }
 };

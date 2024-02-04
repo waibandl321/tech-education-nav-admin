@@ -9,24 +9,30 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
-import useJobType from "@/hooks/api/useJobType";
-import { CreateJobTypeInput, JobType } from "@/API";
+import useBenefitUserCategory from "@/hooks/api/useBenefitUserCategory";
+import { CreateBenefitUserCategoryInput, BenefitUserCategory } from "@/API";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 
-export default function JobTypePane({
-  jobTypes,
+export default function BenefitUserCategoryPane({
+  benefitUserCategories,
 }: {
-  jobTypes: Array<JobType>;
+  benefitUserCategories: Array<BenefitUserCategory>;
 }) {
   // hook
-  const { apiCreateJobType, apiGetJobTypes, apiDeleteJobType } = useJobType();
+  const {
+    apiCreateBenefitUserCategory,
+    apiGetBenefitUserCategories,
+    apiDeleteBenefitUserCategory,
+  } = useBenefitUserCategory();
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
 
   // state
   const [inputValue, setInputValue] = useState("");
-  const [jobTypeList, setJobTypeList] = useState<Array<JobType>>(jobTypes);
+  const [benefitUserCategoryList, setBenefitUserCategoryList] = useState<
+    Array<BenefitUserCategory>
+  >(benefitUserCategories);
 
   // form変更
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,31 +40,31 @@ export default function JobTypePane({
   };
 
   // 取得
-  const getJobTypeList = async () => {
-    const getResult = await apiGetJobTypes();
-    setJobTypeList(getResult.data ?? []);
+  const getBenefitUserCategoryList = async () => {
+    const getResult = await apiGetBenefitUserCategories();
+    setBenefitUserCategoryList(getResult.data ?? []);
   };
 
   // 作成
   const handleCreateLanguage = async () => {
-    // 同じ職種が登録されている場合はエラーにする
-    const isExist = jobTypeList.some(
+    // 同じユーザー種別が登録されている場合はエラーにする
+    const isExist = benefitUserCategoryList.some(
       (v) => v.name.toLowerCase() === inputValue.toLowerCase()
     );
     if (isExist) {
       setAlertMessage({
         type: "error",
-        message: "同じ職種が登録されています。",
+        message: "同じユーザー種別が登録されています。",
       });
       return;
     }
     setLoading(true);
     try {
-      const request: CreateJobTypeInput = {
+      const request: CreateBenefitUserCategoryInput = {
         name: inputValue,
       };
-      await apiCreateJobType(request);
-      await getJobTypeList();
+      await apiCreateBenefitUserCategory(request);
+      await getBenefitUserCategoryList();
       setInputValue("");
     } catch (error) {
       setAlertMessage({
@@ -71,11 +77,11 @@ export default function JobTypePane({
   };
 
   // 削除
-  const handleDelete = async (e: Event, item: JobType) => {
+  const handleDelete = async (e: Event, item: BenefitUserCategory) => {
     setLoading(true);
     try {
-      await apiDeleteJobType(item);
-      await getJobTypeList();
+      await apiDeleteBenefitUserCategory(item);
+      await getBenefitUserCategoryList();
     } catch (error) {
       setAlertMessage({
         type: "error",
@@ -88,7 +94,7 @@ export default function JobTypePane({
 
   return (
     <Box>
-      <Typography>◾️ 職種マスタ</Typography>
+      <Typography>◾️ 優待ユーザー種別マスタ</Typography>
       <OutlinedInput
         type="text"
         size="small"
@@ -110,7 +116,7 @@ export default function JobTypePane({
         onChange={handleInputChange}
       />
       <Stack direction="row" flexWrap="wrap" spacing={1} sx={{ mt: 4 }}>
-        {jobTypeList.map((item) => (
+        {benefitUserCategoryList.map((item) => (
           <Chip
             key={item.id}
             label={item.name}

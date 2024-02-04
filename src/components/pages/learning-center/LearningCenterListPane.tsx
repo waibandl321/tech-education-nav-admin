@@ -35,6 +35,7 @@ const initCreateLearningCenter: CreateLearningCenterInput = {
   logoImageURL: undefined,
   establishmentYear: 2000,
   representative: "",
+  admissionFee: null,
   paymentOptions: null,
   creditCards: null,
   cancelPolicy: "",

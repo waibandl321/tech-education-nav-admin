@@ -8,8 +8,7 @@ import {
   LearningCenter,
   LearningCenterCourse,
   ProgrammingLanguage,
-  PaymentMethod,
-  CreditCard,
+  Qualification,
 } from "@/API";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
 import {
@@ -34,7 +33,38 @@ import { useMessageAlert } from "@/contexts/MessageAlertContext";
 import useCSV from "@/hooks/utils/useCSV";
 import useLearningCourse from "@/hooks/api/useLearningCourse";
 import { useRouter } from "next/router";
-import CreateLearningCenterCourse from "@/docs/LearningCenterCourse";
+import useAPIRequest from "@/hooks/utils/useAPIRequest";
+
+const initCreateLearningCourse: CreateLearningCenterCourseInput = {
+  learningCenterId: "",
+  courseName: "",
+  courseURL: "",
+  couseDetail: "",
+  plans: [],
+  isAvailableMoneyBack: false,
+  moneyBackDetail: "",
+  isAvailableSubsidy: false,
+  subsidyMemo: "",
+  isMadeToOrder: false,
+  madeToOrderDetail: "",
+  isJobIntroductionAvailable: false,
+  jobIntroductionDetail: "",
+  isJobHuntingSupport: false,
+  jobHuntingSupportDetail: "",
+  isJobHuntingGuarantee: false,
+  jobHuntingGuaranteeDetail: "",
+  purposes: [],
+  jobTypes: [],
+  programmingLanguages: [],
+  frameworks: [],
+  developmentTools: [],
+  qualifications: [],
+  attendanceType: null,
+  locationPref: "",
+  locationCity: "",
+  benefitUsers: [],
+  isDeleted: false,
+};
 
 export default function LearningCoursesPane({
   centers,
@@ -43,8 +73,7 @@ export default function LearningCoursesPane({
   frameworks,
   developmentTools,
   jobTypes,
-  paymentMethods,
-  creditCards,
+  qualifications,
 }: {
   centers: Array<LearningCenter>;
   courses: Array<LearningCenterCourse>;
@@ -52,8 +81,7 @@ export default function LearningCoursesPane({
   frameworks: Array<Framework>;
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
-  paymentMethods: Array<PaymentMethod>;
-  creditCards: Array<CreditCard>;
+  qualifications: Array<Qualification>;
 }) {
   // state
   const [selectedLearningCenter, setSelectedLearningCenter] =
@@ -68,8 +96,10 @@ export default function LearningCoursesPane({
   const router = useRouter();
   const { setLoading } = useLoading();
   const { setAlertMessage } = useMessageAlert();
+  const { getDuplicateRequest } = useAPIRequest();
   const { getImportedCSV, convertStringToCSV, download } = useCSV();
   const {
+    apiGetLearningCourses,
     apiGetLearningCourseById,
     apiCreateLearningCourse,
     apiUpdateLearningCourse,
@@ -87,11 +117,53 @@ export default function LearningCoursesPane({
     );
   }, [selectedLearningCenter, courseList]);
 
+  const getCourses = async () => {
+    const result = await apiGetLearningCourses();
+    setCourseList(result.data ?? []);
+  };
+
+  // 複製
+  const duplicateLearningCourse = async (item: LearningCenterCourse) => {
+    if (!selectedLearningCenter?.id)
+      return setAlertMessage({
+        type: "error",
+        message: "スクールが選択されていません",
+      });
+    try {
+      const req: CreateLearningCenterCourseInput = getDuplicateRequest({
+        ...item,
+        plans: [],
+        courseName: `${item.courseName} Copy`,
+        learningCenterId: selectedLearningCenter.id,
+        isDeleted: false,
+      });
+      const result = await apiCreateLearningCourse(req);
+      if (!result.isSuccess) {
+        setAlertMessage({
+          type: "error",
+          message: "コースの複製に失敗しました。",
+        });
+        return;
+      }
+      setAlertMessage({
+        type: "success",
+        message: "データを複製しました。",
+      });
+      await getCourses();
+    } catch (error) {
+      setAlertMessage({
+        type: "error",
+        message: "コースの複製に失敗しました。",
+      });
+    }
+  };
+
   // 削除
   const deleteLearningCourse = async (item: LearningCenterCourse) => {
     setLoading(true);
     try {
       await apiDeleteLearningCourse(item);
+      await getCourses();
     } catch (error) {
       console.error(error);
       setAlertMessage({
@@ -188,10 +260,10 @@ export default function LearningCoursesPane({
 
   // コース新規作成
   const handleAddCourse = () => {
-    const data = new CreateLearningCenterCourse({
-      learningCenterId: selectedLearningCenter?.id ?? "",
-    });
-    setEditItem(data);
+    // const data = new CreateLearningCenterCourse({
+    //   learningCenterId: selectedLearningCenter?.id ?? "",
+    // });
+    setEditItem(initCreateLearningCourse);
     setIsOpenEdit(true);
   };
 
@@ -210,21 +282,30 @@ export default function LearningCoursesPane({
   const handleEditItem = async (item: LearningCenterCourse) => {
     setEditItem(null);
     setIsOpenEdit(false);
-    setLoading(true);
-    try {
-      const result = await apiGetLearningCourseById(item.id);
-      if (result.isSuccess && result.data) {
-        setEditItem(result.data);
-        setIsOpenEdit(true);
-      }
-    } catch (error) {
-      setAlertMessage({
-        type: "error",
-        message: "データの取得に失敗しました。",
-      });
-    } finally {
-      setLoading(false);
-    }
+    setEditItem(item);
+    setIsOpenEdit(true);
+    // setEditItem(null);
+    // setIsOpenEdit(false);
+    // setLoading(true);
+    // try {
+    //   const result = await apiGetLearningCourseById(item.id);
+    //   if (result.isSuccess && result.data) {
+    //     setEditItem(result.data);
+    //     setIsOpenEdit(true);
+    //   }
+    // } catch (error) {
+    //   setAlertMessage({
+    //     type: "error",
+    //     message: "データの取得に失敗しました。",
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
+
+  const handleClose = async () => {
+    setIsOpenEdit(false);
+    await getCourses();
   };
 
   return (
@@ -281,6 +362,15 @@ export default function LearningCoursesPane({
                     <ListItemText primary={`${item.courseName}: `} />
                     <ListItemSecondaryAction>
                       <Button
+                        color="success"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          duplicateLearningCourse(item);
+                        }}
+                      >
+                        複製
+                      </Button>
+                      <Button
                         color="error"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -299,7 +389,7 @@ export default function LearningCoursesPane({
           {/* 編集用ダイアログ */}
           {editItem && isOpenEdit && (
             <LearningCourseEditPane
-              onClose={() => setIsOpenEdit(false)}
+              onClose={handleClose}
               editItem={editItem}
               selectedLearningCenter={selectedLearningCenter}
               key={editItem?.id}
@@ -307,8 +397,7 @@ export default function LearningCoursesPane({
               frameworks={frameworks}
               developmentTools={developmentTools}
               jobTypes={jobTypes}
-              paymentMethods={paymentMethods}
-              creditCards={creditCards}
+              qualifications={qualifications}
             />
           )}
         </Box>
