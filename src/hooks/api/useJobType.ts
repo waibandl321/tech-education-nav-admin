@@ -65,6 +65,7 @@ export default function useJobType() {
       };
       const result = await client.graphql({
         query: mutations.createJobType,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -85,6 +86,7 @@ export default function useJobType() {
     try {
       const result = await client.graphql({
         query: mutations.updateJobType,
+        authMode: "userPool",
         variables: { input: JobType },
       });
       return {
@@ -107,6 +109,7 @@ export default function useJobType() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteJobType,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

@@ -74,6 +74,7 @@ export default function useLearningCenter() {
       };
       const result = await client.graphql({
         query: mutations.createLearningCenter,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -96,6 +97,7 @@ export default function useLearningCenter() {
     try {
       const result = await client.graphql({
         query: mutations.updateLearningCenter,
+        authMode: "userPool",
         variables: { input: learningCenter },
       });
       return {
@@ -118,6 +120,7 @@ export default function useLearningCenter() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteLearningCenter,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

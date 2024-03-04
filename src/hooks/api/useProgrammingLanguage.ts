@@ -71,6 +71,7 @@ export default function useProgrammingLanguage() {
       };
       const result = await client.graphql({
         query: mutations.createProgrammingLanguage,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -93,6 +94,7 @@ export default function useProgrammingLanguage() {
     try {
       const result = await client.graphql({
         query: mutations.updateProgrammingLanguage,
+        authMode: "userPool",
         variables: { input: programmingLanguage },
       });
       return {
@@ -117,6 +119,7 @@ export default function useProgrammingLanguage() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteProgrammingLanguage,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

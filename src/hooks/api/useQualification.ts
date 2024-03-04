@@ -69,6 +69,7 @@ export default function useQualification() {
       };
       const result = await client.graphql({
         query: mutations.createQualification,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -91,6 +92,7 @@ export default function useQualification() {
     try {
       const result = await client.graphql({
         query: mutations.updateQualification,
+        authMode: "userPool",
         variables: { input: qualification },
       });
       return {
@@ -113,6 +115,7 @@ export default function useQualification() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteQualification,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

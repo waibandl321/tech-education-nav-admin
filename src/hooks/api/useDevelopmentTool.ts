@@ -69,6 +69,7 @@ export default function useDevelopmentTool() {
       };
       const result = await client.graphql({
         query: mutations.createDevelopmentTool,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -91,6 +92,7 @@ export default function useDevelopmentTool() {
     try {
       const result = await client.graphql({
         query: mutations.updateDevelopmentTool,
+        authMode: "userPool",
         variables: { input: DevelopmentTool },
       });
       return {
@@ -113,6 +115,7 @@ export default function useDevelopmentTool() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteDevelopmentTool,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

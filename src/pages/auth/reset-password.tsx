@@ -11,9 +11,7 @@ export default function ResetPassword() {
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>
-      <Layout>
-        <PasswordResetRequest />
-      </Layout>
+      <PasswordResetRequest />
     </>
   );
 }

@@ -4,18 +4,15 @@
     "apiName": "techeducationnav",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authtecheducationnav6670346a"
+      "mode": "API_KEY",
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2025-03-04T22:17:12.574Z",
+      "keyDescription": "fetch data"
     },
     "additionalAuthTypes": [
       {
-        "mode": "API_KEY",
-        "expirationTime": 7,
-        "apiKeyExpirationDate": "2023-12-18T10:03:08.336Z",
-        "keyDescription": ""
-      },
-      {
-        "mode": "AWS_IAM"
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authtecheducationnav6670346a"
       }
     ],
     "conflictResolution": {}

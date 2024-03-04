@@ -38,6 +38,7 @@ export default function useReview() {
     try {
       const result = await client.graphql({
         query: mutations.updateCourseReview,
+        authMode: "userPool",
         variables: { input: learningCourse },
       });
       return {
@@ -60,6 +61,7 @@ export default function useReview() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteCourseReview,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

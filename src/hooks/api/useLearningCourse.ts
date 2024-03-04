@@ -75,6 +75,7 @@ export default function useLearningCourse() {
       };
       const result = await client.graphql({
         query: mutations.createLearningCenterCourse,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -99,6 +100,7 @@ export default function useLearningCourse() {
     try {
       const result = await client.graphql({
         query: mutations.updateLearningCenterCourse,
+        authMode: "userPool",
         variables: { input: learningCourse },
       });
       return {
@@ -121,6 +123,7 @@ export default function useLearningCourse() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteLearningCenterCourse,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

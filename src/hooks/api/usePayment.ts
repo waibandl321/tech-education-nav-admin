@@ -75,6 +75,7 @@ export default function usePayment() {
       };
       const result = await client.graphql({
         query: mutations.createPaymentMethod,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -98,6 +99,7 @@ export default function usePayment() {
     try {
       const result = await client.graphql({
         query: mutations.updatePaymentMethod,
+        authMode: "userPool",
         variables: { input: paymentMethod },
       });
       return {
@@ -120,6 +122,7 @@ export default function usePayment() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deletePaymentMethod,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -184,6 +187,7 @@ export default function usePayment() {
       };
       const result = await client.graphql({
         query: mutations.createCreditCard,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -205,6 +209,7 @@ export default function usePayment() {
     try {
       const result = await client.graphql({
         query: mutations.updateCreditCard,
+        authMode: "userPool",
         variables: { input: creditCard },
       });
       return {
@@ -227,6 +232,7 @@ export default function usePayment() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteCreditCard,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

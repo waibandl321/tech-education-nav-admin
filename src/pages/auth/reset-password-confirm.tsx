@@ -11,9 +11,7 @@ export default function ResetPasswordConfirm() {
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>
-      <Layout>
-        <PasswordResetConfirm />
-      </Layout>
+      <PasswordResetConfirm />
     </>
   );
 }

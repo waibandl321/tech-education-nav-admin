@@ -65,6 +65,7 @@ export default function useFramework() {
       };
       const result = await client.graphql({
         query: mutations.createFramework,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -85,6 +86,7 @@ export default function useFramework() {
     try {
       const result = await client.graphql({
         query: mutations.updateFramework,
+        authMode: "userPool",
         variables: { input: Framework },
       });
       return {
@@ -107,6 +109,7 @@ export default function useFramework() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteFramework,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

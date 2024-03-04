@@ -508,6 +508,15 @@ export const listLearningCenterCourses =
       courseName
       courseURL
       couseDetail
+      plans {
+        id
+        planName
+        planMemo
+        duration
+        price
+        splitPrice
+        __typename
+      }
       isAvailableMoneyBack
       moneyBackDetail
       isAvailableSubsidy

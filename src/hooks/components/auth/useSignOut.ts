@@ -7,7 +7,7 @@ const useSignOut = () => {
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await signOut({ global: true });
       window.location.replace("/auth/login");
     } catch (error) {
       console.error(error);

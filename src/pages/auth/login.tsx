@@ -10,9 +10,7 @@ export default function Login() {
         <meta name="description" content="ページの説明" />
         {/* その他のメタタグ */}
       </Head>
-      <Layout>
-        <LoginPane />
-      </Layout>
+      <LoginPane />
     </>
   );
 }
