@@ -20,22 +20,14 @@ export default function Navigation() {
     { name: "スクール情報", path: "/learning-center" },
     { name: "コース情報", path: "/learning-courses" },
     { name: "レビュー情報", path: "/reviews" },
-    {
-      name: "開発ツール",
-      path: "/languages-frameworks",
-    },
-    {
-      name: "目的/職種/資格",
-      path: "/job-type",
-    },
-    {
-      name: "支払い方法",
-      path: "/payment",
-    },
-    {
-      name: "ユーザー種別",
-      path: "/user-category",
-    },
+    { name: "言語・フレームワーク", path: "/languages-frameworks" },
+    { name: "開発ツール", path: "/development-tools" },
+    { name: "職種", path: "/job-type" },
+    { name: "開発領域", path: "/development-categories" },
+    { name: "開発プロダクト", path: "/development-products" },
+    { name: "資格", path: "/qualifications" },
+    { name: "支払い・クレジットカード", path: "/payment" },
+    { name: "優待ユーザー種別", path: "/user-category" },
   ];
 
   return (

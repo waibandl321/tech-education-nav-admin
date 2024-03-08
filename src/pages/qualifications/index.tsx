@@ -1,32 +1,32 @@
 import Layout from "@/app/layout";
 import Head from "next/head";
-import JobTypePane from "@/components/pages/job-type/JobTypePane";
-import { fetchJobTypes } from "@/hooks/server/fetchData";
+import QualificationPane from "@/components/pages/qualification/QualificationPane";
+import { fetchQualifications } from "@/hooks/server/fetchData";
 import { GetServerSideProps } from "next";
-import { JobType } from "@/API";
+import { Qualification } from "@/API";
 
 export default function JobTypePage({
-  jobTypes,
+  qualifications,
 }: {
-  jobTypes: Array<JobType>;
+  qualifications: Array<Qualification>;
 }) {
   return (
     <>
       <Head>
-        <title>【管理】職種</title>
+        <title>【管理】資格</title>
       </Head>
       <Layout>
-        <JobTypePane jobTypes={jobTypes} />
+        <QualificationPane qualifications={qualifications} />
       </Layout>
     </>
   );
 }
 // サーバーサイドでスクールとコース情報を取得し、クライアントにpropsとして渡す
 export const getServerSideProps: GetServerSideProps = async () => {
-  const result = await fetchJobTypes();
+  const result = await fetchQualifications();
   return {
     props: {
-      jobTypes: result.jobTypes,
+      qualifications: result.qualifications,
     },
   };
 };

@@ -167,34 +167,45 @@ export const fetchReviewList = async () => {
   }
 };
 
-// マスタデータの取得: 言語、フレームワーク、開発ツール
+// マスタデータの取得: 言語、フレームワーク
 export const fetchLanguagesAndFrameworks = async () => {
   try {
-    const [languagesResult, frameworksResult, developmentToolResult] =
-      await Promise.all([
-        client.graphql({
-          query: listProgrammingLanguages,
-          authMode: "apiKey",
-        }),
-        client.graphql({
-          query: listFrameworks,
-          authMode: "apiKey",
-        }),
-        client.graphql({
-          query: listDevelopmentTools,
-          authMode: "apiKey",
-        }),
-      ]);
+    const [languagesResult, frameworksResult] = await Promise.all([
+      client.graphql({
+        query: listProgrammingLanguages,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listFrameworks,
+        authMode: "apiKey",
+      }),
+    ]);
     return {
       languages: languagesResult.data.listProgrammingLanguages.items,
       frameworks: frameworksResult.data.listFrameworks.items,
-      developmentTools: developmentToolResult.data.listDevelopmentTools.items,
     };
   } catch (error) {
     console.error("Error fetching languages and frameworks:", error);
     return {
       languages: [],
       frameworks: [],
+    };
+  }
+};
+
+// マスタデータの取得: 開発ツール
+export const fetchDevelopmentTools = async () => {
+  try {
+    const developmentToolResult = await client.graphql({
+      query: listDevelopmentTools,
+      authMode: "apiKey",
+    });
+    return {
+      developmentTools: developmentToolResult.data.listDevelopmentTools.items,
+    };
+  } catch (error) {
+    console.error("Error fetching development tools:", error);
+    return {
       developmentTools: [],
     };
   }
@@ -203,45 +214,77 @@ export const fetchLanguagesAndFrameworks = async () => {
 // マスタデータの取得: 職種/資格
 export const fetchJobTypes = async () => {
   try {
-    const [
-      getJobTypesResult,
-      getQualificationsResult,
-      getDevelopmentCategoriesResult,
-      getDevelopmentProductsResult,
-    ] = await Promise.all([
-      client.graphql({
-        query: listJobTypes,
-        authMode: "apiKey",
-      }),
-      client.graphql({
-        query: listQualifications,
-        authMode: "apiKey",
-      }),
-      client.graphql({
-        query: listDevelopmentCategories,
-        authMode: "apiKey",
-      }),
-      client.graphql({
-        query: listDevelopmentProducts,
-        authMode: "apiKey",
-      }),
-    ]);
+    const getJobTypesResult = await client.graphql({
+      query: listJobTypes,
+      authMode: "apiKey",
+    });
 
     return {
       jobTypes: getJobTypesResult.data.listJobTypes.items,
-      qualifications: getQualificationsResult.data.listQualifications.items,
-      developmentCategories:
-        getDevelopmentCategoriesResult.data.listDevelopmentCategories.items,
-      developmentProducts:
-        getDevelopmentProductsResult.data.listDevelopmentProducts.items,
     };
   } catch (error) {
     console.error("Error fetchJobTypes:", error);
     return {
       jobTypes: [],
-      qualifications: [],
+    };
+  }
+};
+
+// 開発領域
+export const fetchDevelopmentCategories = async () => {
+  try {
+    const getDevelopmentCategoriesResult = await client.graphql({
+      query: listDevelopmentCategories,
+      authMode: "apiKey",
+    });
+
+    return {
+      developmentCategories:
+        getDevelopmentCategoriesResult.data.listDevelopmentCategories.items,
+    };
+  } catch (error) {
+    console.error("Error fetchDevelopmentCategories:", error);
+    return {
       developmentCategories: [],
+    };
+  }
+};
+
+// 開発プロダクト
+export const fetchDevelopmentProducts = async () => {
+  try {
+    const getDevelopmentProductsResult = await client.graphql({
+      query: listDevelopmentProducts,
+      authMode: "apiKey",
+    });
+
+    return {
+      developmentProducts:
+        getDevelopmentProductsResult.data.listDevelopmentProducts.items,
+    };
+  } catch (error) {
+    console.error("Error fetchDevelopmentProducts:", error);
+    return {
       developmentProducts: [],
+    };
+  }
+};
+
+// 資格
+export const fetchQualifications = async () => {
+  try {
+    const getQualificationsResult = await client.graphql({
+      query: listQualifications,
+      authMode: "apiKey",
+    });
+
+    return {
+      qualifications: getQualificationsResult.data.listQualifications.items,
+    };
+  } catch (error) {
+    console.error("Error fetchJobTypes:", error);
+    return {
+      qualifications: [],
     };
   }
 };
@@ -275,9 +318,7 @@ export const fetchPaymentPageData = async () => {
   }
 };
 
-/**
- * ユーザー種別
- */
+// ユーザー種別
 export const fetchUserCategoryPageData = async () => {
   try {
     const getUserCategoriesResult = await client.graphql({
