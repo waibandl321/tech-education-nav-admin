@@ -97,6 +97,9 @@ export const fetchCoursePageData = async () => {
       developmentToolResult,
       getJobTypesResult,
       getQualificationsResult,
+      getDevelopmentProductsResult,
+      getDevelopmentCategoriesResult,
+      benefitUserCategoriesResult,
     ] = await Promise.all([
       client.graphql({
         query: listLearningCenters,
@@ -126,6 +129,18 @@ export const fetchCoursePageData = async () => {
         query: listQualifications,
         authMode: "apiKey",
       }),
+      client.graphql({
+        query: listDevelopmentProducts,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listDevelopmentCategories,
+        authMode: "apiKey",
+      }),
+      client.graphql({
+        query: listBenefitUserCategories,
+        authMode: "apiKey",
+      }),
     ]);
     return {
       centers: learningCentersResult.data.listLearningCenters.items,
@@ -135,6 +150,12 @@ export const fetchCoursePageData = async () => {
       developmentTools: developmentToolResult.data.listDevelopmentTools.items,
       jobTypes: getJobTypesResult.data.listJobTypes.items,
       qualifications: getQualificationsResult.data.listQualifications.items,
+      developmentProducts:
+        getDevelopmentProductsResult.data.listDevelopmentProducts.items,
+      developmentCategories:
+        getDevelopmentCategoriesResult.data.listDevelopmentCategories.items,
+      benefitUserCategories:
+        benefitUserCategoriesResult.data.listBenefitUserCategories.items,
     };
   } catch (error) {
     console.error("Error fetching listLearningCenters:", error);
@@ -146,6 +167,9 @@ export const fetchCoursePageData = async () => {
       developmentTools: [],
       jobTypes: [],
       qualifications: [],
+      developmentProducts: [],
+      developmentCategories: [],
+      benefitUserCategories: [],
     };
   }
 };

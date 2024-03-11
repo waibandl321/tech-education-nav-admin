@@ -17,7 +17,7 @@ export default function useLearningCourseLogic() {
     { key: "isMadeToOrder", name: "オーダーメイドカリキュラムの有無" },
     {
       key: "benefitUsers",
-      name: "特別な受講対象者（学生、子供、主婦、高齢者、障害者など）",
+      name: "優待ユーザー（学生、子供、主婦、高齢者、障害者など）",
     },
   ];
 

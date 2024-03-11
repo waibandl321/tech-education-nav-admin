@@ -9,6 +9,9 @@ import {
   LearningCenterCourse,
   ProgrammingLanguage,
   Qualification,
+  DevelopmentProduct,
+  BenefitUserCategory,
+  DevelopmentCategory,
 } from "@/API";
 import useLearningCourseLogic from "@/hooks/components/learning-course/useLearningCourseLogic";
 import {
@@ -74,6 +77,9 @@ export default function LearningCoursesPane({
   developmentTools,
   jobTypes,
   qualifications,
+  developmentProducts,
+  developmentCategories,
+  benefitUserCategories,
 }: {
   centers: Array<LearningCenter>;
   courses: Array<LearningCenterCourse>;
@@ -82,6 +88,9 @@ export default function LearningCoursesPane({
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
   qualifications: Array<Qualification>;
+  developmentProducts: Array<DevelopmentProduct>;
+  developmentCategories: Array<DevelopmentCategory>;
+  benefitUserCategories: Array<BenefitUserCategory>;
 }) {
   // state
   const [selectedLearningCenter, setSelectedLearningCenter] =
@@ -398,6 +407,9 @@ export default function LearningCoursesPane({
               developmentTools={developmentTools}
               jobTypes={jobTypes}
               qualifications={qualifications}
+              developmentProducts={developmentProducts}
+              developmentCategories={developmentCategories}
+              benefitUserCategories={benefitUserCategories}
             />
           )}
         </Box>

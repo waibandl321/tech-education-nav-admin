@@ -12,14 +12,13 @@ import {
   CoursePlanInput,
   CoursePlan,
   Qualification,
+  DevelopmentProduct,
+  BenefitUserCategory,
+  DevelopmentCategory,
 } from "@/API";
 import { v4 as uuidv4 } from "uuid";
 import TextareaComponent from "@/components/common/parts/TextareaComponent";
-import {
-  AttendanceTypeLabels,
-  EspeciallyAudienceLabels,
-  PurposeLabels,
-} from "@/const";
+import { AttendanceTypeLabels, PurposeLabels } from "@/const";
 import { useLoading } from "@/contexts/LoadingContext";
 import { useMessageAlert } from "@/contexts/MessageAlertContext";
 import useLearningCourse from "@/hooks/api/useLearningCourse";
@@ -76,6 +75,9 @@ export default function LearningCourseEditPane({
   developmentTools,
   jobTypes,
   qualifications,
+  developmentProducts,
+  developmentCategories,
+  benefitUserCategories,
 }: {
   editItem: LearningCenterCourse | CreateLearningCenterCourseInput | null;
   onClose: () => void;
@@ -85,6 +87,9 @@ export default function LearningCourseEditPane({
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
   qualifications: Array<Qualification>;
+  developmentProducts: Array<DevelopmentProduct>;
+  developmentCategories: Array<DevelopmentCategory>;
+  benefitUserCategories: Array<BenefitUserCategory>;
 }) {
   // hooks
   const { setLoading } = useLoading();
@@ -298,17 +303,17 @@ export default function LearningCourseEditPane({
     <Paper
       sx={{
         position: "fixed",
-        top: 64,
-        bottom: 16,
-        right: 24,
+        top: 0,
+        bottom: 0,
+        right: 0,
         left: "30%",
         overflow: "auto",
       }}
       elevation={3}
     >
-      <Card sx={{ pb: 4 }}>
+      <Card>
         <CardContent>
-          <Box>
+          <Box display="flex" justifyContent="flex-end">
             <Button onClick={() => handleSaveItem()}>保存</Button>
             <Button onClick={() => handleCloseEdit()} color="inherit">
               キャンセル
@@ -579,7 +584,7 @@ export default function LearningCourseEditPane({
             <TextareaComponent
               onInputChange={(event) => handlerFormChange(event)}
               inputValue={editItem?.jobHuntingGuaranteeDetail ?? ""}
-              name="JobHuntingGuaranteeDetail"
+              name="jobHuntingGuaranteeDetail"
               placeholder="転職保証の詳細"
             />
           </Box>
@@ -619,6 +624,52 @@ export default function LearningCourseEditPane({
                   {jobTypes.map((job) => (
                     <MenuItem key={job.id} value={job.id}>
                       {job.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-development-product-label">
+                  開発できるプロダクト
+                </InputLabel>
+                <Select
+                  labelId="select-development-product-label"
+                  id="select-development-product"
+                  name="developmentProducts"
+                  value={editItem?.developmentProducts ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={
+                    <OutlinedInput fullWidth label="開発できるプロダクト" />
+                  }
+                  multiple
+                >
+                  {developmentProducts.map((p) => (
+                    <MenuItem key={p.id} value={p.id}>
+                      {p.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item md={6}>
+              <FormControl fullWidth>
+                <InputLabel id="select-development-category-label">
+                  開発領域
+                </InputLabel>
+                <Select
+                  labelId="select-development-category-label"
+                  id="select-development-category"
+                  name="developmentCategories"
+                  value={editItem?.developmentCategories ?? []}
+                  onChange={(event) => handlerFormChange(event)}
+                  input={<OutlinedInput fullWidth label="開発領域" />}
+                  multiple
+                >
+                  {developmentCategories.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -796,7 +847,7 @@ export default function LearningCourseEditPane({
             <Grid item md={6}>
               <FormControl fullWidth>
                 <InputLabel id="select-especially-audiences">
-                  特別な受講対象者
+                  優待ユーザー
                 </InputLabel>
                 <Select
                   labelId="select-especially-audiences"
@@ -804,19 +855,23 @@ export default function LearningCourseEditPane({
                   name="benefitUsers"
                   value={editItem?.benefitUsers ?? []}
                   onChange={(event) => handlerFormChange(event)}
-                  input={<OutlinedInput fullWidth label="特別な受講対象者" />}
+                  input={<OutlinedInput fullWidth label="優待ユーザー" />}
                 >
-                  {Object.entries(EspeciallyAudienceLabels).map(
-                    ([key, item]) => (
-                      <MenuItem key={key} value={item.value}>
-                        {item.label}
-                      </MenuItem>
-                    )
-                  )}
+                  {benefitUserCategories.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
           </Grid>
+          <Box display="flex" justifyContent="flex-end">
+            <Button onClick={() => handleSaveItem()}>保存</Button>
+            <Button onClick={() => handleCloseEdit()} color="inherit">
+              キャンセル
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </Paper>

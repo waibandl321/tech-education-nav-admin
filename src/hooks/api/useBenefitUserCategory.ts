@@ -72,6 +72,7 @@ export default function useBenefitUserCategory() {
       };
       const result = await client.graphql({
         query: mutations.createBenefitUserCategory,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -95,6 +96,7 @@ export default function useBenefitUserCategory() {
     try {
       const result = await client.graphql({
         query: mutations.updateBenefitUserCategory,
+        authMode: "userPool",
         variables: { input: item },
       });
       return {
@@ -119,6 +121,7 @@ export default function useBenefitUserCategory() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteBenefitUserCategory,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

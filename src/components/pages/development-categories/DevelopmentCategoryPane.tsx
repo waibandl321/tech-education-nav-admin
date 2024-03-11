@@ -202,13 +202,16 @@ export default function DevelopmentCategoryPane({
               </TableCell>
               <TableCell
                 sx={{ width: 100, backgroundColor: "#f8f8f8" }}
-              ></TableCell>
+                align="center"
+              >
+                ---
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {developmentCategoryList.map((item) => (
               <TableRow key={item.id}>
-                <TableCell align="left">
+                <TableCell align="left" sx={{ verticalAlign: "bottom" }}>
                   <TextField
                     fullWidth
                     name="name"
@@ -219,7 +222,7 @@ export default function DevelopmentCategoryPane({
                     multiline
                   />
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" sx={{ verticalAlign: "bottom" }}>
                   <TextField
                     fullWidth
                     name="memo"
@@ -230,33 +233,35 @@ export default function DevelopmentCategoryPane({
                     multiline
                   />
                 </TableCell>
-                <TableCell align="left">
-                  <IconButton
-                    edge="end"
-                    color="error"
-                    title="削除"
-                    size="small"
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      handleDelete(item);
-                    }}
-                    sx={{ ml: 2 }}
-                  >
-                    <DeleteIcon></DeleteIcon>
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    color="primary"
-                    title="保存"
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleUpdate(item);
-                    }}
-                    sx={{ ml: 2 }}
-                  >
-                    <SaveIcon></SaveIcon>
-                  </IconButton>
+                <TableCell align="center">
+                  <Box display="flex" alignItems="center">
+                    <IconButton
+                      edge="end"
+                      color="error"
+                      title="削除"
+                      size="small"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        handleDelete(item);
+                      }}
+                      sx={{ ml: 2 }}
+                    >
+                      <DeleteIcon></DeleteIcon>
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      color="primary"
+                      title="保存"
+                      size="small"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdate(item);
+                      }}
+                      sx={{ ml: 1 }}
+                    >
+                      <SaveIcon></SaveIcon>
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}

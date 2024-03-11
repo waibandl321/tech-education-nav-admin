@@ -71,6 +71,7 @@ export default function useDevelopmentCategory() {
       };
       const result = await client.graphql({
         query: mutations.createDevelopmentCategory,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -93,6 +94,7 @@ export default function useDevelopmentCategory() {
     try {
       const result = await client.graphql({
         query: mutations.updateDevelopmentCategory,
+        authMode: "userPool",
         variables: { input: item },
       });
       return {
@@ -117,6 +119,7 @@ export default function useDevelopmentCategory() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteDevelopmentCategory,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

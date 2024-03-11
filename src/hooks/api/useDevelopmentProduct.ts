@@ -71,6 +71,7 @@ export default function useDevelopmentProduct() {
       };
       const result = await client.graphql({
         query: mutations.createDevelopmentProduct,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {
@@ -93,6 +94,7 @@ export default function useDevelopmentProduct() {
     try {
       const result = await client.graphql({
         query: mutations.updateDevelopmentProduct,
+        authMode: "userPool",
         variables: { input: item },
       });
       return {
@@ -117,6 +119,7 @@ export default function useDevelopmentProduct() {
       };
       const deletedResult = await client.graphql({
         query: mutations.deleteDevelopmentProduct,
+        authMode: "userPool",
         variables: { input: request },
       });
       return {

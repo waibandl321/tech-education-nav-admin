@@ -126,9 +126,9 @@ export default function LearningCenterEditPane({
     <Paper
       sx={{
         position: "fixed",
-        top: 64,
-        bottom: 16,
-        right: 24,
+        top: 0,
+        bottom: 0,
+        right: 0,
         left: "30%",
         overflow: "auto",
       }}

@@ -4,6 +4,9 @@ import LearningCoursesPane from "@/components/pages/learning-course/LearningCour
 import { GetServerSideProps } from "next";
 import { fetchCoursePageData } from "@/hooks/server/fetchData";
 import {
+  BenefitUserCategory,
+  DevelopmentCategory,
+  DevelopmentProduct,
   DevelopmentTool,
   Framework,
   JobType,
@@ -21,6 +24,9 @@ export default function LearningCoursesIndex({
   developmentTools,
   jobTypes,
   qualifications,
+  developmentProducts,
+  developmentCategories,
+  benefitUserCategories,
 }: {
   centers: Array<LearningCenter>;
   courses: Array<LearningCenterCourse>;
@@ -29,6 +35,9 @@ export default function LearningCoursesIndex({
   developmentTools: Array<DevelopmentTool>;
   jobTypes: Array<JobType>;
   qualifications: Array<Qualification>;
+  developmentProducts: Array<DevelopmentProduct>;
+  developmentCategories: Array<DevelopmentCategory>;
+  benefitUserCategories: Array<BenefitUserCategory>;
 }) {
   return (
     <>
@@ -44,6 +53,9 @@ export default function LearningCoursesIndex({
           developmentTools={developmentTools}
           jobTypes={jobTypes}
           qualifications={qualifications}
+          developmentProducts={developmentProducts}
+          developmentCategories={developmentCategories}
+          benefitUserCategories={benefitUserCategories}
         />
       </Layout>
     </>
@@ -61,6 +73,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
       developmentTools: result.developmentTools,
       jobTypes: result.jobTypes,
       qualifications: result.qualifications,
+      developmentProducts: result.developmentProducts,
+      developmentCategories: result.developmentCategories,
+      benefitUserCategories: result.benefitUserCategories,
     },
   };
 };
